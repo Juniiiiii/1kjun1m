@@ -1,0 +1,32 @@
+.loading {
+    overflow: hidden;
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    font-size: 3rem;
+    font-family: 'Libre Caslon Text', serif;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
+    background-color: transparent;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.loading:hover span {
+    opacity: 1;
+}
+
+.loading span {
+    transition: all 0.3s ease-out;
+    width: 0;
+    opacity: 0;
+    display: inline-flex;
+    overflow: hidden;
+}
