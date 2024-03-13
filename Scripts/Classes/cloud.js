@@ -26,7 +26,7 @@ class Cloud {
             restitution: particleRestitution,
         };
 
-        for (let i = 0; i < particleCount * containerDiagonal; i++) {
+        for (let i = 0; i < particleCount; i++) {
             this.pickedColor = randomElement(particleColors);
             options.render.fillStyle = this.pickedColor;
             options.render.strokeStyle = this.pickedColor;
