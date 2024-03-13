@@ -67,16 +67,65 @@
 }
 
 .subtitle-text {
-    font-family: 'Prata', serif;
-    font-size: calc(1vw + 1vh);
+    font-family: 'Playfair Display', serif;
+    font-size: calc(1.1vw);
     color: var(--white);
 }
 
 #made-in {
-    grid-area: 7 / 4 / 8 / 6;
+    grid-area: 9 / 1 / 10 / 4;
 }
 
-#designed-in {
-    grid-area: 7 / 6 / 8 / 8;
+#portfolio {
+    grid-area: 9 / 8 / 10 / 10;
     text-align: right;
 }
+
+.rotating-words-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.rotating-words-left-align {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.rotating-words {
+    width: 4.2vw;
+    margin: 0;
+    margin-right: 0.4vw;
+    padding: 0;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.rotating-words p {
+    display: flex;
+    margin: 0;
+    text-align: right;
+    padding: 0;
+    position: absolute;
+    opacity: 0;
+}
+
+.rotating-words p .letter {
+    transform-origin: center center 25px;
+}
+
+.rotating-words p .letter.out {
+    transform: rotateX(90deg);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+}
+
+.rotating-words p .letter.in {
+    transition: 0.38s ease;
+}
+
+.rotating-words p .letter.behind {
+    transform: rotateX(-90deg);
+}
+
+
+
