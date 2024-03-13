@@ -102,6 +102,12 @@ function AfterCirclesCollision() {
         }
     }, engine.timing.lastDelta);
 
+    document.querySelector('#matter-container').style.zIndex = -1;
+
+    document.body.style.backgroundColor = 'transparent';
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+
     DomainExpansion();
 }
 
