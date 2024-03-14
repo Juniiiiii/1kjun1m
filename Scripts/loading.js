@@ -50,7 +50,7 @@ function SpawnCircles() {
 
     options.label = "secondCircle";
     secondCircle = Bodies.circle(container.clientWidth + radius, container.clientHeight/2, radius, JSON.parse(JSON.stringify(options)));
-    Composite.add(engine.world, [firstCircle, secondCircle]);
+    Composite.add(mengine.world, [firstCircle, secondCircle]);
 }
 
 function StartLoadingCollision() {
@@ -58,7 +58,7 @@ function StartLoadingCollision() {
     Body.setVelocity(secondCircle, Vector.create(-circleCollisionCorrection * secondCircle.frictionAir * container.clientWidth/2, 0));
 }
 
-Events.on(engine, 'collisionStart', event => {
+Events.on(mengine, 'collisionStart', event => {
     if (!circleCollided) {
         var pairs = event.pairs;
         for (var i = 0 ; i < pairs.length; i++) {
@@ -73,7 +73,7 @@ Events.on(engine, 'collisionStart', event => {
 })
 
 function AfterCirclesCollision() {
-    Composite.add(engine.world, expansionBody);
+    Composite.add(mengine.world, expansionBody);
     Body.setPosition(expansionBody, Vector.create((firstCircle.position.x + secondCircle.position.x)/2, 
                                                 (firstCircle.position.y + secondCircle.position.y)/2));
 
@@ -81,14 +81,14 @@ function AfterCirclesCollision() {
     cloud.setPositionOffset(expansionBody.position.x, expansionBody.position.y);
     cloud.isForcing = true;
 
-    Composite.remove(engine.world, firstCircle);
-    Composite.remove(engine.world, secondCircle)
+    Composite.remove(mengine.world, firstCircle);
+    Composite.remove(mengine.world, secondCircle)
 
     loadingElement.removeEventListener('mouseover', hoverLoading);
     loadingElement.removeEventListener('mouseout', unhoverLoading);
     document.querySelector('.loading').remove();
 
-    var iter = 1000/engine.timing.lastDelta;
+    var iter = 1000/mengine.timing.lastDelta;
     var reachForce = particleConsistentForce * containerDiagonal;
     var incr = (reachForce - cloud.repulsionForce)/iter;
     cloud.alteringForce = true;
@@ -100,7 +100,7 @@ function AfterCirclesCollision() {
             cloud.alteringForce = false;
             cloud.adjustForces();
         }
-    }, engine.timing.lastDelta);
+    }, mengine.timing.lastDelta);
 
     document.querySelector('#matter-container').style.zIndex = -1;
 
@@ -121,9 +121,9 @@ function DomainExpansion() {
             clearInterval(expansionId);
             cur = containerDiagonal;
 
-            Composite.add(engine.world, mouseConstraint);
+            Composite.add(mengine.world, mouseConstraint);
             container.style.backgroundColor = black;
-            Composite.remove(engine.world, expansionBody);
+            Composite.remove(mengine.world, expansionBody);
 
         } else Body.scale(expansionBody, cur/prev, cur/prev);
     }, 1);

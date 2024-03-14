@@ -9,6 +9,7 @@
   "author": "Ikjun Im",
   "license": "ISC",
   "dependencies": {
+    "animejs": "^3.2.2",
     "matter-js": "^0.19.0",
     "matter-wrap": "^0.2.0",
     "poly-decomp": "^0.3.0"

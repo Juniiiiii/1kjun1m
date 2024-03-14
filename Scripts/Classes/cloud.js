@@ -7,6 +7,7 @@ class Cloud {
         this.alteringForce = false;
 
         //Assign this
+        this.danceForce = particleDanceForce * containerDiagonal;
         this.repulsionRange = particleForceRange * containerDiagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
         this.repulsionForce = particleInitialForce * containerDiagonal;
@@ -46,7 +47,7 @@ class Cloud {
                     break;
             }
         }
-        Composite.add(engine.world, this.particles);
+        Composite.add(mengine.world, this.particles);
     }
 
     setPositionOffset(x, y) {
@@ -83,10 +84,10 @@ class Cloud {
     }
 
     dance() {
-        this.particles.forEach(particle => {
+        this.particles.forEach(p => {
             Body.applyForce(p, p.position, 
-                Vector.create(p.mass * getRandom(-danceForce, danceForce), 
-                p.mass * getRandom(-danceForce, danceForce)));
+                Vector.create(p.mass * randomFloat(-this.danceForce, this.danceForce), 
+                p.mass * randomFloat(-this.danceForce, this.danceForce)));
         });
     }
 
@@ -114,7 +115,7 @@ class Cloud {
         options.label = "leftWall";
         this.walls.push(Bodies.rectangle(-wallThickness/2, container.clientHeight/2, wallThickness, wallLength, JSON.parse(JSON.stringify(options))));
 
-        Composite.add(engine.world, this.walls);
+        Composite.add(mengine.world, this.walls);
     }
 
     repositionWalls() {
@@ -143,6 +144,7 @@ class Cloud {
         if (this.alteringForce) return;
         this.repulsionRange = particleForceRange * containerDiagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
+        this.danceForce = particleDanceForce * containerDiagonal;
     }
 }
 const cloud = new Cloud();

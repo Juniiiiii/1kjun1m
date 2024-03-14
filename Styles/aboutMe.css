@@ -1,6 +1,25 @@
-.about-me {
+.title-about-padding {
     width: 100%;
-    height: 80vh;
+    height: 6vh;
+    background-color: transparent;
 }
 
+.about-me {
+    background-color: var(--white);
+    position: relative;
+    width: 100%;
+    height: 84vh;
+}
 
+.about-me-text-wrapper {
+    flex-basis: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-me-text {
+    font-family: 'Prata', serif;
+    font-size: calc(1.5vw);
+    color: var(--black);
+}

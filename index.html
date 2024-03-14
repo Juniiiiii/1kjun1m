@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
+    <script src="./Scripts/Plugins/anime.min.js"></script>
     <script src="./Scripts/Plugins/matter.js"></script>
     <script src="./Scripts/Plugins/pathseg.min.js"></script>
 
@@ -67,49 +68,68 @@
     <link rel="stylesheet" href="./Styles/aboutMe.css">
 </head>
 <body>
-    <div class="title-page">
-        <div id="matter-container" class="title-page-span"></div>
-        <div id="title-first-line" class="no-select">1ns1de the m1nd of</div>
-        <div id="made-in" class="subtitle-text no-select">
-            <div class="rotating-words-wrapper">
-                <div class="rotating-words-left-align">
-                    <span class="rotating-words" id="made-in-words">
-                        <p>made</p>
-                        <p>born</p>
-                    </span>
+    <div class="title-page-wrapper">
+        <div class="title-line-wrapper">
+            <div class="no-select show">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+            <div class="no-select">1ns1de the m1nd of</div>
+        </div>
+        <div class="title-page">
+            <div id="matter-container" class="title-page-span"></div>
+            <div id="made-in" class="subtitle-text no-select">
+                <div class="rotating-words-wrapper">
+                    <div class="rotating-words-left-align">
+                        <span class="rotating-words" id="made-in-words">
+                            <p>made</p>
+                            <p>born</p>
+                        </span>
+                    </div>
+                    <span id="made-in-text">in Seoul</span>
                 </div>
-                <span id="made-in-text">in Seoul</span>
-            </div>
-            <div class="rotating-words-wrapper">
-                <div class="rotating-words-left-align">
-                    <span class="rotating-words" id="designed-in-words">
-                        <p>designed</p>
-                        <p>raised</p>
-                    </span>
+                <div class="rotating-words-wrapper">
+                    <div class="rotating-words-left-align">
+                        <span class="rotating-words" id="designed-in-words">
+                            <p>designed</p>
+                            <p>raised</p>
+                        </span>
+                    </div>
+                    <span id="designed-in-text">in Sydney</span>
                 </div>
-                <span id="designed-in-text">in Sydney</span>
             </div>
-        </div>
-        <div id="portfolio" class="subtitle-text">
-            <span>| inside the mind of |</span>
-            <span>portfolio by</span>
-            <span>ikjunim@gmail.com</span>
-        </div>
-        <div id="main-title">
-            <div class="main-title-text no-select">
-                1kjun 1m
+            <div id="portfolio" class="subtitle-text">
+                <span class="no-select">| inside the mind of |</span>
+                <span class="no-select">portfolio by</span>
+                <span>ikjunim@gmail.com</span>
             </div>
-        </div>
-        <div class="signature-wrapper">
-            <img src="./Media/signature.png" alt="signature" id="signature">
-        </div>
-        <!--Deleted after loading animation-->
-        <div class="loading">
-            <div class="loading-text">1<span>kjun</span>1<span>m</span></div>
+            <div id="main-title">
+                <div class="main-title-text no-select">
+                    1kjun 1m
+                </div>
+            </div>
+            <div class="signature-wrapper">
+                <img src="./Media/signature.png" alt="signature" id="signature">
+            </div>
+            <!--Deleted after loading animation-->
+            <div class="loading">
+                <div class="loading-text">1<span>kjun</span>1<span>m</span></div>
+            </div>
         </div>
     </div>
+    <div class="title-about-padding"></div>
     <div class="about-me">
-
+        <div class="about-me-text-wrapper">
+            <div class="about-me-text">
+                Lorem Ipsum
+            </div>
+        </div>
     </div>
 
     <!--Set up-->
@@ -125,6 +145,8 @@
     <script src="./Scripts/loading.js"></script>
     <script src="./Scripts/Classes/cloud.js"></script>
     <script src="./Scripts/titlePage.js"></script>
+    <script src="./Scripts/aboutMe.js"></script>
+
     <script src="./Scripts/main.js"></script>
 </body>
 </html>

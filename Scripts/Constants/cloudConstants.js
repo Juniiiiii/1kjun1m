@@ -8,3 +8,4 @@ const wallLength = 10000;
 const particleForceRange = 0.06;
 const particleInitialForce = 0.000005;
 const particleConsistentForce = 0.002;
+const particleDanceForce = 0.000002;

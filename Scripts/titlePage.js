@@ -1,9 +1,58 @@
+let titleLines, titleWrapper, prevLine, newLine, maxLineScroll = (5/12),
+titleLineRadius = 1, titleLineShowing = new Set([]), titleLineHide = {};
+
 document.addEventListener('DOMContentLoaded', function() {
     rotateWord(document.querySelectorAll('#made-in-words p'), 
                 document.getElementById('made-in-words'));
     rotateWord(document.querySelectorAll('#designed-in-words p'),
                 document.getElementById('designed-in-words'));
+
+    titleWrapper = document.querySelector('.title-line-wrapper');
+    titleLines = document.querySelectorAll('.title-line-wrapper .no-select');
+
+    for (let i = 0 ;i < titleLines.length; i++) {
+        titleLines[i].style.transform = 'translateY(-' + (0.8 + 0.5 * i) + 'em)';
+        titleLineHide[i] = null;
+    }
+    titleLineShowing.add(0);
+
+    window.addEventListener('scroll', function() {
+        showTitleLines(window.scrollY);
+    });
 });
+
+function hideTitleLines(except) {
+    titleLineShowing.forEach(line => {
+        if (titleLineHide[line]) {
+            clearTimeout(titleLineHide[line]);
+        }
+        titleLineHide[line] = setTimeout(() => {
+            titleLines[line].classList.remove('show');
+            titleLineHide[line] = null;
+        }, 300);
+    });
+    titleLineShowing.clear();
+
+    if (titleLineHide[except]) {
+        clearTimeout(titleLineHide[except]);
+        titleLineHide[except] = null;
+    }
+    for (let i = Math.min(except, prevLine); i <= Math.max(except, prevLine); i++) {
+        titleLineShowing.add(i);
+        titleLines[i].classList.add('show');
+    }
+
+    prevLine = except;
+}
+
+function showTitleLines(currentY) {
+    if (currentY <= 0) hideTitleLines(0); 
+    else if (currentY >= titleWrapper.offsetHeight * maxLineScroll) hideTitleLines(titleLines.length - 1);
+    else {
+        newLine = Math.floor(currentY / (titleWrapper.offsetHeight * maxLineScroll) * (titleLines.length - 1));
+        if (!titleLineShowing.has(newLine)) hideTitleLines(newLine);
+    }
+}
 
 function rotateWord(words, wordWrapper) {
     words.forEach(word => {
