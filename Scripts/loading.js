@@ -108,6 +108,8 @@ function AfterCirclesCollision() {
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
 
+    document.querySelectorAll('.title-line-wrapper .no-select')[0].classList.remove('hidden');
+
     DomainExpansion();
 }
 

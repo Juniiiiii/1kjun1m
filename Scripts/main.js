@@ -1,8 +1,40 @@
-//Start the loading sequence
-SpawnExpansionBody();
-SpawnCircles();
+const cursor = document.querySelector('.cursor');
+const titlePage = document.querySelector('.title-page-wrapper');
+let pointingDown = false;
 
-window.addEventListener("resize", () => OnResize());
+document.addEventListener("DOMContentLoaded", () => {
+    //Start the loading sequence
+    SpawnExpansionBody();
+    SpawnCircles();
+    
+    window.addEventListener("resize", () => OnResize());
+    
+    window.addEventListener("scroll", () => {
+        cloud.dance();
+        containerRect = container.getBoundingClientRect();
+    });
+    
+    Events.on(mengine, 'beforeUpdate', (event) => {
+        if (cloud.isForcing) {
+            if (isHovering(mousePosition, container)) {
+                cloud.applyForce(Vector.create(mousePosition.x - containerRect.left, 
+                                                mousePosition.y - containerRect.top));
+            } else cloud.applyForce();
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        moveCursor();
+    });
+
+    titlePage.onmouseover = () => {
+        cursor.querySelector('#arrow-down').classList.add('show');
+    };
+
+    titlePage.onmouseleave = () => {
+        cursor.querySelector('#arrow-down').classList.remove('show');
+    };
+});
 
 function OnResize() {
     render.canvas.width = container.clientWidth;
@@ -19,18 +51,20 @@ function OnResize() {
     cloud.repositionWalls();
 }
 
-window.addEventListener("scroll", () => {
-    cloud.dance();
-    containerRect = container.getBoundingClientRect();
-});
+function moveCursor() {
+    cursor.style.left = mousePosition.x + 'px';
+    cursor.style.top =  mousePosition.y + 'px';
+}
 
-Events.on(mengine, 'beforeUpdate', (event) => {
-    if (cloud.isForcing) {
-        if (isHovering(mousePosition, container)) {
-            cloud.applyForce(Vector.create(mousePosition.x - containerRect.left, 
-                                            mousePosition.y - containerRect.top));
-        } else cloud.applyForce();
+function changeCursorIcon() {
+    if (isHovering(mousePosition, container)) {
+        if (!pointingDown) {
+            cursor.querySelector('.cursor-down-arrow').classList.remove('hidden');
+            pointingDown = true;
+        }
+    } else {
+        cursor.querySelector('.cursor-down-arrow').classList.add('hidden');
+        pointingDown = false;
     }
-
-});
+}
 

@@ -15,6 +15,7 @@ body, html {
     scrollbar-width: 0;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
+    cursor: none;
 }
 
 ::webkit-scrollbar {
@@ -23,4 +24,51 @@ body, html {
 
 .hidden {
     display: none;
+}
+
+.cursor {
+    width: 5em;
+    height: 5em;
+    background-color: var(--white);
+    mix-blend-mode: difference;
+}
+
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1000;
+    border-radius: 50%;
+}
+
+.cursor-icon {
+    opacity: 0;
+    transition: opacity 1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.cursor-icon.show {
+    opacity: 1;
+}
+
+#arrow-down img {
+    width: 70%;
+    height: 70%;
+    animation: bounce 1.5s infinite alternate;
+}
+
+
+@keyframes bounce {
+    0% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(-5px);
+    }
 }

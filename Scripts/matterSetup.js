@@ -46,6 +46,7 @@ runner = Runner.create();
 mouse = Mouse.create(render.canvas);
 
 mousePosition = Vector.create(0, 0);
+
 window.onmousemove = function(e) {
     mousePosition = Vector.create(e.clientX, e.clientY);
 }
