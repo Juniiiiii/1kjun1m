@@ -66,9 +66,10 @@
     <link rel="stylesheet" href="./Styles/loading.css">
     <link rel="stylesheet" href="./Styles/titlePage.css">
     <link rel="stylesheet" href="./Styles/aboutMe.css">
+    <link rel="stylesheet" href="./Styles/reality.css">
 </head>
 <body>
-    <div class="cursor">
+    <div class="cursor hidden">
         <div id="arrow-down" class="cursor-icon">
             <img src="./Media/downArrow.svg" alt="downArrow">
         </div>
@@ -131,25 +132,42 @@
     </div>
     <div class="title-about-padding"></div>
     <div class="about-me">
-        <div class="about-me-text-wrapper">
-            <div class="about-me-text">
-                Lorem Ipsum
+        <div class="about-title-text-wrapper">
+            <div class="about-title-text" id="about-title-text-first" about-title-move="zero">
+                is where ideas
             </div>
+            <div class="about-title-text" id="about-title-text-second" about-title-move="first">
+                meet
+            </div>
+        </div>
+    </div>
+    <div class="reality-page-wrapper">
+        <div class="reality-line-wrapper">
+            <div class="no-select">
+                reality
+            </div>
+        </div>
+        <div class="reality-page">
+            <div id="reality-container" class="reality-page-span"></div>
         </div>
     </div>
 
     <!--Set up-->
     <script src="./Scripts/Utility/utility.js"></script>
 
+    <script src="./Scripts/Constants/printerConstants.js"></script>
     <script src="./Scripts/Constants/matterConstants.js"></script>
     <script src="./Scripts/Constants/colorConstants.js"></script>
     <script src="./Scripts/Constants/cloudConstants.js"></script>
     <script src="./Scripts/Constants/loadingConstants.js"></script>
-
+    
+    <script src="./Scripts/MatterClass/glyphDictionary.js"></script>
+    <script src="./Scripts/MatterClass/matterInstance.js"></script>
     <script src="./Scripts/matterSetup.js"></script>
 
     <script src="./Scripts/loading.js"></script>
-    <script src="./Scripts/Classes/cloud.js"></script>
+    <script src="./Scripts/MatterClass/cloud.js"></script>
+    <script src="./Scripts/MatterClass/printer.js"></script>
     <script src="./Scripts/titlePage.js"></script>
     <script src="./Scripts/aboutMe.js"></script>
 

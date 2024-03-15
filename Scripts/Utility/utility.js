@@ -33,3 +33,49 @@ function isHovering(position, element) {
         rect.right >= position.x
     );
 }
+
+function isIntersecting(element1, element2) {
+    var rect1 = element1.getBoundingClientRect();
+    var rect2 = element2.getBoundingClientRect();
+
+    // Check for intersection
+    return !(
+        rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom
+    );
+}
+
+//Returns the aspect ratio of a polygon using its bounding box
+function aspectRatio(vertices) {
+    var minX = Infinity;
+    var minY = Infinity;
+    var maxX = -Infinity;
+    var maxY = -Infinity;
+
+    vertices.forEach(vertex => {
+        minX = Math.min(minX, vertex.x);
+        minY = Math.min(minY, vertex.y);
+        maxX = Math.max(maxX, vertex.x);
+        maxY = Math.max(maxY, vertex.y);
+    });
+
+    return (maxX - minX)/(maxY - minY);
+}
+
+function isDigit(char) {
+    return /^\d$/.test(char);
+}
+
+function isUpper(char) {
+    return /^[A-Z]$/.test(char);
+}
+
+function isLower(char) {
+    return /^[a-z]$/.test(char);
+}
+
+function isLetter(char) {
+    return isUpper(char) || isLower(char);
+}

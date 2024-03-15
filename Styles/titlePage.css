@@ -11,7 +11,7 @@
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: transparent;
 }
 
@@ -30,10 +30,11 @@
 
 #matter-container {
     z-index: 0;
+    pointer-events: none;
 }
 
 .title-line-wrapper {
-    grid-area: 1 / 1 / 2 / 2;
+    grid-area: 1 / 1 / -1 / -1;
     font-family: 'Playfair Display', serif;
     font-size: 12vh;
     color: var(--white);

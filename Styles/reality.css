@@ -1,0 +1,47 @@
+.reality-page-wrapper {
+    position: block;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.reality-line-wrapper {
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    justify-content: center;
+}
+
+.reality-line-wrapper .no-select {
+    font-family: 'Prata', serif;
+    font-size: calc(3vw);
+    color: var(--white);
+    mix-blend-mode: difference;
+    width: max-content;
+    height: max-content;
+    margin: 0;
+    padding: 0;
+}
+
+.reality-page {
+    grid-area: 1 / 1 / 2 / 2;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
+    background-color: var(--black);
+}
+
+.reality-page-span {
+    grid-area: 1 / 1 / -1 / -1;
+}
+
+#reality-container {
+    z-index: 0;
+    pointer-events: none;
+}

@@ -46,19 +46,19 @@ function SpawnCircles() {
         },
     }
     options.label = "firstCircle";
-    firstCircle = Bodies.circle(-radius, container.clientHeight/2, radius, JSON.parse(JSON.stringify(options)));
+    firstCircle = Bodies.circle(-radius, matterInstance.container.clientHeight/2, radius, JSON.parse(JSON.stringify(options)));
 
     options.label = "secondCircle";
-    secondCircle = Bodies.circle(container.clientWidth + radius, container.clientHeight/2, radius, JSON.parse(JSON.stringify(options)));
-    Composite.add(mengine.world, [firstCircle, secondCircle]);
+    secondCircle = Bodies.circle(matterInstance.container.clientWidth + radius, matterInstance.container.clientHeight/2, radius, JSON.parse(JSON.stringify(options)));
+    Composite.add(matterInstance.engine.world, [firstCircle, secondCircle]);
 }
 
 function StartLoadingCollision() {
-    Body.setVelocity(firstCircle, Vector.create(circleCollisionCorrection * firstCircle.frictionAir * container.clientWidth/2, 0));
-    Body.setVelocity(secondCircle, Vector.create(-circleCollisionCorrection * secondCircle.frictionAir * container.clientWidth/2, 0));
+    Body.setVelocity(firstCircle, Vector.create(circleCollisionCorrection * firstCircle.frictionAir * matterInstance.container.clientWidth/2, 0));
+    Body.setVelocity(secondCircle, Vector.create(-circleCollisionCorrection * secondCircle.frictionAir * matterInstance.container.clientWidth/2, 0));
 }
 
-Events.on(mengine, 'collisionStart', event => {
+Events.on(matterInstance.engine, 'collisionStart', event => {
     if (!circleCollided) {
         var pairs = event.pairs;
         for (var i = 0 ; i < pairs.length; i++) {
@@ -73,40 +73,49 @@ Events.on(mengine, 'collisionStart', event => {
 })
 
 function AfterCirclesCollision() {
-    Composite.add(mengine.world, expansionBody);
+    Composite.add(matterInstance.engine.world, expansionBody);
     Body.setPosition(expansionBody, Vector.create((firstCircle.position.x + secondCircle.position.x)/2, 
                                                 (firstCircle.position.y + secondCircle.position.y)/2));
 
-    cloud.spawnParticles();
-    cloud.setPositionOffset(expansionBody.position.x, expansionBody.position.y);
-    cloud.isForcing = true;
+    mcloud.spawnParticles();
+    mcloud.setPositionOffset(expansionBody.position.x, expansionBody.position.y);
+    setTimeout(() => {
+        mcloud.removeParticlesOutside();
+    }, 1000);
+    mcloud.isForcing = true;
 
-    Composite.remove(mengine.world, firstCircle);
-    Composite.remove(mengine.world, secondCircle)
+    Composite.remove(matterInstance.engine.world, firstCircle);
+    Composite.remove(matterInstance.engine.world, secondCircle)
 
     loadingElement.removeEventListener('mouseover', hoverLoading);
     loadingElement.removeEventListener('mouseout', unhoverLoading);
     document.querySelector('.loading').remove();
 
-    var iter = 1000/mengine.timing.lastDelta;
-    var reachForce = particleConsistentForce * containerDiagonal;
-    var incr = (reachForce - cloud.repulsionForce)/iter;
-    cloud.alteringForce = true;
+    var iter = 1000/matterInstance.engine.timing.lastDelta;
+    var reachForce = particleConsistentForce * mcloud.diagonal;
+    var incr = (reachForce - mcloud.repulsionForce)/iter;
+    mcloud.alteringForce = true;
     const repulsionId = setInterval(() => {
-        cloud.repulsionForce += incr;
-        if (cloud.repulsionForce >= reachForce) {
+        mcloud.repulsionForce += incr;
+        if (mcloud.repulsionForce >= reachForce) {
             clearInterval(repulsionId);
-            cloud.repulsionForce = reachForce;
-            cloud.alteringForce = false;
-            cloud.adjustForces();
+            mcloud.repulsionForce = reachForce;
+            mcloud.alteringForce = false;
+            mcloud.adjustForces();
         }
-    }, mengine.timing.lastDelta);
+    }, matterInstance.engine.timing.lastDelta);
 
     document.querySelector('#matter-container').style.zIndex = -1;
 
     document.body.style.backgroundColor = 'transparent';
-    document.body.style.overflow = "auto";
-    document.documentElement.style.overflow = "auto";
+    
+    document.body.style.overflowX = "hidden";
+    document.body.style.overflowY = "auto";
+
+    document.documentElement.style.overflowX = "hidden";
+    document.documentElement.style.overflowY = "auto";
+
+    document.querySelector('.cursor').classList.remove('hidden');
 
     document.querySelectorAll('.title-line-wrapper .no-select')[0].classList.remove('hidden');
 
@@ -114,18 +123,18 @@ function AfterCirclesCollision() {
 }
 
 function DomainExpansion() {
-    var cur = 1, prev = 1, incre = expansionSpeed * containerDiagonal;
+    var cur = 1, prev = 1, incre = expansionSpeed * mcloud.diagonal;
     const expansionId = setInterval(() => {
         prev = cur;
         cur += incre;
         
-        if (cur > containerDiagonal) {
+        if (cur > mcloud.diagonal) {
             clearInterval(expansionId);
-            cur = containerDiagonal;
+            cur = mcloud.diagonal;
 
-            Composite.add(mengine.world, mouseConstraint);
-            container.style.backgroundColor = black;
-            Composite.remove(mengine.world, expansionBody);
+            Composite.add(matterInstance.engine.world, matterInstance.mouseConstraint);
+            mcloud.container.style.backgroundColor = black;
+            Composite.remove(matterInstance.engine.world, expansionBody);
 
         } else Body.scale(expansionBody, cur/prev, cur/prev);
     }, 1);

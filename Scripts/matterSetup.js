@@ -1,15 +1,7 @@
-let Engine, Render, Runner, Bodies, Events, Common, Composite, Body, MouseConstraint, Mouse, Vector;
-let mengine, render, runner, mouse, mouseConstraint, mousePosition;
-let container, containerDiagonal, containerRect;
+let Engine, Render, Runner, Bodies, Events, Common, Composite, Body, MouseConstraint, Mouse, Vector, Foundry;
+let mousePosition, matterInstance, realityInstance;
 
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-container = document.getElementById('matter-container');
-containerRect = container.getBoundingClientRect();
-containerDiagonal = Math.sqrt(
-    container.clientWidth * container.clientWidth +
-    container.clientHeight * container.clientHeight
-);
-    
 Engine = Matter.Engine;
 Render = Matter.Render;
 Runner = Matter.Runner;
@@ -25,51 +17,18 @@ Vector = Matter.Vector;
 Matter.use(require('matter-wrap'));
 Common.setDecomp(require('poly-decomp'));
 
-mengine = Engine.create({
-    gravity: {x : 0, y : 0}
-});
-
-render = Render.create({
-    element: container,
-    engine: mengine,
-    options: {
-        width: container.clientWidth,
-        height: container.clientHeight,
-        background: "transparent",
-        wireframes: false,
-        showAngleIndicator: false,
-        showDebug: false,
-    }
-});
-
-runner = Runner.create();
-mouse = Mouse.create(render.canvas);
+Foundry = new GlyphDictionary();
 
 mousePosition = Vector.create(0, 0);
-
 window.onmousemove = function(e) {
     mousePosition = Vector.create(e.clientX, e.clientY);
 }
 
-mouseConstraint = MouseConstraint.create(mengine, {
-    mouse: mouse,
-    constraint: {
-        stiffness: 0.1,
-        damping: 0.1,
-        render: {
-            visible: false
-        }
-    },
-    /*
-    collisionFilter: {
-        category: charCategory,
-        mask: charCategory | photoCategory,
-    }
-    */
-});
+matterInstance = new MatterInstance(document.getElementById('matter-container'));
+matterInstance.run();
 
-Render.run(render);
-Runner.run(runner, mengine);
+realityInstance = new MatterInstance(document.getElementById('reality-container'));
+realityInstance.run();
 
 },{"matter-wrap":3,"poly-decomp":4}],2:[function(require,module,exports){
 (function (global){(function (){

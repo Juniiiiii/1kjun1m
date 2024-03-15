@@ -13,14 +13,15 @@ body, html {
     overflow: hidden;
     background-color: var(--white);
     scrollbar-width: 0;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     cursor: none;
 }
 
 ::webkit-scrollbar {
     width: 0;
 }
+
 
 .hidden {
     display: none;
@@ -60,9 +61,8 @@ body, html {
 #arrow-down img {
     width: 70%;
     height: 70%;
-    animation: bounce 1.5s infinite alternate;
+    animation: bounce 1s infinite alternate;
 }
-
 
 @keyframes bounce {
     0% {

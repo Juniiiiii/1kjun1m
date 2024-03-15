@@ -1,27 +1,50 @@
 const cursor = document.querySelector('.cursor');
 const titlePage = document.querySelector('.title-page-wrapper');
-let pointingDown = false;
+const realityPage = document.querySelector('.reality-page-wrapper');
+let titlePageIsShowing, matterInstanceRect = matterInstance.container.getBoundingClientRect();
+let realityPageIsShowing, realityInstanceRect = realityInstance.container.getBoundingClientRect();
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await Foundry.load();
+
     //Start the loading sequence
     SpawnExpansionBody();
     SpawnCircles();
-    
+
+    Body.setVelocity(firstCircle, Vector.create(circleCollisionCorrection * firstCircle.frictionAir * matterInstance.container.clientWidth/2, 0));
+    Body.setVelocity(secondCircle, Vector.create(-circleCollisionCorrection * secondCircle.frictionAir * matterInstance.container.clientWidth/2, 0));    
+
     window.addEventListener("resize", () => OnResize());
     
     window.addEventListener("scroll", () => {
-        cloud.dance();
-        containerRect = container.getBoundingClientRect();
-    });
-    
-    Events.on(mengine, 'beforeUpdate', (event) => {
-        if (cloud.isForcing) {
-            if (isHovering(mousePosition, container)) {
-                cloud.applyForce(Vector.create(mousePosition.x - containerRect.left, 
-                                                mousePosition.y - containerRect.top));
-            } else cloud.applyForce();
+        if (titlePageIsShowing) {
+            mcloud.dance();
+            matterInstanceRect = matterInstance.container.getBoundingClientRect();
+        }
+        if (realityPageIsShowing) {
+            rcloud.dance();
+            realityInstanceRect = realityInstance.container.getBoundingClientRect();
         }
     });
+    
+    
+    Events.on(matterInstance.engine, 'beforeUpdate', (event) => {
+        if (titlePageIsShowing && mcloud.isForcing) {
+            if (isHovering(mousePosition, mcloud.container)) {
+                mcloud.applyForce(Vector.create(mousePosition.x - matterInstanceRect.left, 
+                                                mousePosition.y - matterInstanceRect.top));
+            } else mcloud.applyForce();
+        }
+    });
+
+    Events.on(realityInstance.engine, 'beforeUpdate', (event) => {
+        if (realityPageIsShowing && rcloud.isForcing) {
+            if (isHovering(mousePosition, rcloud.container)) {
+                rcloud.applyForce(Vector.create(mousePosition.x - realityInstanceRect.left, 
+                                                mousePosition.y - realityInstanceRect.top));
+            } else rcloud.applyForce();
+        }
+    })
 
     window.addEventListener('mousemove', (e) => {
         moveCursor();
@@ -34,37 +57,38 @@ document.addEventListener("DOMContentLoaded", () => {
     titlePage.onmouseleave = () => {
         cursor.querySelector('#arrow-down').classList.remove('show');
     };
+
+    var titlePageObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            titlePageIsShowing = entry.isIntersecting;
+        });
+    });
+
+    titlePageObserver.observe(titlePage);
+
+    var realityPageObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            realityPageIsShowing = entry.isIntersecting;
+        });
+    });
+
+    realityPageObserver.observe(realityPage);
 });
 
 function OnResize() {
-    render.canvas.width = container.clientWidth;
-    render.canvas.height = container.clientHeight;
-    containerDiagonal = Math.sqrt(container.clientWidth * container.clientWidth + container.clientHeight * container.clientHeight);
-    containerRect = container.getBoundingClientRect();
+    matterInstance.resize();
+    realityInstance.resize();
 
-    if (!circleCollided) {
-        Body.setVelocity(firstCircle, Vector.create(circleCollisionCorrection * firstCircle.frictionAir * container.clientWidth/2, 0));
-        Body.setVelocity(secondCircle, Vector.create(-circleCollisionCorrection * secondCircle.frictionAir * container.clientWidth/2, 0));
-    }
+    mcloud.updateDiagonal();
+    mcloud.adjustForces();
+    mcloud.repositionWalls();
 
-    cloud.adjustForces();
-    cloud.repositionWalls();
+    rcloud.updateDiagonal();
+    rcloud.adjustForces();
+    rcloud.repositionWalls();
 }
 
 function moveCursor() {
     cursor.style.left = mousePosition.x + 'px';
     cursor.style.top =  mousePosition.y + 'px';
 }
-
-function changeCursorIcon() {
-    if (isHovering(mousePosition, container)) {
-        if (!pointingDown) {
-            cursor.querySelector('.cursor-down-arrow').classList.remove('hidden');
-            pointingDown = true;
-        }
-    } else {
-        cursor.querySelector('.cursor-down-arrow').classList.add('hidden');
-        pointingDown = false;
-    }
-}
-

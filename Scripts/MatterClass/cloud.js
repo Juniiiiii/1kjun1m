@@ -1,5 +1,10 @@
 class Cloud {
-    constructor() {
+    constructor(matterInstance) {
+        this.engine = matterInstance.engine;
+        this.container = matterInstance.container;
+        this.diagonal = Math.sqrt(this.container.clientWidth * this.container.clientWidth + 
+                                this.container.clientHeight * this.container.clientHeight);
+
         this.particles = [];
         this.walls = [];
 
@@ -7,10 +12,10 @@ class Cloud {
         this.alteringForce = false;
 
         //Assign this
-        this.danceForce = particleDanceForce * containerDiagonal;
-        this.repulsionRange = particleForceRange * containerDiagonal;
+        this.danceForce = particleDanceForce * this.diagonal;
+        this.repulsionRange = particleForceRange * this.diagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
-        this.repulsionForce = particleInitialForce * containerDiagonal;
+        this.repulsionForce = particleInitialForce * this.diagonal;
 
         this.netForce = Vector.create(0, 0);
     }
@@ -34,20 +39,29 @@ class Cloud {
             options.label = "Particle" + i;
             switch(randomInt(1, 4)) {
                 case 1:
-                    this.particles.push(Bodies.circle(0, 0, particleSize * containerDiagonal, JSON.parse(JSON.stringify(options))));
+                    this.particles.push(Bodies.circle(0, 0, particleSize * this.diagonal, JSON.parse(JSON.stringify(options))));
                     break;
                 case 2:
-                    this.particles.push(Bodies.polygon(0, 0, 3, particleSize * containerDiagonal * Math.sqrt(3), JSON.parse(JSON.stringify(options))));
+                    this.particles.push(Bodies.polygon(0, 0, 3, particleSize * this.diagonal * Math.sqrt(3), JSON.parse(JSON.stringify(options))));
                     break;
                 case 3:
-                    this.particles.push(Bodies.rectangle(0, 0, particleSize * containerDiagonal * Math.SQRT2, particleSize * containerDiagonal * Math.SQRT2, JSON.parse(JSON.stringify(options))));
+                    this.particles.push(Bodies.rectangle(0, 0, particleSize * this.diagonal * Math.SQRT2, particleSize * this.diagonal * Math.SQRT2, JSON.parse(JSON.stringify(options))));
                     break;
                 case 4:
-                    this.particles.push(Bodies.polygon(0, 0, 5, particleSize * containerDiagonal * 2 * Math.sin(Math.PI / 5), JSON.parse(JSON.stringify(options))));
+                    this.particles.push(Bodies.polygon(0, 0, 5, particleSize * this.diagonal * 2 * Math.sin(Math.PI / 5), JSON.parse(JSON.stringify(options))));
                     break;
             }
         }
-        Composite.add(mengine.world, this.particles);
+        Composite.add(this.engine.world, this.particles);
+    }
+
+    removeParticlesOutside() {
+        this.particles.forEach(particle => {
+            if (particle.position.x < 0 || particle.position.x > this.container.clientWidth || 
+                particle.position.y < 0 || particle.position.y > this.container.clientHeight) {
+                Composite.remove(this.engine.world, particle);
+            }
+        });
     }
 
     setPositionOffset(x, y) {
@@ -104,48 +118,54 @@ class Cloud {
         };
 
         options.label = "topWall";
-        this.walls.push(Bodies.rectangle(container.clientWidth/2, -wallThickness/2, wallLength, wallThickness, JSON.parse(JSON.stringify(options))));
+        this.walls.push(Bodies.rectangle(this.container.clientWidth/2, -wallThickness/2, wallLength, wallThickness, JSON.parse(JSON.stringify(options))));
         
         options.label = "rightWall";
-        this.walls.push(Bodies.rectangle(container.clientWidth + wallThickness/2, container.clientHeight/2, wallThickness, wallLength, JSON.parse(JSON.stringify(options))));
+        this.walls.push(Bodies.rectangle(this.container.clientWidth + wallThickness/2, this.container.clientHeight/2, wallThickness, wallLength, JSON.parse(JSON.stringify(options))));
 
         options.label = "bottomWall";
-        this.walls.push(Bodies.rectangle(container.clientWidth/2, container.clientHeight + wallThickness/2, wallLength, wallThickness, JSON.parse(JSON.stringify(options))));
+        this.walls.push(Bodies.rectangle(this.container.clientWidth/2, this.container.clientHeight + wallThickness/2, wallLength, wallThickness, JSON.parse(JSON.stringify(options))));
 
         options.label = "leftWall";
-        this.walls.push(Bodies.rectangle(-wallThickness/2, container.clientHeight/2, wallThickness, wallLength, JSON.parse(JSON.stringify(options))));
+        this.walls.push(Bodies.rectangle(-wallThickness/2, this.container.clientHeight/2, wallThickness, wallLength, JSON.parse(JSON.stringify(options))));
 
-        Composite.add(mengine.world, this.walls);
+        Composite.add(this.engine.world, this.walls);
     }
 
     repositionWalls() {
         Body.setPosition(this.walls[0], {
-            x: container.clientWidth/2, 
+            x: this.container.clientWidth/2, 
             y: -wallThickness/2,
         });
     
         Body.setPosition(this.walls[1], {
-            x: container.clientWidth + wallThickness/2,
-            y: container.clientHeight/2,
+            x: this.container.clientWidth + wallThickness/2,
+            y: this.container.clientHeight/2,
         });
     
         Body.setPosition(this.walls[2], {
-            x: container.clientWidth/2,
-            y: container.clientHeight + wallThickness/2,
+            x: this.container.clientWidth/2,
+            y: this.container.clientHeight + wallThickness/2,
         });
     
         Body.setPosition(this.walls[3], {
             x: -wallThickness/2,
-            y: container.clientHeight/2,
+            y: this.container.clientHeight/2,
         })
     }
 
     adjustForces() {
         if (this.alteringForce) return;
-        this.repulsionRange = particleForceRange * containerDiagonal;
+        this.repulsionRange = particleForceRange * this.diagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
-        this.danceForce = particleDanceForce * containerDiagonal;
+        this.danceForce = particleDanceForce * this.diagonal;
+    }
+
+    updateDiagonal() {
+        this.diagonal = Math.sqrt(this.container.clientWidth * this.container.clientWidth + this.container.clientHeight * this.container.clientHeight);
     }
 }
-const cloud = new Cloud();
-cloud.spawnWalls();
+const mcloud = new Cloud(matterInstance);
+mcloud.spawnWalls();
+const rcloud = new Cloud(realityInstance);
+rcloud.spawnWalls();

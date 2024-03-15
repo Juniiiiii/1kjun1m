@@ -1,4 +1,4 @@
-let titleLines, titleWrapper, prevLine, newLine, maxLineScroll = (5/12),
+let titleLines, titleWrapper, prevLine, newLine, maxLineScroll = (5/12), titlePageIsIntersecting = false,
 titleLineRadius = 1, titleLineShowing = new Set([]), titleLineHide = {};
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -17,8 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
     titleLineShowing.add(0);
 
     window.addEventListener('scroll', function() {
-        showTitleLines(window.scrollY);
+        if (titlePageIsIntersecting) {
+            showTitleLines(window.scrollY);
+        }
     });
+
+    let observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            titlePageIsIntersecting = entry.isIntersecting;
+        });
+    });
+    observer.observe(titleWrapper);
 });
 
 function hideTitleLines(except) {
