@@ -83,15 +83,6 @@
     padding: 0;
 }
 
-.no-select {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none;
-}
-
 .signature-wrapper {
     grid-area: 3 / 3 / 9 / 9;
     display: flex;

@@ -1,0 +1,83 @@
+.idea-page-wrapper {
+    position: block;
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.idea-input-wrapper {
+    background-color: transparent;
+    height: 50%;
+    width: 95%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    margin-top: 5%;
+}
+
+.idea-input-span {
+    grid-area: 1 / 1 / -1 / -1;
+}
+
+.idea-input {
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.idea-input.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.idea-input input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--black);
+    caret-color: var(--black);
+    color: var(--black);
+    font-family: 'Prata', serif;
+    font-size: 2vw;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    cursor: none;
+}
+
+.idea-input input:focus {
+    outline: none;
+}
+
+.idea-input button {
+    padding: 0;
+    width: 3vw;
+    border: none;
+    background-color: transparent;
+    cursor: none;
+}
+
+.idea-materialize-wrapper {
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.idea-materialize {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: var(--black);
+    font-family: 'Prata', serif;
+    font-size: 2vw;
+}

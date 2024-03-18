@@ -132,7 +132,6 @@ function DomainExpansion() {
             clearInterval(expansionId);
             cur = mcloud.diagonal;
 
-            Composite.add(matterInstance.engine.world, matterInstance.mouseConstraint);
             mcloud.container.style.backgroundColor = black;
             Composite.remove(matterInstance.engine.world, expansionBody);
 

@@ -4,6 +4,14 @@ const realityPage = document.querySelector('.reality-page-wrapper');
 let titlePageIsShowing, matterInstanceRect = matterInstance.container.getBoundingClientRect();
 let realityPageIsShowing, realityInstanceRect = realityInstance.container.getBoundingClientRect();
 
+window.addEventListener('beforeunload', function() {
+    window.scrollTo(0, 0);
+});
+
+window.addEventListener('mousemove', (e) => {
+    moveCursor();
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
     await Foundry.load();
 
@@ -38,17 +46,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     Events.on(realityInstance.engine, 'beforeUpdate', (event) => {
-        if (realityPageIsShowing && rcloud.isForcing) {
-            if (isHovering(mousePosition, rcloud.container)) {
-                rcloud.applyForce(Vector.create(mousePosition.x - realityInstanceRect.left, 
-                                                mousePosition.y - realityInstanceRect.top));
-            } else rcloud.applyForce();
+        if (realityPageIsShowing) {
+            rprinter.updateWrap();
+            if (rcloud.isForcing) {
+                if (isHovering(mousePosition, rcloud.container)) {
+                    rcloud.applyForce(Vector.create(mousePosition.x - realityInstanceRect.left, 
+                                                    mousePosition.y - realityInstanceRect.top));
+                } else rcloud.applyForce();
+            }
         }
     })
-
-    window.addEventListener('mousemove', (e) => {
-        moveCursor();
-    });
 
     titlePage.onmouseover = () => {
         cursor.querySelector('#arrow-down').classList.add('show');
@@ -56,6 +63,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     titlePage.onmouseleave = () => {
         cursor.querySelector('#arrow-down').classList.remove('show');
+    };
+
+    realityPage.onmouseover = () => {
+        cursor.style.backgroundColor = 'transparent';
+        cursor.style.mixBlendMode = 'normal';
+        cursor.querySelector('#pointer').classList.add('show');
+    };
+
+    realityPage.onmouseleave = () => {
+        cursor.style.backgroundColor = 'white';
+        cursor.style.mixBlendMode = 'difference';
+        cursor.querySelector('#pointer').classList.remove('show');
     };
 
     var titlePageObserver = new IntersectionObserver(entries => {

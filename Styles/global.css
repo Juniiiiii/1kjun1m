@@ -5,6 +5,9 @@
     --yellow: #ffcb77;
     --white: #fef9ef;
     --red: #fe6d73;
+    --spec-cols: 34;
+    --spec-rows: 11;
+    --spec-length: 3vw;
 }
 
 body, html {
@@ -22,16 +25,17 @@ body, html {
     width: 0;
 }
 
-
 .hidden {
     display: none;
 }
 
-.cursor {
-    width: 5em;
-    height: 5em;
-    background-color: var(--white);
-    mix-blend-mode: difference;
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .cursor {
@@ -42,9 +46,20 @@ body, html {
     pointer-events: none;
     z-index: 1000;
     border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease, background-color 0.5s ease;
+    width: 5em;
+    height: 5em;
+    background-color: var(--white);
+    mix-blend-mode: difference;
+}
+
+.cursor.show {
+    opacity: 1;
 }
 
 .cursor-icon {
+    position: fixed;
     opacity: 0;
     transition: opacity 1s ease;
     display: flex;
@@ -62,6 +77,11 @@ body, html {
     width: 70%;
     height: 70%;
     animation: bounce 1s infinite alternate;
+}
+
+#pointer img {
+    width: 70%;
+    height: 70%   
 }
 
 @keyframes bounce {

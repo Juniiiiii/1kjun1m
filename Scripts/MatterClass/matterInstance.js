@@ -30,7 +30,14 @@ class MatterInstance {
                     visible: false
                 }
             },
+            collisionFilter: {
+                category: charCategory,
+                mask: charCategory,
+            },
         });
+
+        this.mouseConstraint.mouse.element.removeEventListener("mousewheel", this.mouseConstraint.mouse.mousewheel);
+        this.mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", this.mouseConstraint.mouse.mousewheel);
     }
 
     run() {

@@ -11,67 +11,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap" rel="stylesheet">    
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vidaloka&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alike&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amethysta&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
-
-
-
-
-
-
-
-
-
-
-<title>1kjun 1m</title>
-
+    <title>1kjun 1m</title>
+    
     <link rel="stylesheet" href="./Styles/global.css">
     <link rel="stylesheet" href="./Styles/loading.css">
     <link rel="stylesheet" href="./Styles/titlePage.css">
     <link rel="stylesheet" href="./Styles/aboutMe.css">
     <link rel="stylesheet" href="./Styles/reality.css">
+    <link rel="stylesheet" href="./Styles/idea.css">
+    <link rel="stylesheet" href="./Styles/spec.css">
 </head>
 <body>
-    <div class="cursor hidden">
+    <div class="cursor show">
         <div id="arrow-down" class="cursor-icon">
             <img src="./Media/downArrow.svg" alt="downArrow">
+        </div>
+        <div id="pointer" class="cursor-icon">
+            <img src="./Media/pointer.svg" alt="pointer">
         </div>
     </div>
     
@@ -125,7 +85,7 @@
                 <img src="./Media/signature.png" alt="signature" id="signature">
             </div>
             <!--Deleted after loading animation-->
-            <div class="loading">
+            <div class="loading no-select">
                 <div class="loading-text">1<span>kjun</span>1<span>m</span></div>
             </div>
         </div>
@@ -133,10 +93,10 @@
     <div class="title-about-padding"></div>
     <div class="about-me">
         <div class="about-title-text-wrapper">
-            <div class="about-title-text" id="about-title-text-first" about-title-move="zero">
+            <div class="about-title-text no-select" id="about-title-text-first" about-title-move="zero">
                 is where ideas
             </div>
-            <div class="about-title-text" id="about-title-text-second" about-title-move="first">
+            <div class="about-title-text no-select" id="about-title-text-second" about-title-move="first">
                 meet
             </div>
         </div>
@@ -148,9 +108,86 @@
             </div>
         </div>
         <div class="reality-page">
+            <div id="reality-text-wrapper" class="reality-page-span">
+                <div class="reality-text">
+                    <div>
+                        A developer first, designer at heart, he lets curiosity and creativity guide him through his work and life.
+                    </div>
+                    <div>
+                        The two create a powerful combination, transforming many of his hobbies into a reality.
+                    </div>
+                    <div>
+                        A love for mathematics lead him to become a math teacher, currently teaching students preparing for University.
+                    </div>
+                    <div>
+                        A love for video games lead him to become an indie game developer, using Unity and C# (soon to be released™).
+                    </div>
+                    <div>
+                        A love for programming lead him to become a ... well, only time will tell what lies ahead.
+                    </div>
+                </div>
+            </div>
             <div id="reality-container" class="reality-page-span"></div>
         </div>
     </div>
+    <div class="idea-page-wrapper">
+        <div class="idea-input-wrapper">
+            <div class="idea-input idea-input-span">
+                <input type="text" placeholder="turn your ideas into a reality">
+                <button>
+                    <img src="./Media/upArrow.svg" alt="send it">
+                </button>
+            </div>
+            <div class="idea-materialize-wrapper idea-input-span">
+                <div class="idea-materialize"></div>
+            </div>
+        </div>
+    </div>
+    <div class="spec-page-wrapper">
+        <div class="spec-tsunami spec-page-span">
+            <div class="spec-grid-wrapper">
+                <div class="spec-grid">
+                    <script type="text/javascript">
+                        const grid = document.querySelector('.spec-grid');
+                        for (var i = 0; i < getComputedStyle(document.documentElement).getPropertyValue('--spec-cols') *
+                        getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
+                            var span = document.createElement('span');
+                            span.setAttribute("index", i);
+                            span.appendChild(document.createElement('div'));
+                            grid.appendChild(span);
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="spec-wave">
+                <img src="./Media/wave.svg" alt="wave">
+            </div>
+        </div>
+            <div class="spec-page spec-triple-grid spec-page-span">
+                <div class="header first-header-row first-col">Languages</div>
+                <span class="text second-text-row first-col">• C#/Java (5/5)</span>
+                <span class="text third-text-row first-col">• HTML/CSS (4/5)</span>
+                <span class="text fourth-text-row first-col">• JavaScript (3/5)</span>
+                <span class="text fifth-text-row first-col">• Python (4/5)</span>
+                
+                <div class="header first-header-row second-col">Strengths</div>
+                <span class="text second-text-row second-col">× Object-Oriented Programming</span>
+                <span class="text third-text-row second-col">× Data structures and Algorithms</span>
+                <span class="text fourth-text-row second-col">× Fast and independent learner</span>
+                <span class="text fifth-text-row second-col">× Teamwork and communication</span>
+
+                <div class="header first-header-row third-col">Hobbies</div>
+                <span class="text second-text-row third-col">¤ Indie game development</span>
+                <span class="text third-text-row third-col">¤ Mathematics</span>
+                <span class="text fourth-text-row third-col">¤ Marathon running</span>
+                <span class="text fifth-text-row third-col">¤ Design</span>
+            </div>
+    </div>
+
+
+
+
+
 
     <!--Set up-->
     <script src="./Scripts/Utility/utility.js"></script>
@@ -170,6 +207,9 @@
     <script src="./Scripts/MatterClass/printer.js"></script>
     <script src="./Scripts/titlePage.js"></script>
     <script src="./Scripts/aboutMe.js"></script>
+    <script src="./Scripts/reality.js"></script>
+    <script src="./Scripts/idea.js"></script>
+    <script src="./Scripts/spec.js"></script>
 
     <script src="./Scripts/main.js"></script>
 </body>

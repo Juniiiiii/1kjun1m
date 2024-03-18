@@ -3,7 +3,8 @@
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
-    height: 100vh;
+    width: 100%;
+    height: 80vh;
     background-color: transparent;
     margin: 0;
     padding: 0;
@@ -43,5 +44,32 @@
 
 #reality-container {
     z-index: 0;
-    pointer-events: none;
 }
+
+#reality-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reality-text {
+    font-family: 'Prata', serif;
+    color: var(--white);
+    font-size: 1.6vw;
+}
+
+.reality-text div {
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+}
+
+.reality-text .letter {
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
+}
+
+.reality-text .letter.show {
+    opacity: 1;
+}
+

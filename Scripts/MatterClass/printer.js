@@ -106,5 +106,17 @@ class Printer {
         });
     }
 
+    length(text, size, relSize = false) {
+        if (relSize) size *= this.container.clientWidth;
+        var gap = inBetween * size;
+        var length = 0;
+
+        for (var i = 0; i < text.length; i++) {
+            if (text[i] == " ") { length += size; continue; }
+            length += relativeWidth[text[i]] * size + gap;
+        }
+
+        return length;
+    }
 }
 const rprinter = new Printer(realityInstance);

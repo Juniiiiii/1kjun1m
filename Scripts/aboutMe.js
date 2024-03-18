@@ -1,7 +1,7 @@
 let aboutTexts, aboutLetters = [], aboutLetterCount = 0, prevLetter = 0, newLetter = 0, 
 aboutLetterStart = true, aboutLetterEnd = false, aboutLetterShow = [], aboutLetterHide = [];
 let aboutTitleMovements = {}, aboutTitleObserver;
-let realityText, realityTextWrapper;
+let realityLine, realityLineWrapper;
 
 document.addEventListener('DOMContentLoaded', function() {
     aboutTexts = document.querySelectorAll('.about-me .about-text');
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let newText = "";
         textContent.forEach(letter => {
-            newText += (letter.trim() === "") ? "<span class='about-me-letter'>&nbsp;</span>" : "<span class='about-me-letter'>" + letter + "</span>";
+            newText += (letter.trim() === "") ? "<span class='about-me-letter no-select'>&nbsp;</span>" : "<span class='about-me-letter'>" + letter + "</span>";
             aboutLetterCount++;
         });
 
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     var aboutTitleTexts = document.querySelectorAll('.about-title-text-wrapper .about-title-text');
-    realityTextWrapper = document.querySelector('.reality-line-wrapper');
-    realityText = document.querySelector('.reality-line-wrapper .no-select');
+    realityLineWrapper = document.querySelector('.reality-line-wrapper');
+    realityLine = document.querySelector('.reality-line-wrapper .no-select');
 
     aboutTitleMovements[aboutTitleTexts[0].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[0], 10, 1000);
     aboutTitleMovements[aboutTitleTexts[1].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[1], 21, 1250);
-    aboutTitleMovements[realityText.getAttribute('about-title-move')] = new AboutTitleMovement(realityText, 20, 1500, true);
+    aboutTitleMovements[realityLine.getAttribute('about-title-move')] = new AboutTitleMovement(realityLine, 20, 1500, true);
 
     aboutTitleObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     aboutTitleTexts.forEach(aboutTitleText => {
         aboutTitleObserver.observe(aboutTitleText);
     });
-    aboutTitleObserver.observe(realityText);
+    aboutTitleObserver.observe(realityLine);
 });
 
 function aboutLettersShowUpTo(index) {
@@ -117,7 +117,7 @@ class AboutTitleMovement {
             this.animation = anime({
                 targets: this.element,
                 translateX: this.maxMovement + 'vw',
-                duration: this.duration,
+                duration: this.duration/2,
                 complete: () => {
                     delete aboutTitleMovements[this.element.getAttribute('about-title-move')];
                     aboutTitleObserver.unobserve(this.element);
@@ -142,7 +142,7 @@ class AboutTitleMovement {
         anime.timeline().add({
             targets: this.element,
             translateY: -document.querySelector('.about-title-text-wrapper').offsetHeight * 1 + 'px',
-            duration: this.duration,
+            duration: this.duration/2,
             easing: 'easeOutExpo',
             complete: () => {
                 this.element.style.mixBlendMode = 'normal';
@@ -156,10 +156,11 @@ class AboutTitleMovement {
             easing: 'easeOutExpo',
             begin: () => {
                 const checkIntersectionId = setInterval(() => {
-                    if (isIntersecting(this.element, realityTextWrapper)) {
+                    if (isIntersecting(this.element, realityLineWrapper)) {
                         clearInterval(checkIntersectionId);
                         const rect = this.element.getBoundingClientRect();
-                        aboutToReality(rect.x + rect.width/2, rect.y + rect.height);
+                        this.element.classList.add('hidden');
+                        aboutToReality(rect.x, rect.y + rect.height);
                     }
                 }, 50);
             },
@@ -168,6 +169,8 @@ class AboutTitleMovement {
 }
 
 function aboutToReality(posX, posY) {
+    Composite.add(realityInstance.engine.world, realityInstance.mouseConstraint);
+
     rcloud.spawnParticles();
     rcloud.setPositionOffset(posX, 0);
     setTimeout(() => {
@@ -191,7 +194,7 @@ function aboutToReality(posX, posY) {
 
     rprinter.print({
         text: "reality",
-        size: 0.02,
+        size: 0.01,
         x: posX,
         y: 0,
         relPosition: false,
@@ -199,6 +202,8 @@ function aboutToReality(posX, posY) {
         color: [white],
         category: charCategory,
         mask: charCategory,
+    }).forEach(letter => {
+        Body.setVelocity(letter, Vector.create(0, 0.005 * (realityInstance.container.clientHeight/2)));
     });
 }
 
