@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 
     <title>1kjun 1m</title>
-    
+
     <link rel="stylesheet" href="./Styles/global.css">
     <link rel="stylesheet" href="./Styles/loading.css">
     <link rel="stylesheet" href="./Styles/titlePage.css">
@@ -146,11 +146,14 @@
     <div class="spec-page-wrapper">
         <div class="spec-tsunami spec-page-span">
             <div class="spec-grid-wrapper">
-                <div class="spec-grid">
+                <div class="spec-grid" id="fold-grid">
+                    <div id="fold"></div>
+                </div>
+                <div class="spec-grid" id="square-wave">
                     <script type="text/javascript">
-                        const grid = document.querySelector('.spec-grid');
+                        const grid = document.querySelector('#square-wave');
                         for (var i = 0; i < getComputedStyle(document.documentElement).getPropertyValue('--spec-cols') *
-                        getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
+                                            getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
                             var span = document.createElement('span');
                             span.setAttribute("index", i);
                             span.appendChild(document.createElement('div'));
@@ -158,30 +161,36 @@
                         }
                     </script>
                 </div>
+                <div class="spec-grid spec-page-span">
+                    <img src="./Media/grid.png" alt="backdrop" id="backdrop">
+                </div>
+                <div class="spec-page spec-grid spec-page-span">
+                    <div class="header first-header-row first-col">Languages</div>
+                    <span class="text second-text-row first-col">• C#/Java (5/5)</span>
+                    <span class="text third-text-row first-col">• HTML/CSS (4/5)</span>
+                    <span class="text fourth-text-row first-col">• JavaScript (3/5)</span>
+                    <span class="text fifth-text-row first-col">• Python (4/5)</span>
+                    
+                    <div class="header first-header-row second-col">Strengths</div>
+                    <span class="text second-text-row second-col">× Object-Oriented Programming</span>
+                    <span class="text third-text-row second-col">× Data structures and Algorithms</span>
+                    <span class="text fourth-text-row second-col">× Fast and independent learner</span>
+                    <span class="text fifth-text-row second-col">× Teamwork and communication</span>
+    
+                    <div class="header first-header-row third-col">Hobbies</div>
+                    <span class="text second-text-row third-col">¤ Indie game development</span>
+                    <span class="text third-text-row third-col">¤ Mathematics</span>
+                    <span class="text fourth-text-row third-col">¤ Marathon running</span>
+                    <span class="text fifth-text-row third-col">¤ Design</span>
+                </div>
             </div>
-            <div class="spec-wave">
-                <img src="./Media/wave.svg" alt="wave">
-            </div>
-        </div>
-            <div class="spec-page spec-triple-grid spec-page-span">
-                <div class="header first-header-row first-col">Languages</div>
-                <span class="text second-text-row first-col">• C#/Java (5/5)</span>
-                <span class="text third-text-row first-col">• HTML/CSS (4/5)</span>
-                <span class="text fourth-text-row first-col">• JavaScript (3/5)</span>
-                <span class="text fifth-text-row first-col">• Python (4/5)</span>
-                
-                <div class="header first-header-row second-col">Strengths</div>
-                <span class="text second-text-row second-col">× Object-Oriented Programming</span>
-                <span class="text third-text-row second-col">× Data structures and Algorithms</span>
-                <span class="text fourth-text-row second-col">× Fast and independent learner</span>
-                <span class="text fifth-text-row second-col">× Teamwork and communication</span>
+            <!--
 
-                <div class="header first-header-row third-col">Hobbies</div>
-                <span class="text second-text-row third-col">¤ Indie game development</span>
-                <span class="text third-text-row third-col">¤ Mathematics</span>
-                <span class="text fourth-text-row third-col">¤ Marathon running</span>
-                <span class="text fifth-text-row third-col">¤ Design</span>
-            </div>
+                <div class="spec-wave">
+                    <img src="./Media/wave.svg" alt="wave">
+                </div>
+            -->
+        </div>
     </div>
 
 

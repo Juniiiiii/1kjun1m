@@ -1,24 +1,14 @@
 const realityText = document.querySelector('.reality-text');
 const realityTextWrapper = document.querySelector('#reality-text-wrapper');
-let realityLetters = [];
 let realityTextWithinView = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     realityText.querySelectorAll('div').forEach((div, index) => {
-        spanifyLetter(div).forEach(letter => {
-            realityLetters.push(letter);
+        spanifyWord(div).forEach(word => {
+            realityWordManager.words.push(word);
         });
         div.setAttribute('reality-text-number', index);
     });
-
-    for (var i = 0 ; i < realityLetters.length; i++) {
-        var word = [];
-        while (i < realityLetters.length && realityLetters[i].textContent.trim() !== "") {
-            word.push(realityLetters[i]);
-            i++;
-        }
-        realityWordManager.words.push(new RealityWord(word));
-    }
 
     window.addEventListener('scroll', function() {
         if (realityTextWithinView) realityWordManager.setOpacities(window.scrollY + window.innerHeight);
@@ -57,11 +47,11 @@ class RealityWordManager {
         this.animationId = setInterval(() => {
             if (this.current != this.target) {
                 if (this.current < this.target) {
-                    this.words[this.current].show();
+                    this.words[this.current].classList.add('show');
                     this.current = Math.min(this.current + 1, this.words.length - 1);
                 }
                 else {
-                    this.words[this.current].hide();
+                    this.words[this.current].classList.remove('show');
                     this.current = Math.max(this.current - 1, 0);
                 }
             }
@@ -73,11 +63,11 @@ class RealityWordManager {
         this.animationId = setInterval(() => {
             if (this.current != this.target) {
                 if (this.current < this.target) {
-                    this.words[this.current].show();
+                    this.words[this.current].classList.add('show');
                     this.current = Math.min(this.current + 1, this.words.length - 1);
                 }
                 else {
-                    this.words[this.current].hide();
+                    this.words[this.current].classList.remove('show');
                     this.current = Math.max(this.current - 1, 0);
                 }
             } else {
@@ -89,24 +79,6 @@ class RealityWordManager {
 }
 let realityWordManager = new RealityWordManager(realityText.getBoundingClientRect().top * 1.05 + window.scrollY, 
                                                 realityTextWrapper.getBoundingClientRect().bottom + window.scrollY);
-
-class RealityWord {
-    constructor(letters) {
-        this.letters = letters;
-    }
-
-    show() {
-        this.letters.forEach(letter => {
-            letter.classList.add('show');
-        });
-    }
-
-    hide() {
-        this.letters.forEach(letter => {
-            letter.classList.remove('show');
-        });
-    }
-}
 
 class RealityOpacityEffect {
     constructor(element, letters) {
