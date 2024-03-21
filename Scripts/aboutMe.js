@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     realityLineWrapper = document.querySelector('.reality-line-wrapper');
     realityLine = document.querySelector('.reality-line-wrapper .no-select');
 
-    aboutTitleMovements[aboutTitleTexts[0].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[0], 10, 1000);
-    aboutTitleMovements[aboutTitleTexts[1].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[1], 21, 1250);
+    //aboutTitleMovements[aboutTitleTexts[0].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[0], 10, 1000);
+    //aboutTitleMovements[aboutTitleTexts[1].getAttribute('about-title-move')] = new AboutTitleMovement(aboutTitleTexts[1], 21, 1250);
     aboutTitleMovements[realityLine.getAttribute('about-title-move')] = new AboutTitleMovement(realityLine, 20, 1500, true);
 
     aboutTitleObserver = new IntersectionObserver(entries => {

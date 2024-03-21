@@ -119,4 +119,4 @@ class Printer {
         return length;
     }
 }
-const rprinter = new Printer(realityInstance);
+const printer = new Printer(matterInstance);

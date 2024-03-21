@@ -19,207 +19,294 @@
 
     <link rel="stylesheet" href="./Styles/global.css">
     <link rel="stylesheet" href="./Styles/loading.css">
-    <link rel="stylesheet" href="./Styles/titlePage.css">
+    <link rel="stylesheet" href="./Styles/landing.css">
+    <link rel="stylesheet" href="./Styles/rotatingText.css">
     <link rel="stylesheet" href="./Styles/aboutMe.css">
     <link rel="stylesheet" href="./Styles/reality.css">
     <link rel="stylesheet" href="./Styles/idea.css">
     <link rel="stylesheet" href="./Styles/spec.css">
 </head>
 <body>
-    <div class="cursor show">
-        <div id="arrow-down" class="cursor-icon">
-            <img src="./Media/downArrow.svg" alt="downArrow">
+    <div class="loading-text no-select">1<span>kjun</span>1<span>m</span></div>
+    <div class="loading-page">
+        <div class="loading-circle" id="loading-circle-one"></div>
+        <div class="loading-circle" id="loading-circle-two"></div>
+        <div class="hidden" id="expansion-circle"></div>
+    </div>
+    <div id="matter-container"></div>
+    <div class="first-page">
+        <div class="landing-page">
+            <div class="landing-title landing-center no-select">
+                1kjun 1m
+            </div>
+            <div class="landing-signature">
+                <img src="./Media/signature.png" alt="signature">
+            </div>
+            <div class="landing-by landing-subtitle no-select">
+                <span>inside the mind of</span>
+                <span>portfolio by</span>
+                <span>Ikjun Im</span>
+            </div>
+            <div class="landing-in landing-subtitle">
+                <div>
+                    <span class="rotating-words" id="made-in-words">
+                        <p>made</p>
+                        <p>born</p>
+                    </span>
+                    <span>in Seoul</span>
+                </div>
+                <div>
+                    <span class="rotating-words" id="designed-in-words">
+                        <p>designed</p>
+                        <p>raised</p>
+                    </span>
+                    <span>in Sydney</span>
+                </div>
+            </div>
         </div>
-        <div id="pointer" class="cursor-icon">
-            <img src="./Media/pointer.svg" alt="pointer">
+        <div class="idea-page no-select">
+            <div class="main-title">
+                <span class="first">inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+                <span>inside the mind of</span>
+            </div>
+            <div class="idea-line"></div>
+            <div class="idea-filter">
+                <div class="sub-title">
+                    <div class="text">is where ideas meet</div>
+                    <div class="reality">
+                        <input type="text" size="16" placeholder="">
+                        <div class="output"></div>
+                        <script type="text/javascript">
+                            const reality = document.querySelector('.sub-title .reality input');
+                            reality.value = 'reality';
+                        </script>
+                    </div>
+                </div>
+                <div class="matter-greyscale"></div>
+            </div>
         </div>
     </div>
-    
-    <div class="title-page-wrapper">
-        <div class="title-line-wrapper">
-            <div class="no-select show hidden">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
-            <div class="no-select">1ns1de the m1nd of</div>
+
+
+
+
+    <!--
+        <div class="cursor show">
+            <div id="arrow-down" class="cursor-icon">
+                <img src="./Media/downArrow.svg" alt="downArrow">
+            </div>
+            <div id="pointer" class="cursor-icon">
+                <img src="./Media/pointer.svg" alt="pointer">
+            </div>
         </div>
-        <div class="title-page">
-            <div id="matter-container" class="title-page-span"></div>
-            <div id="made-in" class="subtitle-text no-select">
-                <div class="rotating-words-wrapper">
-                    <div class="rotating-words-left-align">
-                        <span class="rotating-words" id="made-in-words">
-                            <p>made</p>
-                            <p>born</p>
-                        </span>
+        
+        <div class="title-page-wrapper">
+                <div class="title-line-wrapper">
+                    <div class="no-select show hidden">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                    <div class="no-select">1ns1de the m1nd of</div>
+                </div>
+            <div class="title-page">
+                <div id="matter-container" class="title-page-span"></div>
+                    <div id="made-in" class="subtitle-text no-select">
+                        <div class="rotating-words-wrapper">
+                            <div class="rotating-words-left-align">
+                                <span class="rotating-words" id="made-in-words">
+                                    <p>made</p>
+                                    <p>born</p>
+                                </span>
+                            </div>
+                            <span id="made-in-text">in Seoul</span>
+                        </div>
+                        <div class="rotating-words-wrapper">
+                            <div class="rotating-words-left-align">
+                                <span class="rotating-words" id="designed-in-words">
+                                    <p>designed</p>
+                                    <p>raised</p>
+                                </span>
+                            </div>
+                            <span id="designed-in-text">in Sydney</span>
+                        </div>
                     </div>
-                    <span id="made-in-text">in Seoul</span>
-                </div>
-                <div class="rotating-words-wrapper">
-                    <div class="rotating-words-left-align">
-                        <span class="rotating-words" id="designed-in-words">
-                            <p>designed</p>
-                            <p>raised</p>
-                        </span>
+                    <div id="portfolio" class="subtitle-text">
+                        <span class="no-select">| inside the mind of |</span>
+                        <span class="no-select">portfolio by</span>
+                        <span>ikjunim@gmail.com</span>
                     </div>
-                    <span id="designed-in-text">in Sydney</span>
+                    <div id="main-title">
+                        <div class="main-title-text no-select">
+                            1kjun 1m
+                        </div>
+                    </div>
+                    <div class="signature-wrapper">
+                        <img src="./Media/signature.png" alt="signature" id="signature">
+                    </div>
                 </div>
             </div>
-            <div id="portfolio" class="subtitle-text">
-                <span class="no-select">| inside the mind of |</span>
-                <span class="no-select">portfolio by</span>
-                <span>ikjunim@gmail.com</span>
-            </div>
-            <div id="main-title">
-                <div class="main-title-text no-select">
-                    1kjun 1m
-                </div>
-            </div>
-            <div class="signature-wrapper">
-                <img src="./Media/signature.png" alt="signature" id="signature">
-            </div>
-            <!--Deleted after loading animation-->
             <div class="loading no-select">
                 <div class="loading-text">1<span>kjun</span>1<span>m</span></div>
             </div>
         </div>
-    </div>
-    <div class="title-about-padding"></div>
-    <div class="about-me">
-        <div class="about-title-text-wrapper">
-            <div class="about-title-text no-select" id="about-title-text-first" about-title-move="zero">
-                is where ideas
-            </div>
-            <div class="about-title-text no-select" id="about-title-text-second" about-title-move="first">
-                meet
-            </div>
-        </div>
-    </div>
-    <div class="reality-page-wrapper">
-        <div class="reality-line-wrapper">
-            <div class="no-select">
-                reality
-            </div>
-        </div>
-        <div class="reality-page">
-            <div id="reality-text-wrapper" class="reality-page-span">
-                <div class="reality-text">
-                    <div>
-                        A developer first, designer at heart, he lets curiosity and creativity guide him through his work and life.
+            <div class="title-about-padding"></div>
+            <div class="about-me">
+                <div class="about-title-text-wrapper">
+                    <div class="about-title-text no-select" id="about-title-text-first" about-title-move="zero">
+                        is where ideas
                     </div>
-                    <div>
-                        The two create a powerful combination, transforming many of his hobbies into a reality.
-                    </div>
-                    <div>
-                        A love for mathematics lead him to become a math teacher, currently teaching students preparing for University.
-                    </div>
-                    <div>
-                        A love for video games lead him to become an indie game developer, using Unity and C# (soon to be released™).
-                    </div>
-                    <div>
-                        A love for programming lead him to become a ... well, only time will tell what lies ahead.
+                    <div class="about-title-text no-select" id="about-title-text-second" about-title-move="first">
+                        meet
                     </div>
                 </div>
             </div>
-            <div id="reality-container" class="reality-page-span"></div>
-        </div>
-    </div>
-    <div class="idea-page-wrapper">
-        <div class="idea-input-wrapper">
-            <div class="idea-input idea-input-span">
-                <input type="text" placeholder="turn your ideas into a reality">
-                <button>
-                    <img src="./Media/upArrow.svg" alt="send it">
-                </button>
-            </div>
-            <div class="idea-materialize-wrapper idea-input-span">
-                <div class="idea-materialize"></div>
-            </div>
-        </div>
-    </div>
-    <div class="spec-page-wrapper">
-        <div class="spec-tsunami spec-page-span">
-            <div class="spec-grid-wrapper">
-                <div class="spec-grid" id="fold-grid">
-                    <div id="fold"></div>
-                </div>
-                <div class="spec-grid" id="square-wave">
-                    <script type="text/javascript">
-                        const grid = document.querySelector('#square-wave');
-                        for (var i = 0; i < getComputedStyle(document.documentElement).getPropertyValue('--spec-cols') *
-                                            getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
-                            var span = document.createElement('span');
-                            span.setAttribute("index", i);
-                            span.appendChild(document.createElement('div'));
-                            grid.appendChild(span);
-                        }
-                    </script>
-                </div>
-                <div class="spec-grid spec-page-span">
-                    <img src="./Media/grid.png" alt="backdrop" id="backdrop">
-                </div>
-                <div class="spec-page spec-grid spec-page-span">
-                    <div class="header first-header-row first-col">Languages</div>
-                    <span class="text second-text-row first-col">• C#/Java (5/5)</span>
-                    <span class="text third-text-row first-col">• HTML/CSS (4/5)</span>
-                    <span class="text fourth-text-row first-col">• JavaScript (3/5)</span>
-                    <span class="text fifth-text-row first-col">• Python (4/5)</span>
-                    
-                    <div class="header first-header-row second-col">Strengths</div>
-                    <span class="text second-text-row second-col">× Object-Oriented Programming</span>
-                    <span class="text third-text-row second-col">× Data structures and Algorithms</span>
-                    <span class="text fourth-text-row second-col">× Fast and independent learner</span>
-                    <span class="text fifth-text-row second-col">× Teamwork and communication</span>
     
-                    <div class="header first-header-row third-col">Hobbies</div>
-                    <span class="text second-text-row third-col">¤ Indie game development</span>
-                    <span class="text third-text-row third-col">¤ Mathematics</span>
-                    <span class="text fourth-text-row third-col">¤ Marathon running</span>
-                    <span class="text fifth-text-row third-col">¤ Design</span>
+            <div class="reality-page-wrapper">
+                <div class="reality-line-wrapper">
+                    <div class="no-select">
+                        reality
+                    </div>
+                </div>
+                <div class="reality-page">
+                    <div id="reality-text-wrapper" class="reality-page-span">
+                        <div class="reality-text">
+                            <div>
+                                A developer first, designer at heart, he lets curiosity and creativity guide him through his work and life.
+                            </div>
+                            <div>
+                                The two create a powerful combination, transforming many of his hobbies into a reality.
+                            </div>
+                            <div>
+                                A love for mathematics lead him to become a math teacher, currently teaching students preparing for University.
+                            </div>
+                            <div>
+                                A love for video games lead him to become an indie game developer, using Unity and C# (soon to be released™).
+                            </div>
+                            <div>
+                                A love for programming lead him to become a ... well, only time will tell what lies ahead.
+                            </div>
+                        </div>
+                    </div>
+                        <div id="reality-container" class="reality-page-span"></div>
                 </div>
             </div>
-            <!--
-
-                <div class="spec-wave">
-                    <img src="./Media/wave.svg" alt="wave">
+            <div class="idea-page-wrapper">
+                <div class="idea-input-wrapper">
+                    <div class="idea-input idea-input-span">
+                        <input type="text" placeholder="turn your ideas into a reality">
+                        <button>
+                            <img src="./Media/upArrow.svg" alt="send it">
+                        </button>
+                    </div>
+                    <div class="idea-materialize-wrapper idea-input-span">
+                        <div class="idea-materialize"></div>
+                    </div>
                 </div>
-            -->
-        </div>
-    </div>
+            </div>
+            <div class="spec-page-wrapper">
+                <div class="spec-tsunami spec-page-span">
+                    <div class="spec-grid-wrapper">
+                        <div class="spec-grid" id="fold-grid">
+                            <div id="fold"></div>
+                        </div>
+                        <div class="spec-grid" id="square-wave">
+                            <script type="text/javascript">
+                                const grid = document.querySelector('#square-wave');
+                                for (var i = 0; i < getComputedStyle(document.documentElement).getPropertyValue('--spec-cols') *
+                                                    getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
+                                    var span = document.createElement('span');
+                                    span.setAttribute("index", i);
+                                    span.appendChild(document.createElement('div'));
+                                    grid.appendChild(span);
+                                }
+                            </script>
+                        </div>
+                        <div class="spec-grid spec-page-span">
+                            <img src="./Media/grid.png" alt="backdrop" id="backdrop">
+                        </div>
+                        <div class="spec-page spec-grid spec-page-span">
+                            <div class="header first-header-row first-col">Languages</div>
+                            <span class="text second-text-row first-col">• C#/Java (5/5)</span>
+                            <span class="text third-text-row first-col">• HTML/CSS (4/5)</span>
+                            <span class="text fourth-text-row first-col">• JavaScript (3/5)</span>
+                            <span class="text fifth-text-row first-col">• Python (4/5)</span>
+                            
+                            <div class="header first-header-row second-col">Strengths</div>
+                            <span class="text second-text-row second-col">× Object-Oriented Programming</span>
+                            <span class="text third-text-row second-col">× Data structures and Algorithms</span>
+                            <span class="text fourth-text-row second-col">× Fast and independent learner</span>
+                            <span class="text fifth-text-row second-col">× Teamwork and communication</span>
+            
+                            <div class="header first-header-row third-col">Hobbies</div>
+                            <span class="text second-text-row third-col">¤ Indie game development</span>
+                            <span class="text third-text-row third-col">¤ Mathematics</span>
+                            <span class="text fourth-text-row third-col">¤ Marathon running</span>
+                            <span class="text fifth-text-row third-col">¤ Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    -->
 
 
 
 
 
-
-    <!--Set up-->
     <script src="./Scripts/Utility/utility.js"></script>
+    <script src="/Scripts/observers.js"></script>
 
     <script src="./Scripts/Constants/printerConstants.js"></script>
     <script src="./Scripts/Constants/matterConstants.js"></script>
     <script src="./Scripts/Constants/colorConstants.js"></script>
     <script src="./Scripts/Constants/cloudConstants.js"></script>
     <script src="./Scripts/Constants/loadingConstants.js"></script>
-    
+
     <script src="./Scripts/MatterClass/glyphDictionary.js"></script>
     <script src="./Scripts/MatterClass/matterInstance.js"></script>
     <script src="./Scripts/matterSetup.js"></script>
 
-    <script src="./Scripts/loading.js"></script>
     <script src="./Scripts/MatterClass/cloud.js"></script>
     <script src="./Scripts/MatterClass/printer.js"></script>
-    <script src="./Scripts/titlePage.js"></script>
-    <script src="./Scripts/aboutMe.js"></script>
-    <script src="./Scripts/reality.js"></script>
-    <script src="./Scripts/idea.js"></script>
-    <script src="./Scripts/spec.js"></script>
 
+    <script src="./Scripts/loading.js"></script>
+    <script src="./Scripts/landingPage.js"></script>
+    <script src="./Scripts/idea.js"></script>
+
+    
     <script src="./Scripts/main.js"></script>
+    <!--Set up-->
+    <!--
+        <script src="./Scripts/aboutMe.js"></script>
+        <script src="./Scripts/reality.js"></script>
+        <script src="./Scripts/spec.js"></script>
+    -->
 </body>
 </html>

@@ -1,0 +1,31 @@
+.rotating-words {
+    margin-right: 0.4vw;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.rotating-words p {
+    display: flex;
+    position: absolute;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.rotating-words p .letter {
+    transform-origin: center center 25px;
+}
+
+.rotating-words p .letter.out {
+    transform: rotateX(90deg);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+}
+
+.rotating-words p .letter.in {
+    transition: 0.38s ease;
+}
+
+.rotating-words p .letter.behind {
+    transform: rotateX(-90deg);
+}

@@ -2,7 +2,7 @@ class MatterInstance {
     constructor(element) {
         this.container = element;
         this.engine = Engine.create({
-            gravity: {x : 0, y : 0}
+            gravity: { x: 0, y: 0 }
         });
 
         this.render = Render.create({
@@ -20,7 +20,7 @@ class MatterInstance {
 
         this.runner = Runner.create();
         this.mouse = Mouse.create(this.render.canvas);
-        
+
         this.mouseConstraint = MouseConstraint.create(this.engine, {
             mouse: this.mouse,
             constraint: {
@@ -38,6 +38,8 @@ class MatterInstance {
 
         this.mouseConstraint.mouse.element.removeEventListener("mousewheel", this.mouseConstraint.mouse.mousewheel);
         this.mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", this.mouseConstraint.mouse.mousewheel);
+
+        Composite.add(this.engine.world, this.mouseConstraint);
     }
 
     run() {
@@ -45,8 +47,8 @@ class MatterInstance {
         Runner.run(this.runner, this.engine);
     }
 
-    resize() {
-        this.render.canvas.width = this.container.clientWidth;
-        this.render.canvas.height = this.container.clientHeight;
+    resize(width, height) {
+        this.render.canvas.width = width;
+        this.render.canvas.height = height;
     }
 }

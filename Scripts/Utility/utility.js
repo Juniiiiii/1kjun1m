@@ -140,13 +140,10 @@ function setAbsolute(element) {
 
     element.style.position = 'absolute';
 
-    element.style.left = rect.left + window.scrollX + 'px';
-    element.style.top = rect.top + window.scrollY + 'px';
+    //element.style.left = rect.left + 'px';
+    //element.style.top = rect.top + 'px';
 
-    element.style.width = rect.width + 'px';
-    element.style.height = rect.height + 'px';
-
-    element.style.zIndex = 1000;
+    element.style.zIndex = 100;
 
     return rect;
 }

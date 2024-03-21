@@ -164,8 +164,11 @@ class Cloud {
     updateDiagonal() {
         this.diagonal = Math.sqrt(this.container.clientWidth * this.container.clientWidth + this.container.clientHeight * this.container.clientHeight);
     }
+
+    setPositionTopMiddle() {
+        this.setPositionOffset(this.container.clientWidth/2, this.container.clientHeight * (1/4));
+    
+    }
 }
-const mcloud = new Cloud(matterInstance);
-mcloud.spawnWalls();
-const rcloud = new Cloud(realityInstance);
-rcloud.spawnWalls();
+const cloud = new Cloud(matterInstance);
+cloud.spawnWalls();

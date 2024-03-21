@@ -14,11 +14,12 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: var(--white);
+    background-color: transparent;
     scrollbar-width: 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    cursor: none;
+    pointer-events: none;
+    /* cursor: none; */
 }
 
 ::webkit-scrollbar {
@@ -91,4 +92,27 @@ body, html {
     100% {
         transform: translateY(-5px);
     }
+}
+
+.first-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#matter-container {
+    pointer-events: all;
+    background-color: var(--black);
+    position: absolute;
+    width: 100%;
+    z-index: -10;
+    top: 0;
+    left: 0;
+}
+
+.matter-greyscale {
+    grid-area: 1 / 1 / -1 / -1;
+    background-color: rgba(0, 0, 0, 1);
+    mix-blend-mode: saturation;
+    z-index: -5;
 }
