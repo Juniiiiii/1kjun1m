@@ -1,106 +1,65 @@
-.spec-page-wrapper {
-    position: block;
-    background-color: var(--black);
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    width: 100%;
-    height: calc(var(--spec-rows) * var(--spec-length));
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    z-index: -10;
-}
-
-.spec-tsunami {
-    width: max-content;
-    position: relative;
-    height: max-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: translateY(-100%);
-    background-color: transparent;
-}
-
-.spec-page-span {
-    grid-area: 1 / 1 / -1 / -1;
-}
-
-.spec-wave {
-    width: 100%;
-    height: max-content;
-}
-
-.spec-grid-wrapper {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    background-color: transparent;
-}
-
-.spec-grid-wrapper .spec-grid {
-    grid-area: 1 / 1 / -1 / -1;
-}
-
 .spec-grid {
+    background-color: transparent;
+    grid-area: 1 / 1 / -1 / -1;
     width: 100%;
-    height: 100%;
+    height: max-content;
     display: grid;
     grid-template-columns: repeat(var(--spec-cols), var(--spec-length));
     grid-template-rows: repeat(var(--spec-rows), var(--spec-length));
+    overflow: hidden;
+    z-index: -5;
 }
 
-#square-wave span {
+.spec-grid span {
     width: 100%;
     height: 100%;
     background-color: transparent;
     box-sizing:border-box;
 }
 
-#square-wave span div {
+.spec-grid span div {
     width: 100%;
     height: 100%;
-    background-color: var(--white);
-    border: 1px solid var(--black);
-}
-
-#fold-grid {
-    background-color: transparent;
-    pointer-events: none;
-    z-index: 2;
-}
-
-#fold {
     background-color: var(--black);
-    background-image: -webkit-linear-gradient(315deg, var(--white) 50%, var(--black) 50%);
+    border: 1px solid rgba(254, 249, 239, 0.6);
 }
 
-.spec-page {
-    position: relative;
-    pointer-events: none;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--white);
-    mix-blend-mode: difference;
-    z-index: 2;
+.spec-fold {
+    grid-area: 1 / 1 / 2 / 2;
+    background-color: var(--black);
+    background-image: -webkit-linear-gradient(315deg, var(--black) 50%, var(--white) 50%);
+    z-index: 5;
 }
 
 #square-wave {
+    pointer-events: all;
     z-index: 1;
 }
 
-.spec-page .header {
-    font-size: 2.6vw;
-    margin-top: 0.4vw;
+.spec-backdrop {
+    grid-area: 1 / 1 / -1 / -1;
+    background-color: var(--white);
+    z-index: -1;
+    width: 100%;
 }
 
-.spec-page .text {
+.spec-page {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--white);
+    mix-blend-mode: difference;
+    z-index: 1;
+}
+
+.spec-page span.header {
+    font-size: 2.6vw;
+    margin-top: 2.7%;
+}
+
+.spec-page span {
     font-size: 1.6vw;
     display: flex;
     align-items: end;
-    margin-top: 3.5vw;
+    margin-top: 1.6%;
 }
 
 .spec-grid .first-margin-row {
@@ -151,9 +110,4 @@
 .spec-grid .sixth-text-row {
     grid-row-start: 13;
     grid-row-end: 14;
-}
-
-#backdrop {
-    width: 100%;
-    grid-area: 1 / 1 / -1 / -1;
 }

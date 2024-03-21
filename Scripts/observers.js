@@ -1,12 +1,22 @@
+let firstIntersecting = false;
 let landingIntersecting = false;
 let ideaIntersecting = false;
 let ideaHalfIntersecting = false;
 let aboutIntersecting = false;
 
+const firstIntersection = new Event('firstIntersection');
 const landingIntersection = new Event('landingIntersection');
 const ideaIntersection = new Event('ideaIntersection');
 const ideaHalfIntersection = new Event('ideaHalfIntersection');
 const aboutIntersection = new Event('aboutIntersection');
+
+let firstObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        firstIntersecting = entry.isIntersecting;
+        document.dispatchEvent(firstIntersection);
+    });
+});
+firstObserver.observe(document.querySelector('.first-page'));
 
 let landingObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -34,10 +44,10 @@ let ideaHalfObserver = new IntersectionObserver(entries => {
 });
 ideaHalfObserver.observe(document.querySelector('.idea-page'));
 
-/* let aboutObserver = new IntersectionObserver(entries => {
+let aboutObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         aboutIntersecting = entry.isIntersecting;
         document.dispatchEvent(aboutIntersection);
     });
 });
-aboutObserver.observe(document.querySelector('.about-page')); */
+aboutObserver.observe(document.querySelector('.about-page'));

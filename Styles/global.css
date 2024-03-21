@@ -10,7 +10,8 @@
     --spec-length: 3vw;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -82,19 +83,26 @@ body, html {
 
 #pointer img {
     width: 70%;
-    height: 70%   
+    height: 70%
 }
 
 @keyframes bounce {
     0% {
         transform: translateY(5px);
     }
+
     100% {
         transform: translateY(-5px);
     }
 }
 
 .first-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.second-page {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -115,4 +123,5 @@ body, html {
     background-color: rgba(0, 0, 0, 1);
     mix-blend-mode: saturation;
     z-index: -5;
+    pointer-events: none;
 }

@@ -14,14 +14,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     OnResize();
 
     window.addEventListener("scroll", () => {
-        if (landingIntersecting) {
-            cloud.dance();
-            matterInstanceRect = matterInstance.container.getBoundingClientRect();
-        }
+        if (landingIntersecting) cloud.dance();
+        if (firstIntersecting) matterInstanceRect = matterInstance.container.getBoundingClientRect();
     });
 
     Events.on(matterInstance.engine, 'beforeUpdate', (event) => {
-        if (landingIntersecting && cloud.isForcing) {
+        if (firstIntersecting && cloud.isForcing) {
             if (isHovering(mousePosition, cloud.container)) {
                 cloud.applyForce(Vector.create(mousePosition.x - matterInstanceRect.left, 
                                                 mousePosition.y - matterInstanceRect.top));

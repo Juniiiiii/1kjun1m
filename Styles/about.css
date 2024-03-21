@@ -1,0 +1,53 @@
+.about-page {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.about-filter {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.about-page .body-wrapper {
+    grid-area: 1 / 1 / -1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-page .body {
+    width: 90%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Prata', serif;
+    font-size: 1.5vw;
+    color: var(--white);
+    pointer-events: none;
+}
+
+.about-page .body > div:not(:first-child) {
+    margin-top: 4%;
+}
+
+.about-page .body > div {
+    display: flex;
+    overflow: hidden;
+}
+
+.about-page .body .word {
+    opacity: 0;
+    margin-left: 0.5%;
+}
+
+
+
+

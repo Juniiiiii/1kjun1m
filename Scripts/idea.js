@@ -165,7 +165,6 @@ class IdeaWord {
 
     checkIntersectionOnce() {
         this.rect = this.word.getBoundingClientRect();
-        console.log(this.rect.bottom - this.rect.height/2 < ideaLineRect.top);
         if (this.rect.bottom - this.rect.height/2 < ideaLineRect.top) {
             this.word.style.color = 'transparent';
             printer.print({
