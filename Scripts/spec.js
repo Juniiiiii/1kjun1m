@@ -11,16 +11,16 @@ const maxSquareCount = specRows * specCols;
 const topWaveSet = new Set();
 const botWaveSet = new Set();
 
-let allSquareRows = [], specIsUpdating = false, squareObserver, squareScale, squareRowShowing = new Set();
+let allSquareRows = [], specIsUpdating = false, squareObserver, squareScale, squareRowShowing = new Set(), curSquareRow;
 
 //top, wave, bot
-for (var i = 0; i < 3 * specRows; i++) allSquareRows.push([]);
+for (var i = 0; i < 3 * specRows + 1; i++) allSquareRows.push([]);
 
-function indexToRowCol(index) {
+function specIndexToRowCol(index) {
     return [Math.floor(index / specCols), index % specCols];
 }
 
-function rowColToIndex(row, col) {
+function specRowColToIndex(row, col) {
     return row * specCols + col;
 }
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (var i = 0; i < specRows; i++) {
         for (var j = 0; j < specCols; j++) {
-            let currentSquare = specSquareDivs[rowColToIndex(i, j)];
+            let currentSquare = specSquareDivs[specRowColToIndex(i, j)];
             allSquareRows[specRows + i + 1].push(currentSquare);
             assignBorder(currentSquare);
             currentSquare.classList.add('hide-border');
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (var i = 0; i < specCols; i++) {
         for (var j = 0; j < randomInt(5, 9); j++) {
-            let r = gaussianRandom(0, 1.5);
+            let r = gaussianRandom(0, 1.4);
             r = Math.abs(r);
             r = clamp(r, 0, specGaussianRange);
             r = r * specRows / specGaussianRange;
@@ -74,13 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     squareObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            /* if (entry.isIntersecting) console.log(entry.target.getAttribute('row-num')); */
-            if (entry.isIntersecting && !squareRowShowing.has(entry.target.getAttribute('row-num'))) {
-                showBorderOnRow(entry.target.getAttribute('row-num'));
-                squareRowShowing.add(entry.target.getAttribute('row-num'));
-            } else {
-                hideBorderOnRow(entry.target.getAttribute('row-num'));
-                squareRowShowing.delete(entry.target.getAttribute('row-num'));
+            curSquareRow = entry.target.getAttribute('row-num');
+            if (curSquareRow != null) {
+                if (entry.isIntersecting && !squareRowShowing.has(curSquareRow)) {
+                    allSquareRows[curSquareRow].forEach(square => {
+                        square.classList.remove('hide-border');
+                    });
+                    squareRowShowing.add(curSquareRow);
+                } else {
+                    allSquareRows[curSquareRow].forEach(square => {
+                        square.classList.add('hide-border');
+                    });
+                    squareRowShowing.delete(curSquareRow);
+                }
             }
         })
     });
@@ -130,7 +136,8 @@ function rippleSquares(index) {
 }
 
 function addSquareTop(row, col) {
-    if (topWaveSet.has(rowColToIndex(row, col)) || row <= 0) return;
+    if (topWaveSet.has(specRowColToIndex(row, col)) || row <= 0) return;
+    if (row == specRows && col == 1) return; // spec-fold
 
     var span = document.createElement('span');
     span.style.gridArea = row + ' / ' + col;
@@ -141,17 +148,22 @@ function addSquareTop(row, col) {
     span.appendChild(div);
 
     div.style.scale = squareScalingFunctionReverse(row);
-    assignBorder(div);
+
+    if (row == specRows) assignBorderBot(div);
+    else {
+        assignBorder(div);
+        div.style.borderRadius = (1 - row/specRows) * 60 + '%';
+    }
     div.classList.add('hide-border');
 
     topWave.appendChild(span);
     allSquareRows[row].push(div);
 
-    topWaveSet.add(rowColToIndex(row, col));
+    topWaveSet.add(specRowColToIndex(row, col));
 }
 
 function addSquareBot(row, col) {
-    if (botWaveSet.has(rowColToIndex(row, col)) || row >= specRows) return;
+    if (botWaveSet.has(specRowColToIndex(row, col)) || row > specRows) return;
 
     var span = document.createElement('span');
     span.style.gridArea = row + ' / ' + col;
@@ -162,18 +174,30 @@ function addSquareBot(row, col) {
     span.appendChild(div);
 
     div.style.scale = squareScalingFunction(row);
-    console.log(div.style.scale);
-    assignBorder(div);
+
+    if (row == 0) assignBorderTop(div);
+    else {
+        assignBorder(div);
+        div.style.borderRadius = row/specRows * 60 + '%';
+    }
     div.classList.add('hide-border');
 
     botWave.appendChild(span);
     allSquareRows[specRows * 2 + row].push(div);
 
-    botWaveSet.add(rowColToIndex(row, col));
+    botWaveSet.add(specRowColToIndex(row, col));
 }
 
 function assignBorder(element) {
     element.classList.add('border-one');
+}
+
+function assignBorderTop(element) {
+    element.classList.add('border-top');
+}
+
+function assignBorderBot(element) {
+    element.classList.add('border-bot');
 }
 
 function showBorderOnRow(row) {
@@ -188,7 +212,7 @@ function hideBorderOnRow(row) {
     });
 }
 
-let squareParameter = 10;
+let squareParameter = 9.1;
 function squareScalingFunction(row) {
     return (squareParameter + 1)/(row + squareParameter);
 }

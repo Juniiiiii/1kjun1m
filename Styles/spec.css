@@ -22,12 +22,25 @@
     height: 100%;
     background-color: var(--black);
     border: none;
+    box-shadow: none;
     box-sizing:border-box;
     transition: border 1.5s ease;
 }
 
 .spec-grid span div.border-one {
-    border: 1px solid rgba(254, 249, 239, 0.5);
+    border: 0.5px solid rgba(254, 249, 239, 0.5);
+}
+
+.spec-grid span div.border-bot {
+    border-top: 0.5px solid rgba(254, 249, 239, 0.5);
+    border-left: 0.5px solid rgba(254, 249, 239, 0.5);
+    border-right: 0.5px solid rgba(254, 249, 239, 0.5);;
+}
+
+.spec-grid span div.border-top {
+    border-bottom: 0.5px solid rgba(254, 249, 239, 0.5);
+    border-left: 0.5px solid rgba(254, 249, 239, 0.5);
+    border-right: 0.5px solid rgba(254, 249, 239, 0.5);
 }
 
 .spec-grid span div.hide-border {
@@ -48,10 +61,12 @@
 
 #top-wave {
     background-color: var(--black);
+    z-index: -6;
 }
 
 #bot-wave {
     background-color: var(--black);
+    z-index: -6;
 }
 
 .spec-backdrop {
@@ -64,8 +79,8 @@
 .spec-page {
     font-family: 'DM Sans', sans-serif;
     color: var(--white);
-    mix-blend-mode: difference;
     z-index: 1;
+    mix-blend-mode: difference;
 }
 
 .spec-page span.header {

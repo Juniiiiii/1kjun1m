@@ -1,0 +1,27 @@
+.project-grid {
+    background-color: var(--black);
+    width: 100%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: repeat(var(--spec-cols), var(--spec-length));
+    grid-template-rows: repeat(var(--project-rows), var(--spec-length));
+    overflow: hidden;
+}
+
+.project-grid div {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 0.5px solid rgba(254, 249, 239, 0.5);
+    box-shadow: none;
+    box-sizing:border-box;
+    transition: border 1.5s ease;
+}
+
+.project-grid div.fill {
+    background-color: var(--white);
+}
+
+.project-grid div.hide-border {
+    border: none;
+}

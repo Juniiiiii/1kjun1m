@@ -7,6 +7,7 @@
     <script src="./Scripts/Plugins/anime.min.js"></script>
     <script src="./Scripts/Plugins/matter.js"></script>
     <script src="./Scripts/Plugins/pathseg.min.js"></script>
+    <script src="./Scripts/Plugins/polymorph.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +26,7 @@
     <link rel="stylesheet" href="./Styles/reality.css">
     <link rel="stylesheet" href="./Styles/idea.css">
     <link rel="stylesheet" href="./Styles/spec.css">
+    <link rel="stylesheet" href="./Styles/project.css">
 </head>
 <body>
     <div class="loading-text no-select">1<span>kjun</span>1<span>m</span></div>
@@ -34,7 +36,7 @@
         <div class="hidden" id="expansion-circle"></div>
     </div>
     <div id="matter-container"></div>
-    <div class="first-page">
+    <div class="first-page main-page">
         <div class="landing-page">
             <div class="landing-title landing-center no-select">
                 1kjun 1m
@@ -66,35 +68,12 @@
         </div>
         <div class="idea-page no-select">
             <div class="main-title">
-                <span class="first">inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
-                <span>inside the mind of</span>
+                <span class="text">inside the mind of</span>
             </div>
             <div class="idea-line"></div>
             <div class="idea-filter">
                 <div class="sub-title">
-                    <div class="text">is where ideas meet</div>
+                    <span class="text">is where ideas meet</span>
                     <div class="reality">
                         <input type="text" size="16" placeholder="">
                         <div class="output"></div>
@@ -132,7 +111,8 @@
             </div>
         </div>
     </div>
-    <div class="second-page">
+    <div class="page-padding"></div>
+    <div class="second-page main-page">
         <div class="spec-grid" id="top-wave"></div>
         <div class="spec-grid">
             <div class="spec-fold"></div>
@@ -171,6 +151,15 @@
         </div>
         <div class="spec-grid" id="bot-wave"></div>
     </div>
+    <div class="third-page main-page">
+        <div class="project-grid">
+
+        </div>
+    </div>
+    <div class="fourth-page main-page">
+        <img src="./Media/playCircle.svg" alt="circle" id="circle">
+        <img src="./Media/check.svg" alt="check" id="check">
+    </div>
 
     <script src="./Scripts/Utility/utility.js"></script>
     <script src="/Scripts/observers.js"></script>
@@ -180,6 +169,7 @@
     <script src="./Scripts/Constants/colorConstants.js"></script>
     <script src="./Scripts/Constants/cloudConstants.js"></script>
     <script src="./Scripts/Constants/loadingConstants.js"></script>
+    <script src="./Scripts/Constants/projectConstants.js"></script>
 
     <script src="./Scripts/MatterClass/glyphDictionary.js"></script>
     <script src="./Scripts/MatterClass/matterInstance.js"></script>
@@ -193,10 +183,8 @@
     <script src="./Scripts/idea.js"></script>
     <script src="./Scripts/about.js"></script>
     <script src="./Scripts/spec.js"></script>
+    <script src="./Scripts/project.js"></script>
     
     <script src="./Scripts/main.js"></script>
-    <!--
-        <script src="./Scripts/aboutMe.js"></script>
-    -->
 </body>
 </html>

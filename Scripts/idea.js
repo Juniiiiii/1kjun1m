@@ -1,9 +1,64 @@
 const ideaLine = document.querySelector('.idea-page .idea-line')
-const ideaLines = document.querySelectorAll('.idea-page .main-title span');
+
+const ideaMaintitle = document.querySelector('.idea-page .main-title .text');
 const ideaSubtitle = document.querySelector('.idea-page .sub-title .text');
+
 const ideaInput = document.querySelector('.idea-page .sub-title .reality input');
 const ideaOutput = document.querySelector('.idea-page .sub-title .reality .output');
+
 let ideaMaterialized = false, materializeId = null, ideaRealitySlideId = null, allowMaterialize = false;
+let ideaInputAnimationComplete = false;
+const placeholderText = "type your idea...";
+let ideaLineRect = ideaLine.getBoundingClientRect();
+
+window.addEventListener('scroll', () => {
+    ideaLineRect = ideaLine.getBoundingClientRect();
+});
+
+window.addEventListener('resize', () => {
+    ideaLineRect = ideaLine.getBoundingClientRect();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('ideaHalfIntersection', function () {
+        if (ideaHalfIntersecting) {
+            ideaSubtitle.classList.add('slide-down');
+            ideaMaintitle.classList.add('slide-up');
+
+            if (!ideaMaterialized) {
+                ideaRealitySlideId = setTimeout(() => {
+                    ideaInput.classList.add('slide-down-reality');
+                    materializeId = setTimeout(() => {
+                        ideaMaterialized = true;
+                        allowMaterialize = true;
+                        ideaInput.classList.remove('slide-down-reality');
+                        ideaInput.style.transform = 'translateY(-11%)';
+                        ideaInput.style.pointerEvents = 'all';
+                        console.log("ASDf");
+                        materializeId = null;
+                        if (!ideaInputAnimationComplete) ideaInputAnimation();
+                        realityToMatter();
+                    }, 1100);
+                }, 130);
+            }
+        } else {
+            ideaSubtitle.classList.remove('slide-down');
+            ideaMaintitle.classList.remove('slide-up');
+            if (!ideaMaterialized) {
+                if (ideaRealitySlideId != null) clearTimeout(ideaRealitySlideId);
+                ideaInput.classList.remove('slide-down-reality');
+                console.log("Removed");
+                ideaRealitySlideId = null;
+                if (materializeId != null) {
+                    clearTimeout(materializeId);
+                    materializeId = null;
+                }
+            }
+        }
+    });
+});
+
+/* let ideaMaterialized = false, materializeId = null, ideaRealitySlideId = null, allowMaterialize = false;
 let ideaInputAnimationComplete = false, ideaInputAnimationId = null;
 const placeholderText = "type your idea...";
 let ideaLineRect = ideaLine.getBoundingClientRect();
@@ -21,9 +76,6 @@ window.addEventListener('resize', () => {
 
 document.addEventListener('DOMContentLoaded', function () {
     ideaLineRect = ideaLine.getBoundingClientRect();
-    for (var i = 0; i < ideaLines.length; i++) {
-        ideaLines[i].style.transform = 'translateY(' + (-22.1 * i + 10) + '%)';
-    }
 
     document.addEventListener('ideaHalfIntersection', function () {
         moveIdeaLine(ideaHalfIntersecting);
@@ -94,7 +146,7 @@ function moveIdeaLine(down) {
         }, 40);
     }
 }
-
+ */
 ideaInput.addEventListener('keydown', function(event) {
     if (!ideaInputAnimationComplete) {
         clearInterval(ideaInputAnimationId);

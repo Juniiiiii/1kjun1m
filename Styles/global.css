@@ -8,6 +8,7 @@
     --spec-cols: 34;
     --spec-rows: 11;
     --spec-length: 3vw;
+    --project-rows: 17;
 }
 
 body,
@@ -96,16 +97,16 @@ html {
     }
 }
 
-.first-page {
+.main-page {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.second-page {
+.page-padding {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    aspect-ratio: 10 / 1;
+    background-color: var(--black);
 }
 
 #matter-container {
