@@ -23,46 +23,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('aboutIntersection', () => {
         if (aboutIntersecting) {
-            startUpdatingTarget();
-            updateAboutTarget();
+            startAboutUpdate();
+            aboutUpdate();
             startAboutInterval();
         }
-        else {
-            stopUpdatingTarget();
-        }
+        else stopAboutUpdate();
     });
 });
 
-function updateRevealRange() {
+function updateAboutRange() {
     aboutRevealRange = [aboutBody.getBoundingClientRect().top + window.scrollY, 
                         aboutBodyWrapper.getBoundingClientRect().bottom + window.scrollY];
 }
 
-function startUpdatingTarget() {
+function startAboutUpdate() {
     if (aboutIsUpdating) return;
     aboutIsUpdating = true;
 
-    window.addEventListener('resize', updateRevealRange);
-    window.addEventListener('scroll', updateRevealRange);
+    window.addEventListener('resize', updateAboutRange);
+    window.addEventListener('scroll', updateAboutRange);
 
-    window.addEventListener('scroll', updateAboutTarget);
-    window.addEventListener('resize', updateAboutTarget);
+    window.addEventListener('scroll', aboutUpdate);
+    window.addEventListener('resize', aboutUpdate);
 }
 
-function updateAboutTarget() {
+function aboutUpdate() {
     aboutTarget = clamp((window.scrollY + window.innerHeight - aboutRevealRange[0]) / (aboutRevealRange[1] - aboutRevealRange[0]), 0, 1);
     if (aboutCurrent != aboutTarget && aboutInterval == null) startAboutInterval();
 }
 
-function stopUpdatingTarget() {
+function stopAboutUpdate() {
     if (!aboutIsUpdating) return;
     aboutIsUpdating = false;
 
-    window.removeEventListener('resize', updateRevealRange);
-    window.removeEventListener('scroll', updateRevealRange);
+    window.removeEventListener('resize', updateAboutRange);
+    window.removeEventListener('scroll', updateAboutRange);
 
-    window.removeEventListener('scroll', updateAboutTarget);
-    window.removeEventListener('resize', updateAboutTarget);
+    window.removeEventListener('scroll', aboutUpdate);
+    window.removeEventListener('resize', aboutUpdate);
 }
 
 function startAboutInterval() {

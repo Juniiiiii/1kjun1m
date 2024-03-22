@@ -21,7 +21,17 @@
     width: 100%;
     height: 100%;
     background-color: var(--black);
-    border: 1px solid rgba(254, 249, 239, 0.6);
+    border: none;
+    box-sizing:border-box;
+    transition: border 1.5s ease;
+}
+
+.spec-grid span div.border-one {
+    border: 1px solid rgba(254, 249, 239, 0.5);
+}
+
+.spec-grid span div.hide-border {
+    border: none;
 }
 
 .spec-fold {
@@ -34,6 +44,14 @@
 #square-wave {
     pointer-events: all;
     z-index: 1;
+}
+
+#top-wave {
+    background-color: var(--black);
+}
+
+#bot-wave {
+    background-color: var(--black);
 }
 
 .spec-backdrop {
@@ -60,11 +78,6 @@
     display: flex;
     align-items: end;
     margin-top: 1.6%;
-}
-
-.spec-grid .first-margin-row {
-    grid-row-start: 1;
-    grid-row-end: 2;
 }
 
 .spec-grid .first-header-row {

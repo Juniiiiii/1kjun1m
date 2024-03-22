@@ -44,7 +44,7 @@ class Printer {
         var bodies = [];
 
         for (var i = 0, curX = 0; i < option.text.length; i++) {
-            if (option.text[i] == " ") { curX += width; continue; }
+            if (option.text[i] == " " || !allowedGlyphs.test(option.text[i])) { curX += width; continue; }
             bodies.push(this.printGlyph(option.text[i], option.x + curX, option.y, width, height, randomElement(option.color), option)); //Spawn a single character
             curX += relativeWidth[option.text[i]] * width + gap;
         }

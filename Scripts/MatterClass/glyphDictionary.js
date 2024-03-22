@@ -1,3 +1,5 @@
+const allowedGlyphs = /^[a-zA-Z0-9\/+\-]+$/;
+
 class GlyphDictionary {
     constructor() {
         this.digitVertices = new Array(10);

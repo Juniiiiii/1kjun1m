@@ -17,7 +17,6 @@ let firstObserver = new IntersectionObserver(entries => {
     });
 });
 firstObserver.observe(document.querySelector('.first-page'));
-
 let landingObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         landingIntersecting = entry.isIntersecting;
