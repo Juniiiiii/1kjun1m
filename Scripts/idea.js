@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         ideaInput.classList.remove('slide-down-reality');
                         ideaInput.style.transform = 'translateY(-11%)';
                         ideaInput.style.pointerEvents = 'all';
-                        console.log("ASDf");
                         materializeId = null;
                         if (!ideaInputAnimationComplete) ideaInputAnimation();
                         realityToMatter();
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!ideaMaterialized) {
                 if (ideaRealitySlideId != null) clearTimeout(ideaRealitySlideId);
                 ideaInput.classList.remove('slide-down-reality');
-                console.log("Removed");
                 ideaRealitySlideId = null;
                 if (materializeId != null) {
                     clearTimeout(materializeId);

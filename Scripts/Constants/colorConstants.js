@@ -6,5 +6,6 @@ const green = styles.getPropertyValue('--green');
 const yellow = styles.getPropertyValue('--yellow');
 const white = styles.getPropertyValue('--white');
 const red = styles.getPropertyValue('--red');
+const ghost = styles.getPropertyValue('--ghost');
 
 const particleColors = [blue, green, yellow, white, red];

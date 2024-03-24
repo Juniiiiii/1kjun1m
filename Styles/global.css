@@ -5,10 +5,13 @@
     --yellow: #ffcb77;
     --white: #fef9ef;
     --red: #fe6d73;
+    --ghost: rgba(254, 249, 239, 0.2);
     --spec-cols: 34;
     --spec-rows: 11;
     --spec-length: 3vw;
-    --project-rows: 17;
+    --project-cols: 60;
+    --project-rows: 30;
+    --ghost-border: 2px solid var(--ghost);
 }
 
 body,

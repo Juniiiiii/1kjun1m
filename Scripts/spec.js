@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const specGaussianRange = 3;
-    for (var i = 0; i < specCols; i++) {
+    //Generate top wave, but for performance use cached png
+    /* for (var i = 0; i < specCols; i++) {
         for (var j = 0; j < randomInt(5, 9); j++) {
             let r = gaussianRandom(0, 1.5);
             r = Math.abs(r);
@@ -50,32 +51,42 @@ document.addEventListener('DOMContentLoaded', () => {
             r = specRows - r;
             addSquareTop(r, i);
         }
-    }
+    } */
 
-    for (var i = 0; i < specRows; i++) {
+    for (var i = 0; i < 1; i++) {
         for (var j = 0; j < specCols; j++) {
             let currentSquare = specSquareDivs[specRowColToIndex(i, j)];
             allSquareRows[specRows + i + 1].push(currentSquare);
-            assignBorder(currentSquare);
-            currentSquare.classList.add('hide-border');
+            if (j == 0) currentSquare.classList.add('border-one');
+            else currentSquare.classList.add('border-left');
         }
     }
 
-    for (var i = 0; i < specCols; i++) {
-        for (var j = 0; j < randomInt(5, 9); j++) {
-            let r = gaussianRandom(0, 1.4);
+    for (var i = 1; i < specRows; i++) {
+        for (var j = 0; j < specCols; j++) {
+            let currentSquare = specSquareDivs[specRowColToIndex(i, j)];
+            allSquareRows[specRows + i + 1].push(currentSquare);
+            if (j == 0) currentSquare.classList.add('border-top');
+            else currentSquare.classList.add('border-top-left');
+        }
+    }
+
+    //Generate bot wave, but for performance use cached png
+    /* for (var i = 0; i < specCols; i++) {
+        for (var j = 0; j < specRows; j++) {
+            let r = gaussianRandom(0, 1.9);
             r = Math.abs(r);
             r = clamp(r, 0, specGaussianRange);
             r = r * specRows / specGaussianRange;
             r = Math.floor(r);
             addSquareBot(r, i);
         }
-    }
+    } */
 
-    squareObserver = new IntersectionObserver(entries => {
+    /* squareObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             curSquareRow = entry.target.getAttribute('row-num');
-            if (curSquareRow != null) {
+            if (curSquareRow) {
                 if (entry.isIntersecting && !squareRowShowing.has(curSquareRow)) {
                     allSquareRows[curSquareRow].forEach(square => {
                         square.classList.remove('hide-border');
@@ -96,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             squareObserver.observe(row[0]);
             row[0].setAttribute('row-num', index);
         }
-    });
+    }); */
 });
 
 function flipSquares(index) {
@@ -149,12 +160,17 @@ function addSquareTop(row, col) {
 
     div.style.scale = squareScalingFunctionReverse(row);
 
-    if (row == specRows) assignBorderBot(div);
+    if (row == specRows) div.classList.add('border-bot');
     else {
-        assignBorder(div);
-        div.style.borderRadius = (1 - row/specRows) * 60 + '%';
+        /* assignBorder(div); */
+        /* div.style.borderRadius = (1 - row/specRows) * 60 + '%'; */
+        div.classList.add('border-one');
     }
-    div.classList.add('hide-border');
+    /* div.classList.add('hide-border'); */
+
+    if (row == specRows && topWaveSet.has(specRowColToIndex(row, col - 1))) {
+        div.style.borderLeft = 'none';
+    }
 
     topWave.appendChild(span);
     allSquareRows[row].push(div);
@@ -175,29 +191,18 @@ function addSquareBot(row, col) {
 
     div.style.scale = squareScalingFunction(row);
 
-    if (row == 0) assignBorderTop(div);
+    if (row == 0) div.classList.add('border-top');
     else {
-        assignBorder(div);
-        div.style.borderRadius = row/specRows * 60 + '%';
+        /* assignBorder(div); */
+        div.classList.add('border-one');
+        /* div.style.borderRadius = row/specRows * 60 + '%'; */
     }
-    div.classList.add('hide-border');
+    /* div.classList.add('hide-border'); */
 
     botWave.appendChild(span);
     allSquareRows[specRows * 2 + row].push(div);
 
     botWaveSet.add(specRowColToIndex(row, col));
-}
-
-function assignBorder(element) {
-    element.classList.add('border-one');
-}
-
-function assignBorderTop(element) {
-    element.classList.add('border-top');
-}
-
-function assignBorderBot(element) {
-    element.classList.add('border-bot');
 }
 
 function showBorderOnRow(row) {

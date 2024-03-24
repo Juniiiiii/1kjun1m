@@ -158,9 +158,40 @@ function oneZero(num) {
 }
 
 function gaussianRandom(mean=0, stdev=1) {
-    const u = 1 - Math.random(); // Converting [0,1) to (0,1]
+    const u = 1 - Math.random();
     const v = Math.random();
     const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
-    // Transform to the desired mean and standard deviation:
     return z * stdev + mean;
+}
+
+function boundingBoxOfPoints(arr) {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+    arr.forEach(point => {
+        minX = Math.min(minX, point[0]);
+        minY = Math.min(minY, point[1]);
+        maxX = Math.max(maxX, point[0]);
+        maxY = Math.max(maxY, point[1]);
+    });
+
+    return { 
+        minX: minX, 
+        minY: minY, 
+        maxX: maxX, 
+        maxY: maxY,
+        width: maxX - minX + 1,
+        height: maxY - minY + 1
+    };
+}
+
+function offsetPoints(arr, row, col) {
+    return arr.map(point => [point[0] + row, point[1] + col]);
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
