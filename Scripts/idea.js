@@ -20,7 +20,7 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('ideaHalfIntersection', function () {
+    /*document.addEventListener('ideaHalfIntersection', function () {
         if (ideaHalfIntersecting) {
             ideaSubtitle.classList.add('slide-down');
             ideaMaintitle.classList.add('slide-up');
@@ -53,98 +53,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }
-    });
+    });*/
+
+	document.addEventListener('ideaHalfIntersection', slideDown);
 });
 
-/* let ideaMaterialized = false, materializeId = null, ideaRealitySlideId = null, allowMaterialize = false;
-let ideaInputAnimationComplete = false, ideaInputAnimationId = null;
-const placeholderText = "type your idea...";
-let ideaLineRect = ideaLine.getBoundingClientRect();
-let currentIdeaLine = ideaLines.length - 1, targetIdeaLine = 0, ideaLineId, ideaDirection,
-    ideaHide = Array(ideaLines.length).fill(null), ideaShow = new Set([]);
-let ideaSubtitleVisible = false;
+function slideDown() {
+	if (ideaHalfIntersecting) {
+		ideaSubtitle.classList.add('slide-down');
+		ideaMaintitle.classList.add('slide-up');
 
-window.addEventListener('scroll', () => {
-    ideaLineRect = ideaLine.getBoundingClientRect();
-});
-
-window.addEventListener('resize', () => {
-    ideaLineRect = ideaLine.getBoundingClientRect();
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    ideaLineRect = ideaLine.getBoundingClientRect();
-
-    document.addEventListener('ideaHalfIntersection', function () {
-        moveIdeaLine(ideaHalfIntersecting);
-    });
-});
-
-function fadeIdeaLineOut(index) {
-    ideaHide[index] = setTimeout(() => {
-        ideaLines[index].classList.remove('show');
-        ideaHide[index] = null;
-    }, 400);
+		if (!ideaMaterialized) {
+			ideaRealitySlideId = setTimeout(() => {
+				ideaInput.classList.add('slide-down-reality');
+				materializeId = setTimeout(() => {
+					ideaMaterialized = true;
+					allowMaterialize = true;
+					ideaInput.classList.remove('slide-down-reality');
+					ideaInput.style.transform = 'translateY(-11%)';
+					ideaInput.style.pointerEvents = 'all';
+					materializeId = null;
+					if (!ideaInputAnimationComplete) ideaInputAnimation();
+					realityToMatter();
+				}, 1100);
+			}, 130);
+		}
+		document.removeEventListener('ideaHalfIntersection', slideDown);
+	}
 }
 
-function moveIdeaLine(down) {
-    if (ideaDirection == down) return;
-    ideaDirection = down;
-
-    if (ideaDirection) targetIdeaLine = 0;
-    else targetIdeaLine = ideaLines.length - 1;
-
-    if (ideaLineId == null) {
-        ideaLineId = setInterval(() => {
-            if (currentIdeaLine == targetIdeaLine) {
-                clearInterval(ideaLineId);
-                ideaLineId = null;
-                if (targetIdeaLine == 0) {
-                    ideaSubtitle.classList.add('slide-in');
-                    if (!ideaMaterialized) {
-                        ideaRealitySlideId = setTimeout(() => {
-                            ideaInput.classList.add('slide-in-reality');
-                            materializeId = setTimeout(() => {
-                                ideaMaterialized = true;
-                                allowMaterialize = true;
-                                ideaInput.classList.remove('slide-in');
-                                ideaInput.style.transform = 'translateY(-5%)';
-                                ideaInput.style.pointerEvents = 'all';
-                                materializeId = null;
-                                if (!ideaInputAnimationComplete) ideaInputAnimation();
-                                realityToMatter();
-                            }, 1100);
-                        }, 120);
-                    }
-                    ideaSubtitleVisible = true;
-                }
-                return;
-            } else {
-                if (ideaSubtitleVisible) {
-                    ideaSubtitle.classList.remove('slide-in');
-                    if (!ideaMaterialized) {
-                        if (ideaRealitySlideId != null) clearTimeout(ideaRealitySlideId);
-                        ideaInput.classList.remove('slide-in-reality');
-                        ideaRealitySlideId = null;
-                        if (materializeId != null) {
-                            clearTimeout(materializeId);
-                            materializeId = null;
-                        }
-                    }
-                    ideaSubtitleVisible = false;
-                }
-                fadeIdeaLineOut(currentIdeaLine);
-                currentIdeaLine += (ideaDirection) ? -1 : 1;
-                ideaLines[currentIdeaLine].classList.add('show');
-                if (ideaHide[currentIdeaLine]) {
-                    clearTimeout(ideaHide[currentIdeaLine]);
-                    ideaHide[currentIdeaLine] = null;
-                }
-            }
-        }, 40);
-    }
-}
- */
 ideaInput.addEventListener('keydown', function(event) {
     if (!ideaInputAnimationComplete) {
         clearInterval(ideaInputAnimationId);

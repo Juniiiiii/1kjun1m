@@ -32,7 +32,7 @@ class LetterBurst {
             targets: this.letters,
             translateX: () => (Math.random() - 0.5) * burstDistance + "%",
             translateY: () => (Math.random() - 0.5) * burstDistance + "%",
-            rotate: () => (Math.random() - 0.5) * 30,
+            rotate: () => (Math.random() - 0.5) * 15,
             duration: 300,
             easing: 'easeOutExpo',
         });

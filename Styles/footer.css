@@ -94,12 +94,13 @@
     grid-area: 1 / 1;
     width: 6vw;
     height: 0.2vw;
-    background-color: var(--red);
+    background-color: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;
     transform: translateY(350%) rotate(0deg);
     transform-origin: 100% 50%;
+	transition: background-color 0.5s ease;
 }
 
 /* .minute-hand {

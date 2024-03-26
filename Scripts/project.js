@@ -6,6 +6,8 @@ const projectPaperWrapper = document.querySelector('.project-page .paper-wrapper
 const projectRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-rows')) - 1;
 const projectCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-cols'));
 
+const projectSecondHand = document.querySelector('.second-hand');
+
 function pixelCoordToIndex(row, col) {
     return row * projectCols + col;
 }
@@ -153,6 +155,7 @@ class ProjectCard {
         this.name = name;
         this.thumbnail = thumbnail;
         this.border = border;
+		this.color = color;
         this.coordinates = coordinates;
 
         this.parser = new DOMParser();
@@ -210,7 +213,9 @@ class ProjectCard {
 
         this.ignoreUnhover = true;
         this.movePixels();
-        this.paper.show(this.thumbnail);
+        //this.paper.show(this.thumbnail);
+
+		projectSecondHand.style.backgroundColor = this.color;
     }
 
     movePixels() {
