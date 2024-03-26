@@ -451,3 +451,47 @@ const minimumPixelCount = Math.max(
     ourVoiceCoordinates.length, 
     insideTheMindOfCoordinates.length
 );
+
+
+
+const ourVoicePictures = [
+    '/Media/ourVoice.png',
+];
+
+const ourVoiceCaptions = [
+    "https://about.itsourvoice.com",
+]
+
+const ourVoiceOuterTexts = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+];
+
+const ourVoiceInnerTexts = [
+    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta",
+    null,
+    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta"
+];
+
+
+
+const insideTheMindOfPictures = [
+    '/Media/insideTheMindOf.png',
+];
+
+const insideTheMindOfCaptions = [
+    "Portfolio title page"
+];
+
+const insideTheMindOfOuterTexts = [
+    "testing 1",
+    "testing 2",
+    "testing 3"
+];
+
+const insideTheMindOfInnerTexts = [
+    null,
+    null,
+    null
+];

@@ -1,7 +1,9 @@
 const projectGrid = document.querySelector('.project-grid');
 const projectBar = document.querySelector('.project-bar');
+const projectPage = document.querySelector('.project-page');
+const projectPaperWrapper = document.querySelector('.project-page .paper-wrapper');
 
-const projectRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-rows'));
+const projectRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-rows')) - 1;
 const projectCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-cols'));
 
 function pixelCoordToIndex(row, col) {
@@ -19,14 +21,6 @@ let allProjectCards = [];
 let selectedCard = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    /* for (var i = 0, newIndex; i < minimumPixelCount; i++) {
-        newIndex = Math.floor(Math.random() * projectCols * projectRows);
-        while (allIndexes.has(newIndex)) newIndex = Math.floor(Math.random() * projectCols * projectRows);
-        new Pixel(newIndex, i);
-    }
-
-    console.log(allIndexes.size, minimumPixelCount); */
-
     for (var i = 0; i < minimumPixelCount; i++) {
         newIndex = Math.floor(Math.random() * projectCols * projectRows);
         while (allIndexes.has(newIndex)) newIndex = Math.floor(Math.random() * projectCols * projectRows);
@@ -35,8 +29,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allIndexesArr = Array.from(allIndexes);
 
-    allProjectCards.push(new ProjectCard('ourVoice', '/Media/ourVoice.png', 'OurVoice', ourVoiceCoordinates, 'red-border'));
-    allProjectCards.push(new ProjectCard('insideTheMindOf', '/Media/insideTheMindOf.png', 'inside the mind of', insideTheMindOfCoordinates, 'yellow-border'));
+    allProjectCards.push(
+        new ProjectCard(
+            'ourVoice', 
+            '/Media/ourVoice.png', 
+            'OurVoice', 
+            ourVoiceCoordinates,
+            red,
+            'red-border',
+            ourVoicePictures,
+            ourVoiceCaptions,
+            ourVoiceOuterTexts,
+            ourVoiceInnerTexts
+    ));
+    allProjectCards.push(
+        new ProjectCard(
+            'insideTheMindOf', 
+            '/Media/insideTheMindOf.png', 
+            'inside the mind of', 
+            insideTheMindOfCoordinates, 
+            yellow,
+            'yellow-border',
+            insideTheMindOfPictures,
+            insideTheMindOfCaptions,
+            insideTheMindOfOuterTexts,
+            insideTheMindOfInnerTexts
+    ));
+
+    allProjectCards[0].paper.element.classList.remove('hidden');
 
     /* pixelObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -129,7 +149,7 @@ class Pixel {
 }
 
 class ProjectCard {
-    constructor(name, thumbnail, thumbnailText, coordinates, border) {
+    constructor(name, thumbnail, thumbnailText, coordinates, color, border, pictures, captions, outerTexts, innerTexts) {
         this.name = name;
         this.thumbnail = thumbnail;
         this.border = border;
@@ -165,6 +185,8 @@ class ProjectCard {
 
         this.initialX = null;
         this.initialY = null;
+
+        this.paper = new ProjectPaper(name + "-paper", color, border, pictures, captions, outerTexts, innerTexts);
     }
 
     clickHandler() {
@@ -179,7 +201,6 @@ class ProjectCard {
                 pixel.clearClass();
             });
             selectedCard.movePixelsBack();
-            selectedCard.moveBackOrigin();
         }
         selectedCard = this;
         this.pixels.forEach(pixel => {
@@ -189,39 +210,7 @@ class ProjectCard {
 
         this.ignoreUnhover = true;
         this.movePixels();
-        this.moveToCenter();
-    }
-
-    moveToCenter() {
-        if (this.initialX == null) {
-            const rect = this.thumbnail.getBoundingClientRect();
-            const mainRect = projectGrid.getBoundingClientRect();
-
-            this.initialX = ((mainRect.width/2 - rect.x - rect.width/2)/rect.width) * 100 + '%';
-            this.initialY = ((mainRect.height/2 - rect.y - rect.height/2)/rect.height) * 100 + '%';
-        }
-
-        anime({
-            targets: this.thumbnail,
-            translateX: this.initialX,
-            translateY: this.initialY,
-            opacity: 1,
-            /* scale: 2.2, */
-            easing: 'easeOutQuart',
-            duration: cardTransition/2,
-        });
-    }
-
-    moveBackOrigin() {
-        anime({
-            targets: this.thumbnail,
-            translateX: 0,
-            translateY: 0,
-            opacity: 0.2,
-            /* scale: 1, */
-            easing: 'easeOutQuart',
-            duration: cardTransition/2,
-        })
+        this.paper.show(this.thumbnail);
     }
 
     movePixels() {
@@ -256,3 +245,65 @@ class ProjectCard {
     }
 }
 
+class ProjectPaper {
+    constructor(name, color, border, pictures, captions, outerTexts, innerTexts) {
+        this.color = color;
+        this.border = border;
+
+        this.parser = new DOMParser();
+
+        let pictureString = "";
+
+        for (var i = 0 ; i < pictures.length; i++) {
+            pictureString += `
+            <div class="image-wrapper">
+                <div class="image">
+                    <img src="${pictures[i]}" alt="${name}-picture-${i}">
+                    <span>${captions[i]}</span>
+                </div>
+            </div>
+            `;
+        }
+
+        let textString = "";
+
+        for (var i = 0 ; i < outerTexts.length; i++) {
+            if (innerTexts[i]) {
+                textString += `
+                    <div class="paragraph">
+                        <span class="outer">${outerTexts[i]}</span>
+                        <span class="inner">${innerTexts[i]}</span>
+                    </div>
+                `;
+            } else {
+                textString += `
+                    <div class="paragraph">
+                        <span class="outer">${outerTexts[i]}</span>
+                    </div>
+                `;
+            }
+        }
+
+        this.element = this.parser.parseFromString(`
+            <div id="${name}" class="paper hidden">
+                <div class="paper-images">
+                    ${pictureString}
+                </div>
+                <div class="paper-texts">
+                    ${textString}
+                </div>
+            </div>
+        `, 'text/html').body.firstChild;
+
+        this.element.querySelectorAll('.paragraph .outer').forEach(outer => {
+            firstWordSpan(outer);
+        });
+
+        this.element.querySelectorAll('.paragraph .inner').forEach(inner => {
+            /* firstWordSpan(inner); */
+            inner.style.backgroundColor = color;
+        });
+
+        projectPaperWrapper.appendChild(this.element);
+    }
+}

@@ -40,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const specGaussianRange = 3;
-    //Generate top wave, but for performance use cached png
-    /* for (var i = 0; i < specCols; i++) {
+    for (var i = 0; i < specCols; i++) {
         for (var j = 0; j < randomInt(5, 9); j++) {
             let r = gaussianRandom(0, 1.5);
             r = Math.abs(r);
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             r = specRows - r;
             addSquareTop(r, i);
         }
-    } */
+    }
 
     for (var i = 0; i < 1; i++) {
         for (var j = 0; j < specCols; j++) {
@@ -71,17 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //Generate bot wave, but for performance use cached png
-    /* for (var i = 0; i < specCols; i++) {
+    for (var i = 0; i < specCols; i++) {
         for (var j = 0; j < specRows; j++) {
-            let r = gaussianRandom(0, 1.9);
+            let r = gaussianRandom(0, 1.5);
             r = Math.abs(r);
             r = clamp(r, 0, specGaussianRange);
             r = r * specRows / specGaussianRange;
             r = Math.floor(r);
             addSquareBot(r, i);
         }
-    } */
+    }
 
     /* squareObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {

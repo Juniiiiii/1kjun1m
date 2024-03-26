@@ -195,3 +195,36 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+function firstWordSpan(span) {
+    let text = span.textContent.trim().split(/\s+/);
+    let newText = "<span class='first-word'>" + text[0] + "</span>";
+
+    span.innerHTML = newText + " " + text.slice(1).join(" ");
+    return span.querySelector('.first-word');
+}
+
+function AdjustingInterval(workFunc, interval, errorFunc) {
+    var that = this;
+    var expected, timeout;
+    this.interval = interval;
+
+    this.start = function() {
+        expected = Date.now() + this.interval;
+        timeout = setTimeout(step, this.interval);
+    }
+
+    this.stop = function() {
+        clearTimeout(timeout);
+    }
+
+    function step() {
+        var drift = Date.now() - expected;
+        if (drift > that.interval) {
+            if (errorFunc) errorFunc();
+        }
+        workFunc();
+        expected += that.interval;
+        timeout = setTimeout(step, Math.max(0, that.interval-drift));
+    }
+}

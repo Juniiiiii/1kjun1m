@@ -1,0 +1,137 @@
+.footer {
+    width: 100%;
+    aspect-ratio: 5 / 1;
+    background-color: var(--black);
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: all;
+}
+
+.footer-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Space Mono", monospace;
+    color: var(--white);
+    opacity: 0.8;
+    font-size: 2vw;
+    padding-right: 4vw;
+}
+
+.footer-divider {
+    background-color: var(--white);
+    opacity: 0.8;
+    width: 0.2vw;
+    height: 80%;
+    align-self: center;
+    margin-right: 5vw;
+}
+
+.clock-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clock {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.clock > span {
+    grid-area: 1 / 1;
+    font-size: 1vw;
+    color: var(--white);
+    font-family: "Space Mono", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clock > span > span {
+    width: max-content;
+    height: max-content;
+}
+
+.clock .word {
+    grid-area: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-size: 1vw;
+    font-family: "Space Mono", monospace;
+    text-decoration: none;
+}
+
+.clock .hour-hand {
+    grid-area: 1 / 1;
+    width: 4vw;
+    height: 0.4vw;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(50%) translateY(150%) rotate(0deg);
+    transform-origin: 100% 50%;
+}
+
+.clock .minute-hand {
+    grid-area: 1 / 1;
+    width: 5vw;
+    height: 0.2vw;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(20%) translateY(350%) rotate(0deg);
+    transform-origin: 100% 50%;
+}
+
+.clock .second-hand {
+    grid-area: 1 / 1;
+    width: 6vw;
+    height: 0.2vw;
+    background-color: var(--red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(350%) rotate(0deg);
+    transform-origin: 100% 50%;
+}
+
+/* .minute-hand {
+    width: 0.1vw;
+    height: 50%;
+    background-color: var(--white);
+    border-radius: 0.05vw;
+    transform-origin: 50% 100%;
+}
+
+.second-hand {
+    width: 0.05vw;
+    height: 60%;
+    background-color: var(--white);
+    border-radius: 0.025vw;
+    transform-origin: 50% 100%;
+}
+ */
+#website,
+#github,
+#full-name {
+    justify-content: flex-start;
+}
+
+#email,
+#social,
+#linkedin {
+    justify-content: flex-end;
+}
+
+
+/* individual numbers */
+#eleven {
+    color: transparent;
+}
