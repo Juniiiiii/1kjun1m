@@ -1,225 +1,227 @@
-const specSquares = document.getElementById('square-wave').querySelectorAll('span');
-const specSquareDivs = document.getElementById('square-wave').querySelectorAll('span div');
-const specFold = document.querySelector('.spec-fold');
-const topWave = document.getElementById('top-wave');
-const botWave = document.getElementById('bot-wave');
+const languageWrapper = document.querySelector('.second-page .language-wrapper');
+const languageBackground = languageWrapper.querySelector('.background');
+const languageList = document.querySelector('.second-page .language-wrapper .list-wrapper .list');
+const languageListItems = languageList.querySelectorAll('p');
+const languageOverlay = document.querySelector('.second-page .language-wrapper .overlay');
+let languageScroll;
 
-const specRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'));
-const specCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spec-cols'));
-const maxSquareCount = specRows * specCols;
+const strengthsWrapper = document.querySelector('.second-page .strengths-wrapper');
+const strengths = strengthsWrapper.querySelectorAll('.strengths');
+const strengthsList = document.querySelector('.second-page .strengths-wrapper .list-wrapper .list');
+const strengthsListItems = strengthsList.querySelectorAll('p');
+const strengthsOverlay = document.querySelector('.second-page .strengths-wrapper .overlay');
+let strengthsScroll;
 
-const topWaveSet = new Set();
-const botWaveSet = new Set();
-
-let allSquareRows = [], specIsUpdating = false, squareObserver, squareScale, squareRowShowing = new Set(), curSquareRow;
-
-//top, wave, bot
-for (var i = 0; i < 3 * specRows + 1; i++) allSquareRows.push([]);
-
-function specIndexToRowCol(index) {
-    return [Math.floor(index / specCols), index % specCols];
-}
-
-function specRowColToIndex(row, col) {
-    return row * specCols + col;
-}
-
-let squareAnimating = false, squareFlipped = false, squareAnimationSpeed = 40, squareAnimationDuration = 100;
+const hobbiesWrapper = document.querySelector('.second-page .hobbies-wrapper');
+const hobbiesBackground = hobbiesWrapper.querySelector('.background');
+const hobbiesList = document.querySelector('.second-page .hobbies-wrapper .list-wrapper .list');
+const hobbiesListItems = hobbiesList.querySelectorAll('p');
+const hobbiesOverlay = document.querySelector('.second-page .hobbies-wrapper .overlay');
+let hobbiesScroll;
 
 document.addEventListener('DOMContentLoaded', () => {
-    specSquares.forEach(square => {
-        if (square.getAttribute('index') == 0) {
-            square.addEventListener('click', (event) => {
-                flipSquares(square.getAttribute('index'));
-            });
-        } else {
-            square.addEventListener('click', (event) => {
-                rippleSquares(square.getAttribute('index'));
-            });
-        }
-    });
-
-    const specGaussianRange = 3;
-    for (var i = 0; i < specCols; i++) {
-        for (var j = 0; j < randomInt(5, 9); j++) {
-            let r = gaussianRandom(0, 1.5);
-            r = Math.abs(r);
-            r = clamp(r, 0, specGaussianRange);
-            r = r * specRows / specGaussianRange;
-            r = Math.floor(r);
-            r = specRows - r;
-            addSquareTop(r, i);
-        }
-    }
-
-    for (var i = 0; i < 1; i++) {
-        for (var j = 0; j < specCols; j++) {
-            let currentSquare = specSquareDivs[specRowColToIndex(i, j)];
-            allSquareRows[specRows + i + 1].push(currentSquare);
-            if (j == 0) currentSquare.classList.add('border-one');
-            else currentSquare.classList.add('border-left');
-        }
-    }
-
-    for (var i = 1; i < specRows; i++) {
-        for (var j = 0; j < specCols; j++) {
-            let currentSquare = specSquareDivs[specRowColToIndex(i, j)];
-            allSquareRows[specRows + i + 1].push(currentSquare);
-            if (j == 0) currentSquare.classList.add('border-top');
-            else currentSquare.classList.add('border-top-left');
-        }
-    }
-
-    for (var i = 0; i < specCols; i++) {
-        for (var j = 0; j < specRows; j++) {
-            let r = gaussianRandom(0, 1.5);
-            r = Math.abs(r);
-            r = clamp(r, 0, specGaussianRange);
-            r = r * specRows / specGaussianRange;
-            r = Math.floor(r);
-            addSquareBot(r, i);
-        }
-    }
-
-    /* squareObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            curSquareRow = entry.target.getAttribute('row-num');
-            if (curSquareRow) {
-                if (entry.isIntersecting && !squareRowShowing.has(curSquareRow)) {
-                    allSquareRows[curSquareRow].forEach(square => {
-                        square.classList.remove('hide-border');
-                    });
-                    squareRowShowing.add(curSquareRow);
-                } else {
-                    allSquareRows[curSquareRow].forEach(square => {
-                        square.classList.add('hide-border');
-                    });
-                    squareRowShowing.delete(curSquareRow);
-                }
-            }
-        })
-    });
-
-    allSquareRows.forEach((row, index) => {
-        if (row[0]) {
-            squareObserver.observe(row[0]);
-            row[0].setAttribute('row-num', index);
-        }
-    }); */
+    languageAnime();
+    strengthsAnime();
+    hobbiesAnime();
 });
 
-function flipSquares(index) {
-    if (squareAnimating) return;
-    squareAnimating = true;
-    if (squareFlipped) specFold.style.backgroundImage = '-webkit-linear-gradient(315deg, rgba(0, 0, 0, 0) 50%, var(--white) 50%)';
-    else specFold.style.backgroundImage = '-webkit-linear-gradient(315deg, rgba(0, 0, 0, 0) 50%, var(--black) 50%)';
-    anime({
-        targets: specSquareDivs,
-        scale: {value: squareFlipped ? 1 : 0, easing: 'easeInOutQuad', duration: squareAnimationDuration},
-        delay: anime.stagger(squareAnimationSpeed, 
-            {grid: [specCols, specRows], 
-            from: index}),
-        complete: function(anim) {
-            squareAnimating = false;
-            squareFlipped = !squareFlipped;
-        }
+function hobbiesAnime() {
+    var hobbiesTimeline = anime.timeline({
+        autoplay: false,
     });
-}
 
-function rippleSquares(index) {
-    if (squareAnimating) return;
-    squareAnimating = true;
-    anime({
-        targets: specSquareDivs,
-        scale: [
-            {value: squareFlipped ? 1 : 0, easing: 'easeInOutQuad', duration: squareAnimationDuration},
-            {value: oneZero(squareFlipped ? 1 : 0), easing: 'easeInOutQuad', duration: squareAnimationDuration * 1.5}
+    hobbiesTimeline.add({
+        targets: hobbiesBackground,
+        width: ['0%', '100%'],
+        easing: 'linear',
+        duration: 1000,
+    }).add({
+        targets: hobbiesList,
+        keyframes: [
+            {clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
+            {clipPath: 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)' },
         ],
-        delay: anime.stagger(squareAnimationSpeed,
-            {grid: [specCols, specRows],
-            from: index}),
-        complete: function(anim) {
-            squareAnimating = false;
+        easing: 'linear',
+        duration: 1000,
+    });
+
+    hobbiesScroll = new AnimeScroll(
+        hobbiesTimeline, hobbiesWrapper, 0, 0.3,
+        () => {
+            hobbiesOverlay.classList.add('show-fold');
+        },
+        () => {
+            hobbiesOverlay.classList.remove('show-fold');
         }
+    );
+
+    var overlayAnime = anime.timeline({autoplay: false});
+
+    overlayAnime.add({
+        targets: hobbiesListItems,
+        translateY: function(el, index) {
+            return index%2 == 0 ? '-200%' : '200%';
+        },
+        scale: 2,
+        delay: anime.stagger(50, {start: 0, easing: 'linear'}),
+    }, 0).add({
+        targets: hobbiesList,
+        backgroundColor: blue,
+        easing: 'easeOutQuad',
+        duration: 1000,
+    }, 0)
+
+    overlayAnime.reverse();
+
+    hobbiesOverlay.addEventListener('mouseover', () => {
+        hobbiesList.style.clipPath = 'none';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
+
+    hobbiesOverlay.addEventListener('mouseout', () => {
+        hobbiesList.style.clipPath = 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
+
+    document.addEventListener('hobbiesIntersection', () => {
+        if (hobbiesIntersecting) hobbiesScroll.start();
+        else hobbiesScroll.stop();
     });
 }
 
-function addSquareTop(row, col) {
-    if (topWaveSet.has(specRowColToIndex(row, col)) || row <= 0) return;
-    if (row == specRows && col == 1) return; // spec-fold
+function strengthsAnime() {
+    var strengthsTimeline = anime.timeline({
+        autoplay: false,
+    });
 
-    var span = document.createElement('span');
-    span.style.gridArea = row + ' / ' + col;
+    strengthsTimeline.add({
+        targets: strengths,
+        keyframes: [
+            {clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)'},
+            {clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)'},
+        ],
+        easing: 'linear',
+        duration: 1000,
+    }).add({
+        targets: strengthsList,
+        keyframes: [
+            {clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)'},
+            {clipPath: 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)'},
+        ],
+        easing: 'linear',
+        duration: 1000,
+    });
 
-    if (span.style.gridArea == "") return;
+    strengthsScroll = new AnimeScroll(
+        strengthsTimeline, strengthsWrapper, 0, 0.3,
+        () => {
+            strengthsOverlay.classList.add('show-fold');
+        },
+        () => {
+            strengthsOverlay.classList.remove('show-fold');
+        }
+    );
 
-    var div = document.createElement('div');
-    span.appendChild(div);
+    var overlayAnime = anime.timeline({autoplay: false});
 
-    div.style.scale = squareScalingFunctionReverse(row);
+    overlayAnime.add({
+        targets: strengthsListItems,
+        translateY: function(el, index) {
+            return index%2 == 0 ? '-200%' : '200%';
+        },
+        scale: 2.1,
+        delay: anime.stagger(50, {start: 0, easing: 'linear'}),
+    }, 0).add({
+        targets: strengthsList,
+        backgroundColor: yellow,
+        easing: 'easeOutQuad',
+        duration: 1000,
+    }, 0)
 
-    if (row == specRows) div.classList.add('border-bot');
-    else {
-        /* assignBorder(div); */
-        /* div.style.borderRadius = (1 - row/specRows) * 60 + '%'; */
-        div.classList.add('border-one');
-    }
-    /* div.classList.add('hide-border'); */
+    overlayAnime.reverse();
 
-    if (row == specRows && topWaveSet.has(specRowColToIndex(row, col - 1))) {
-        div.style.borderLeft = 'none';
-    }
+    strengthsOverlay.addEventListener('mouseover', () => {
+        strengthsList.style.clipPath = 'none';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
 
-    topWave.appendChild(span);
-    allSquareRows[row].push(div);
+    strengthsOverlay.addEventListener('mouseout', () => {
+        strengthsList.style.clipPath = 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
 
-    topWaveSet.add(specRowColToIndex(row, col));
-}
-
-function addSquareBot(row, col) {
-    if (botWaveSet.has(specRowColToIndex(row, col)) || row > specRows) return;
-
-    var span = document.createElement('span');
-    span.style.gridArea = row + ' / ' + col;
-
-    if (span.style.gridArea == "") return;
-
-    var div = document.createElement('div');
-    span.appendChild(div);
-
-    div.style.scale = squareScalingFunction(row);
-
-    if (row == 0) div.classList.add('border-top');
-    else {
-        /* assignBorder(div); */
-        div.classList.add('border-one');
-        /* div.style.borderRadius = row/specRows * 60 + '%'; */
-    }
-    /* div.classList.add('hide-border'); */
-
-    botWave.appendChild(span);
-    allSquareRows[specRows * 2 + row].push(div);
-
-    botWaveSet.add(specRowColToIndex(row, col));
-}
-
-function showBorderOnRow(row) {
-    allSquareRows[row].forEach(square => {
-        square.classList.remove('hide-border');
+    document.addEventListener('strengthsIntersection', () => {
+        if (strengthsIntersecting) strengthsScroll.start();
+        else strengthsScroll.stop();
     });
 }
 
-function hideBorderOnRow(row) {
-    allSquareRows[row].forEach(square => {
-        square.classList.add('hide-border');
+function languageAnime() {
+    var languageTimeline = anime.timeline({
+        autoplay: false,
     });
-}
 
-let squareParameter = 9.1;
-function squareScalingFunction(row) {
-    return (squareParameter + 1)/(row + squareParameter);
-}
+    languageTimeline.add({
+        targets: languageBackground,
+        width: ['0%', '100%'],
+        easing: 'linear',
+        duration: 1000,
+    }).add({
+        targets: languageList,
+        keyframes: [
+            {clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
+            {clipPath: 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)' },
+        ],
+        easing: 'linear',
+        duration: 1000,
+    });
 
-function squareScalingFunctionReverse(row) {
-    return (squareParameter + 1) / (-row + specRows + 1 + squareParameter);
+    languageScroll = new AnimeScroll(
+        languageTimeline, languageWrapper, 0, 0.3, 
+        () => {
+            languageOverlay.classList.add('show-fold');
+        },
+        () => {
+            languageOverlay.classList.remove('show-fold');
+        }
+    );
+
+    var overlayAnime = anime.timeline({autoplay: false});
+
+    overlayAnime.add({
+        targets: languageListItems,
+        translateY: function(el, index) {
+            return index%2 == 0 ? '-200%' : '200%';
+        },
+        scale: 2.5,
+        delay: anime.stagger(50, {start: 0, easing: 'linear'}),
+    }, 0).add({
+        targets: languageList,
+        backgroundColor: red,
+        easing: 'easeOutQuad',
+        duration: 1000,
+    }, 0)
+
+    overlayAnime.reverse();
+
+    languageOverlay.addEventListener('mouseover', () => {
+        languageList.style.clipPath = 'none';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
+
+    languageOverlay.addEventListener('mouseout', () => {
+        languageList.style.clipPath = 'polygon(100% -10000%, 0 -10000%, 0 10000%, 100% 10000%)';
+        overlayAnime.reverse();
+        overlayAnime.play();
+    });
+
+    document.addEventListener('languageIntersection', () => {
+        if (languageIntersecting) languageScroll.start();
+        else languageScroll.stop();
+    });
 }

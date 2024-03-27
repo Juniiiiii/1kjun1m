@@ -1,4 +1,4 @@
-const projectGrid = document.querySelector('.project-grid');
+const projectGrid = document.querySelector('.third-page .project-grid');
 const projectBar = document.querySelector('.project-bar');
 const projectPage = document.querySelector('.project-page');
 const projectPaperWrapper = document.querySelector('.project-page .paper-wrapper');
@@ -59,35 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ));
 
     allProjectCards[0].paper.element.classList.remove('hidden');
-
-    /* pixelObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            curPixelRow = entry.target.getAttribute('row-num');
-            if (curPixelRow) {
-                if (entry.isIntersecting  && !pixelRowShowing.has(curPixelRow)) {
-                    pixelGrid[curPixelRow].forEach(pixel => {
-                        if (pixel) pixel.showBorder();
-                    });
-                    pixelRowShowing.add(curPixelRow);
-                } else {
-                    pixelGrid[curPixelRow].forEach(pixel => {
-                        if (pixel) pixel.hideBorder();
-                    });
-                    pixelRowShowing.delete(curPixelRow);
-                }
-            }
-        });
-    });
-
-    pixelGrid.forEach(row => {
-        for (var i = 0 ; i < row.length; i++) {
-            if (row[i]) {
-                pixelObserver.observe(row[i].element);
-                row[i].element.setAttribute('row-num', row[i].row);
-                return;
-            }
-        }
-    }); */
 });
 
 const cardTransition = 1000;

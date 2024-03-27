@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
 
     <title>inside the mind of</title>
 
@@ -112,75 +113,64 @@
             </div>
         </div>
     </div>
-    <div class="page-padding"></div>
     <div class="second-page main-page">
-        <div class="spec-grid" id="top-wave">
-            <!-- <img src="./Media/topWave.png" alt=""> -->
-        </div>
-        <div class="spec-grid">
-            <div class="spec-fold"></div>
-            <div class="spec-grid" id="square-wave">
-                <script type="text/javascript">
-                    const grid = document.querySelector('#square-wave');
-                    for (var i = 0; i < getComputedStyle(document.documentElement).getPropertyValue('--spec-cols') *
-                                        getComputedStyle(document.documentElement).getPropertyValue('--spec-rows'); i++) {
-                        var span = document.createElement('span');
-                        span.setAttribute("index", i);
-                        span.appendChild(document.createElement('div'));
-                        grid.appendChild(span);
-                    }
-                </script>
+        <div class="spec-section language-wrapper">
+            <div class="full-span background"></div>
+            <div class="language full-span centered">Languages</div>
+            <div class="list-wrapper full-span">
+                <div class="list">
+                    <p>C#</p>
+                    <p>Java</p>
+                    <p>JavaScript</p>
+                    <p>HTML</p>
+                    <p>CSS</p>
+                    <p>Python</p>
+                </div>
             </div>
-            <img class="spec-backdrop" src="./Media/backdrop.png" alt="backdrop" id="backdrop">
-            <div class="spec-page spec-grid">
-                <span class="header first-header-row first-col">Languages</span>
-                <span class="second-text-row first-col">• C#/Java (5/5)</span>
-                <span class="third-text-row first-col">• HTML/CSS (4/5)</span>
-                <span class="fourth-text-row first-col">• JavaScript (3/5)</span>
-                <span class="fifth-text-row first-col">• Python (4/5)</span>
+            <div class="overlay full-span">
 
-                <span class="header first-header-row second-col">Strengths</span>
-                <span class="second-text-row second-col">× Object-Oriented Programming</span>
-                <span class="third-text-row second-col">× Data structures and Algorithms</span>
-                <span class="fourth-text-row second-col">× Fast and independent learner</span>
-                <span class="fifth-text-row second-col">× Teamwork and communication</span>
-
-                <span class="header first-header-row third-col">Hobbies</span>
-                <span class="second-text-row third-col">¤ Indie game development</span>
-                <span class="third-text-row third-col">¤ Mathematics</span>
-                <span class="fourth-text-row third-col">¤ Marathon running</span>
-                <span class="fifth-text-row third-col">¤ Design</span>
             </div>
         </div>
-        <div class="spec-grid" id="bot-wave">
-            <!-- <img src="./Media/botWave.png" alt=""> -->
+        <div class="spec-section strengths-wrapper">
+            <div class="full-span background"></div>
+            <div class="strengths full-span centered">Strengths</div>
+            <div class="list-wrapper full-span">
+                <div class="list">
+                    <p>Curiosity</p>
+                    <p>Fast learner</p>
+                    <p>Independent</p>
+                    <p>Problem Solving</p>
+                </div>
+            </div>
+            <div class="overlay full-span">
+                
+            </div>
+        </div>
+        <div class="spec-section hobbies-wrapper">
+            <div class="full-span background"></div>
+            <div class="hobbies full-span centered">Hobbies</div>
+            <div class="list-wrapper full-span">
+                <div class="list">
+                    <p>Game dev</p>
+                    <p>Maths</p>
+                    <p>Marathon</p>
+                    <p>Design</p>
+                    <p>Language</p>
+                </div>
+            </div>
+            <div class="overlay full-span">
+                
+            </div>
         </div>
     </div>
-    <div class="third-page main-page">
+    <div class="page-padding"></div>
+    <div class="page-padding"></div>
+    <div class="page-padding"></div>
+    <!-- <div class="third-page main-page">
         <div class="project-container">
             <div class="project-bar"></div>
             <div class="project-page">
-                <!-- <div class="fade-top"></div> -->
-                <div class="paper-wrapper">
-                    <!--
-                        <div id="${name}" class="paper">
-                            <div class="paper-images">
-                                <img src="${pictures[i]}" alt="${name}-picture-${i}">
-                                <img src="${pictures[i]}" alt="${name}-picture-${i}">
-                            </div>
-                            <div class="paper-texts">
-                                <div class="paragraph">
-                                    <span class="outer">${outerTexts[i]}</span>
-                                    <span class="inner">${innerTexts[i]}</span>
-                                </div>
-                                <div class="paragraph">
-                                    <span class="outer">${outerTexts[i]}</span>
-                                </div>
-                            </div>
-                        </div>
-                    -->
-                </div>
-                <!-- <div class="fade-bot"></div> -->
+                <div class="paper-wrapper"></div>
             </div>
             <div class="project-grid"></div>
         </div>
@@ -244,7 +234,7 @@
             <span>realised by</span>
             <span>ikjun im</span>
         </div>
-    </div>
+    </div> -->
 
     <script src="./Scripts/Utility/utility.js"></script>
     <script src="/Scripts/observers.js"></script>
@@ -268,8 +258,8 @@
     <script src="./Scripts/idea.js"></script>
     <script src="./Scripts/about.js"></script>
     <script src="./Scripts/spec.js"></script>
-    <script src="./Scripts/project.js"></script>
-    <script src="./Scripts/footer.js"></script>
+    <!-- <script src="./Scripts/project.js"></script>
+    <script src="./Scripts/footer.js"></script> -->
     
     <script src="./Scripts/main.js"></script>
 </body>

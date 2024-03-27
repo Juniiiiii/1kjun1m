@@ -10,7 +10,7 @@
     --ghost-black: rgba(18, 17, 19, 0.7);
     --ghost: rgba(254, 249, 239, 0.2);
     --spec-cols: 34;
-    --spec-rows: 11;
+    --spec-rows: 60;
     --spec-length: 3vw;
     --project-cols: 60;
     --project-rows: 30;
@@ -107,6 +107,10 @@ html {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.second-page {
+    background-color: var(--black);
 }
 
 .page-padding {

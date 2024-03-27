@@ -228,3 +228,64 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
         timeout = setTimeout(step, Math.max(0, that.interval-drift));
     }
 }
+
+class AnimeScroll {
+    constructor(anime, element, botPercent, topPercent, complete = null, uncomplete = null) {
+        this.anime = anime;
+        this.element = element;
+        this.rect = element.getBoundingClientRect();
+        
+        
+        this.botPercent = botPercent;
+        this.topPercent = topPercent;
+        
+        this.lower = this.rect.top + window.scrollY + this.rect.height * this.botPercent;
+        this.upper = this.rect.bottom + window.scrollY - this.rect.height * this.topPercent;
+
+        this.isRunning = false;
+        this.target = null;
+        this.prev = null;
+
+        this.complete = complete;
+        this.uncomplete = uncomplete;
+    }
+
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+
+        window.addEventListener('scroll', this.updateRange.bind(this));
+        window.addEventListener('resize', this.updateRange.bind(this));
+
+        window.addEventListener('scroll', this.update.bind(this));
+        window.addEventListener('resize', this.update.bind(this));
+    }
+
+    updateRange() {
+        this.rect = this.element.getBoundingClientRect();
+
+        this.lower = this.rect.top + window.scrollY + this.rect.height * this.botPercent;
+        this.upper = this.rect.bottom + window.scrollY + this.rect.height * this.topPercent;
+    }
+
+    update() {
+        this.prev = this.target;
+        this.target = clamp((window.scrollY + window.innerHeight - this.lower) / (this.upper - this.lower), 0, 1);
+        this.anime.seek(this.target * this.anime.duration);
+        if (this.target == 1 && this.prev != 1 && this.complete) this.complete();
+        else if (this.prev == 1 && this.target != 1 && this.uncomplete) this.uncomplete();
+    }
+
+    stop() {
+        if (!this.isRunning) return;
+        this.isRunning = false;
+
+        window.removeEventListener('scroll', this.updateRange);
+        window.removeEventListener('resize', this.updateRange);
+
+        window.removeEventListener('scroll', this.update);
+        window.removeEventListener('resize', this.update);
+
+        this.anime.seek(0);
+    }
+}
