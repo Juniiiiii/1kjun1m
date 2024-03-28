@@ -1,85 +1,72 @@
-const aboutBody = document.querySelector('.about-page .body');
-const aboutLines = document.querySelectorAll('.about-page .body > div');
-const aboutBodyWrapper = document.querySelector('.about-page .body-wrapper');
-let aboutWords = [], aboutRevealRange = [aboutBody.getBoundingClientRect().top, aboutBodyWrapper.getBoundingClientRect().bottom];
-let aboutAnimation, aboutCurrent = 0, aboutTarget = 0, aboutMinSpeed = 0.0005,
-aboutSpeed = 0.03, aboutTick = 10, aboutInterval = null, aboutIsUpdating = false;
+const eyePath = anime.path('.about-page .painting path');
+/* const curiosityDesginer = document.querySelector('.about-page .curiosity-designer'); */
 
 document.addEventListener('DOMContentLoaded', () => {
-    aboutLines.forEach(line => {
-        spanifyWord(line).forEach(word => {
-            aboutWords.push(word);
-        })
-    });
-
-    aboutAnimation = anime({
-        targets: aboutWords,
-        translateY: ['50%', 0],
-        opacity: [0, 1],
-        easing: 'easeOutExpo',
-        delay: anime.stagger(100, {start: 500, easing: 'linear'}),
-        autoplay: false,
-    });
+    var eyeScroll = new PercentScroll(
+        document.querySelector('.about-page'),
+        0.3, 1, (percentage) => {
+            leftEye.progress(percentage);
+            rightEye.progress(percentage);
+        }
+    );
 
     document.addEventListener('aboutIntersection', () => {
-        if (aboutIntersecting) {
-            startAboutUpdate();
-            aboutUpdate();
-            startAboutInterval();
-        }
-        else stopAboutUpdate();
+        if (aboutIntersecting) eyeScroll.start();
+        else eyeScroll.stop();
     });
 });
 
-function updateAboutRange() {
-    aboutRevealRange = [aboutBody.getBoundingClientRect().top + window.scrollY, 
-                        aboutBodyWrapper.getBoundingClientRect().bottom + window.scrollY];
-}
+class Eye {
+    constructor(start, startString, upper, upperString, lower, lowerString, end, endString) {
+        this.start = start;
+        this.startString = startString;
+        this.upper = upper;
+        this.upperString = upperString;
+        this.lower = lower;
+        this.lowerString = lowerString;
+        this.end = end;
+        this.endString = endString;
 
-function startAboutUpdate() {
-    if (aboutIsUpdating) return;
-    aboutIsUpdating = true;
+        this.totalLength = startString.length + upperString.length + lowerString.length + endString.length;
+    }
 
-    window.addEventListener('resize', updateAboutRange);
-    window.addEventListener('scroll', updateAboutRange);
+    progress(percentage) {
+        this.current = clamp(Math.floor(percentage * this.totalLength), 0, this.totalLength);
 
-    window.addEventListener('scroll', aboutUpdate);
-    window.addEventListener('resize', aboutUpdate);
-}
-
-function aboutUpdate() {
-    aboutTarget = clamp((window.scrollY + window.innerHeight - aboutRevealRange[0]) / (aboutRevealRange[1] - aboutRevealRange[0]), 0, 1);
-    if (aboutCurrent != aboutTarget && aboutInterval == null) startAboutInterval();
-}
-
-function stopAboutUpdate() {
-    if (!aboutIsUpdating) return;
-    aboutIsUpdating = false;
-
-    window.removeEventListener('resize', updateAboutRange);
-    window.removeEventListener('scroll', updateAboutRange);
-
-    window.removeEventListener('scroll', aboutUpdate);
-    window.removeEventListener('resize', aboutUpdate);
-}
-
-function startAboutInterval() {
-    aboutInterval = setInterval(() => {
-        if (aboutCurrent < aboutTarget) {
-            aboutCurrent += Math.max((aboutTarget - aboutCurrent) * aboutSpeed, aboutMinSpeed);
-            if (aboutCurrent > aboutTarget) aboutCurrent = aboutTarget;
-        } else if (aboutCurrent > aboutTarget) {
-            aboutCurrent -= Math.max((aboutCurrent - aboutTarget) * aboutSpeed, aboutMinSpeed);
-            if (aboutCurrent < aboutTarget) aboutCurrent = aboutTarget;
+        if (this.current < this.startString.length) {
+            this.start.textContent = this.startString.substring(0, this.current);
+            this.upper.textContent = '';
+            this.lower.textContent = '';
+            this.end.textContent = '';
+        } else if (this.current < this.startString.length + this.upperString.length) {
+            this.start.textContent = this.startString;
+            this.upper.textContent = this.upperString.substring(0, this.current - this.startString.length);
+            this.lower.textContent = '';
+            this.end.textContent = '';
+        } else if (this.current < this.startString.length + this.upperString.length + this.lowerString.length) {
+            this.start.textContent = this.startString;
+            this.upper.textContent = this.upperString;
+            this.lower.textContent = this.lowerString.substring(0, this.current - this.startString.length - this.upperString.length);
+            this.end.textContent = '';
+        } else {
+            this.start.textContent = this.startString;
+            this.upper.textContent = this.upperString;
+            this.lower.textContent = this.lowerString;
+            this.end.textContent = this.endString.substring(0, this.current - this.startString.length - this.upperString.length - this.lowerString.length);
         }
-        progressAboutWords(aboutCurrent);
-        if (aboutCurrent == aboutTarget) {
-            clearInterval(aboutInterval);
-            aboutInterval = null;
-        }
-    }, aboutTick);
+    }
 }
 
-function progressAboutWords(percentage) {
-    aboutAnimation.seek(aboutAnimation.duration * percentage);
-}
+const leftEye = new Eye(
+    document.querySelector('.about-page .left.eye .start'), 'C',
+    document.querySelector('.about-page .left.eye .upper-path textPath'), 'urios',
+    document.querySelector('.about-page .left.eye .lower-path textPath'), 'reativ',
+    document.querySelector('.about-page .left.eye .end'), 'ity'
+);
+
+const rightEye = new Eye(
+    document.querySelector('.about-page .right.eye .start'), 'D',
+    document.querySelector('.about-page .right.eye .upper-path textPath'), 'evelop',
+    document.querySelector('.about-page .right.eye .lower-path textPath'), 'esign',
+    document.querySelector('.about-page .right.eye .end'), 'er'
+);

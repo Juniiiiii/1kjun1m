@@ -27,7 +27,7 @@
 }
 
 .spec-section .overlay.show-fold {
-    clip-path: polygon(0 0, 0 10vw, 6vw 0);
+    clip-path: polygon(0 0, 0 14vw, 10vw 0);
     pointer-events: all;
 }
 

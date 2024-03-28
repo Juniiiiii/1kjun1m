@@ -229,18 +229,67 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
     }
 }
 
+class PercentScroll {
+    constructor(element, from, to, callBack) {
+        this.element = element;
+        this.rect = element.getBoundingClientRect();
+        this.callBack = callBack;
+
+        this.from = from;
+        this.to = 1 - to;
+
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
+
+        this.isRunning = false;
+
+        this.updateRange = this.updateRange.bind(this);
+        this.update = this.update.bind(this);
+    }
+
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+
+        window.addEventListener('scroll', this.updateRange);
+        window.addEventListener('resize', this.updateRange);
+        window.addEventListener('scroll', this.update);
+        window.addEventListener('resize', this.update);
+    }
+
+    updateRange() {
+        this.rect = this.element.getBoundingClientRect();
+
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
+    }
+
+    update() {
+        this.callBack(clamp((window.innerHeight - this.lower) / (this.upper - this.lower), 0, 1));
+    }
+
+    stop() {
+        if (!this.isRunning) return;
+        this.isRunning = false;
+
+        window.removeEventListener('scroll', this.updateRange);
+        window.removeEventListener('resize', this.updateRange);
+        window.removeEventListener('scroll', this.update);
+        window.removeEventListener('resize', this.update);
+    }
+}
+
 class AnimeScroll {
-    constructor(anime, element, botPercent, topPercent, complete = null, uncomplete = null) {
+    constructor(anime, element, from, to, complete = null, uncomplete = null) {
         this.anime = anime;
         this.element = element;
         this.rect = element.getBoundingClientRect();
         
+        this.from = from;
+        this.to = 1 - to;
         
-        this.botPercent = botPercent;
-        this.topPercent = topPercent;
-        
-        this.lower = this.rect.top + window.scrollY + this.rect.height * this.botPercent;
-        this.upper = this.rect.bottom + window.scrollY - this.rect.height * this.topPercent;
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
 
         this.isRunning = false;
         this.target = null;
@@ -264,13 +313,13 @@ class AnimeScroll {
     updateRange() {
         this.rect = this.element.getBoundingClientRect();
 
-        this.lower = this.rect.top + window.scrollY + this.rect.height * this.botPercent;
-        this.upper = this.rect.bottom + window.scrollY + this.rect.height * this.topPercent;
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
     }
 
     update() {
         this.prev = this.target;
-        this.target = clamp((window.scrollY + window.innerHeight - this.lower) / (this.upper - this.lower), 0, 1);
+        this.target = clamp((window.innerHeight - this.lower) / (this.upper - this.lower), 0, 1);
         this.anime.seek(this.target * this.anime.duration);
         if (this.target == 1 && this.prev != 1 && this.complete) this.complete();
         else if (this.prev == 1 && this.target != 1 && this.uncomplete) this.uncomplete();

@@ -1,5 +1,5 @@
 const particleRestitution = 0.8;
-const particleCount = 69;
+const particleCount = 50;
 const particleSize = 0.003;
 
 const wallThickness = 300;

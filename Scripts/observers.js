@@ -1,7 +1,7 @@
 let firstIntersecting = false;
 let landingIntersecting = false;
 let ideaIntersecting = false;
-let ideaHalfIntersecting = false;
+let ideaEndIntersecting = false;
 let aboutIntersecting = false;
 let languageIntersecting = false;
 let strengthsIntersecting = false;
@@ -10,7 +10,7 @@ let hobbiesIntersecting = false
 const firstIntersection = new Event('firstIntersection');
 const landingIntersection = new Event('landingIntersection');
 const ideaIntersection = new Event('ideaIntersection');
-const ideaHalfIntersection = new Event('ideaHalfIntersection');
+const ideaEndIntersection = new Event('ideaEndIntersection');
 const aboutIntersection = new Event('aboutIntersection');
 const languageIntersection = new Event('languageIntersection');
 const strengthsIntersection = new Event('strengthsIntersection');
@@ -39,44 +39,22 @@ let ideaObserver = new IntersectionObserver(entries => {
 });
 ideaObserver.observe(document.querySelector('.idea-page'));
 
-let ideaHalfObserver = new IntersectionObserver(entries => {
+let ideaEndObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        ideaHalfIntersecting = entry.isIntersecting;
-        document.dispatchEvent(ideaHalfIntersection);
+        ideaEndIntersecting = entry.isIntersecting;
+        document.dispatchEvent(ideaEndIntersection);
     });
 }, {
-    threshold: 0.5
+    threshold: 0.95
 });
-ideaHalfObserver.observe(document.querySelector('.idea-page'));
+ideaEndObserver.observe(document.querySelector('.idea-page'));
 
 let aboutObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         aboutIntersecting = entry.isIntersecting;
         document.dispatchEvent(aboutIntersection);
     });
+}, {
+    threshold: 0.2
 });
 aboutObserver.observe(document.querySelector('.about-page'));
-
-let languageObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        languageIntersecting = entry.isIntersecting;
-        document.dispatchEvent(languageIntersection);
-    });
-});
-languageObserver.observe(document.querySelector('.language-wrapper'));
-
-let strengthsObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        strengthsIntersecting = entry.isIntersecting;
-        document.dispatchEvent(strengthsIntersection);
-    });
-});
-strengthsObserver.observe(document.querySelector('.strengths-wrapper'));
-
-let hobbiesObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        hobbiesIntersecting = entry.isIntersecting;
-        document.dispatchEvent(hobbiesIntersection);
-    });
-});
-hobbiesObserver.observe(document.querySelector('.hobbies-wrapper'));

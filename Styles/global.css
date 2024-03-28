@@ -109,7 +109,8 @@ html {
     flex-direction: column;
 }
 
-.second-page {
+.third-page {
+    margin-top: calc(-25vw + 0.5vw); /* height of ideaPage minus height of idea Line*/
     background-color: var(--black);
 }
 
