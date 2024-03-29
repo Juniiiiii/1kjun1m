@@ -44,7 +44,59 @@
 }
 
 .intro-text {
-    margin-top: 30vw;
+    margin-top: 30rem;
+}
+
+.intro-text .fold {
+    background-color: var(--red);
+    height: 100%;
+    z-index: 5;
+    clip-path: polygon(0 0, 0 0, 0 0);
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: clip-path 1s ease;
+}
+
+.intro-text .fold-inner {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.intro-text .hover-background {
+    grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: var(--light-red);
+    font-family: 'Prata', serif;
+    font-size: 2vw;
+}
+
+.intro-text .instructions {
+    grid-area: 1 / 1 / -1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: var(--white);
+    font-family: 'FilledOrigami', serif;
+    padding-left: 2%;
+    font-size: 4.2vw;
+}
+
+.intro-text .fold.show {
+    clip-path: polygon(0 0, 0 30%, 8% 0);
+}
+
+.intro-text .fold:hover {
+    clip-path: polygon(0 0, 0 200%, 200% 0);
 }
 
 .intro-text .paper {
@@ -55,6 +107,7 @@
     color: var(--white);
     font-family: 'DM Sans', sans-serif;
     font-size: 3vw;
+    pointer-events: none;
 }
 
 .intro-text div {

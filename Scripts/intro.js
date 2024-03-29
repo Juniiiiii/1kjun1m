@@ -1,8 +1,10 @@
 const introPage = document.querySelector('.intro-page');
+const whoPage = document.querySelector('.who-page');
 const introText = document.querySelector('.intro-text-wrapper');
 const catPath = document.querySelector('.intro-page .cat-path');
 const catTextPath = document.querySelector('.intro-page .cat-path textPath');
 const questions = document.querySelectorAll('.intro-text .paper div');
+const introFold = document.querySelector('.intro-text .fold');
 
 const oneLetters = spanifyLetter(questions[0]);
 const twoLetters = spanifyLetter(questions[1]);
@@ -12,7 +14,7 @@ const oneWrapper = wrapLetter(questions[0]);
 const twoWrapper = wrapLetter(questions[1]);
 const threeWrapper = wrapLetter(questions[2]);
 
-const colorOffset = randomInt(0, charColors.length);
+const colorOffset = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
     var catTextPS = new PercentScroll(
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     document.addEventListener('introIntersection', () => {
-        if (introIntersecting) catTextPS.start();
+        if (introIntersecting) catTextPS.start(); 
         else catTextPS.stop();
     });
 
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var dragLetters = findAndClassify(twoLetters, 'drag');
     var colorfulLetters = findAndClassify(twoLetters, 'colorful');
     var colorfulPS = new PercentScroll(
-        introPage, 0.3, 1, (percentage) => {
+        introPage, 0.3, 0.7, (percentage) => {
             colorfulLetters.forEach((letter, index) => {
                 letter.style.color = charColors[(colorOffset + index + Math.floor(percentage * 20))%4];
             });
@@ -63,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     var threePureLetters = pureGlyphs(threeLetters);
     var downLetters = findAndClassify(threeLetters, 'down');
-    var moreLetters = findAndClassify(threeLetters, 'more');
+    //var moreLetters = findAndClassify(threeLetters, 'more');
 
-    var oneQuestion = classifyQuestion(oneLetters);
-    var twoQuestion = classifyQuestion(twoLetters);
-    var threeQuestion = classifyQuestion(threeLetters);
+    //var oneQuestion = classifyQuestion(oneLetters);
+    //var twoQuestion = classifyQuestion(twoLetters);
+    //var threeQuestion = classifyQuestion(threeLetters);
 
     var introTextAnime = anime.timeline({
         autoplay: false,
@@ -168,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, onePureDuration + twoPureDuration + 400 * 3)
     .add({ // down letters
         targets: downLetters,
-        translateY: '80%',
+        translateY: '275%',
         duration: 600,
         delay: anime.stagger(100, {start: 0}),
         easing: 'linear',
@@ -197,21 +199,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     var introTextTS = new TriggerScroll(introText, 1, fixIntroText, releaseIntroText);
+    var foldShowTS = new TriggerScroll(introPage, 0.35, () => {
+        introFold.classList.add('show');
+    }, () => {
+        introFold.classList.remove('show');
+    });
 
     document.addEventListener('introTextIntersection', () => {
-        if (introTextIntersecting) introTextTS.start();
-        else introTextTS.stop();
+        if (introTextIntersecting) {
+            introTextTS.start();
+            foldShowTS.start();
+        } else {
+            introTextTS.stop();
+            foldShowTS.stop();
+        }
     });
+
+    
+    window.addEventListener('scroll', () => {
+        
+        var centerCircle = colorfulLetters[1];
+        var circleRect = centerCircle.getBoundingClientRect();
+        var centerXPercent = (circleRect.left + circleRect.width / 2) / window.innerWidth;
+        var centerYPercent = (circleRect.top + circleRect.height / 2) / window.innerHeight;
+    
+        console.log(centerXPercent, centerYPercent);
+    })
+
 });
 
 function fixIntroText() {
     catPath.style.position = 'fixed';
     introText.style.position = 'fixed';
+    whoPage.style.position = 'fixed';
 }
 
 function releaseIntroText() {
     catPath.style.position = 'absolute';
     introText.style.position = 'absolute';
+    whoPage.style.position = 'absolute';
 }
 
 function classifyWhyNots(letters) {
