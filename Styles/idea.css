@@ -25,6 +25,7 @@
 
 .idea-page .where {
     font-size: 4.6vw;
+    background-color: var(--black);
     overflow: hidden;
     display: grid;
     grid-template-columns: auto auto;

@@ -109,9 +109,15 @@ html {
     flex-direction: column;
 }
 
-.third-page {
-    margin-top: calc(-25vw + 0.5vw); /* height of ideaPage minus height of idea Line*/
+.second-page {
     background-color: var(--black);
+}
+
+.third-page {
+    background-color: var(--black);
+    position: relative;
+    width: 100%;
+    height: 500vh;
 }
 
 .page-padding {
@@ -130,10 +136,25 @@ html {
     left: 0;
 }
 
-.matter-greyscale {
+.origami {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.origami .fold {
     grid-area: 1 / 1 / -1 / -1;
-    background-color: rgba(0, 0, 0, 1);
-    mix-blend-mode: saturation;
-    z-index: -5;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+
+.origami .paper {
+    grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'FilledOrigami';
+    src: url('/Media/origami.ttf') format('truetype');
 }

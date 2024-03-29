@@ -9,3 +9,4 @@ const red = styles.getPropertyValue('--red');
 const ghost = styles.getPropertyValue('--ghost');
 
 const particleColors = [blue, green, yellow, white, red];
+const charColors = [blue, green, yellow, red];

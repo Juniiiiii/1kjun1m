@@ -47,6 +47,11 @@ function isIntersecting(element1, element2) {
     );
 }
 
+function scrolledPast(element) {
+    var rect = element.getBoundingClientRect();
+    return rect.top < 0;
+}
+
 //Returns the aspect ratio of a polygon using its bounding box
 function aspectRatio(vertices) {
     var minX = Infinity;
@@ -98,6 +103,17 @@ function spanifyLetter(element) {
     return element.querySelectorAll('.letter');
 }
 
+function wrapLetter(element) {
+    var results = [];
+    element.querySelectorAll('.letter').forEach(letter => {
+        const div = document.createElement('div');
+        div.classList.add('letter-wrapper');
+        div.appendChild(letter);
+        element.appendChild(div);
+    });
+    return results;
+}
+
 function spanifyWord(element) {
     let words = element.textContent.trim().split(/\s+/);
 
@@ -110,6 +126,70 @@ function spanifyWord(element) {
     element.innerHTML = newContent.trim();
 
     return element.querySelectorAll('.word');
+}
+
+function findWord(letters, word) {
+    var i = 0, j = 0, z = 0;
+    var results = [];
+    while (j < letters.length) {
+        while (i < letters.length && letters[i].textContent != word[0]) i++;
+        if (i >= letters.length) break;
+        j = i + 1;
+        z = 1;
+        while (j < letters.length && z < word.length && letters[j].textContent == word[z]) {
+            j++;
+            z++;
+        }
+        if (z < word.length) {
+            i++;
+            continue;
+        }
+        ans = [];
+        for (var k = i; k < j; k++) {
+            ans.push(letters[k]);
+        }
+        results.push(ans);
+        i++;
+    }
+    return results;
+}
+
+function classifyLetters(letters, className) {
+    letters.forEach(letter => {
+        letter.classList.add(className);
+    });
+
+    return letters;
+}
+
+function pureLetters(letters) {
+    var results = [];
+    letters.forEach(letter => {
+        if (letter.classList.length == 1) results.push(letter);
+    });
+    return results;
+}
+
+function pureGlyphs(letters) {
+    var results = [];
+    letters.forEach(letter => {
+        if (letter.classList.length == 1 && letter.textContent.trim() != "") results.push(letter);
+    });
+    return results;
+}
+
+function printLetters(letters) {
+    var printString = "";
+    letters.forEach(letter => {
+        printString += letter.textContent;
+    })
+    console.log(printString);
+}
+
+function duplicateElement(element) {
+    var clone = element.cloneNode(true);
+    element.parentNode.insertBefore(clone, element);
+    return clone;
 }
 
 let mousePosition = { x: 0, y : 0};
@@ -229,6 +309,52 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
     }
 }
 
+function totalStaggerDuration(targets, duration, delay, start) {
+    if (typeof targets === 'number' && Number.isInteger(targets)) return (targets - 1) * delay + start + duration;
+    else if (typeof targets === 'object' && targets.length) return (targets.length - 1) * delay + start + duration;
+}
+
+class TriggerScroll {
+    constructor(element, trigger, triggedCallback, untriggeredCallback) {
+        this.element = element;
+        this.rect = element.getBoundingClientRect();
+
+        this.trigger = trigger;
+        this.triggerPoint = this.rect.top + this.rect.height * this.trigger + window.scrollY;
+        this.triggered = false;
+
+        this.triggedCallback = triggedCallback;
+        this.untriggeredCallback = untriggeredCallback;
+    }
+
+    start() {
+        window.addEventListener('scroll', this.update.bind(this));
+        window.addEventListener('resize', this.updateTrigger.bind(this));
+    }
+
+    updateTrigger() {
+        this.rect = this.element.getBoundingClientRect();
+        this.triggerPoint = this.rect.top + this.rect.height * this.trigger + window.scrollY;
+
+        this.update();
+    }
+
+    update() {
+        if (this.triggerPoint < window.scrollY + window.innerHeight && !this.triggered) {
+            this.triggered = true;
+            this.triggedCallback();
+        } else if (this.triggerPoint >= window.scrollY + window.innerHeight && this.triggered) {
+            this.triggered = false;
+            this.untriggeredCallback();
+        }
+    }
+
+    stop() {
+        window.removeEventListener('scroll', this.update.bind(this));
+        window.removeEventListener('resize', this.update.bind(this));
+    }
+}
+
 class PercentScroll {
     constructor(element, from, to, callBack) {
         this.element = element;
@@ -280,7 +406,7 @@ class PercentScroll {
 }
 
 class AnimeScroll {
-    constructor(anime, element, from, to, complete = null, uncomplete = null) {
+    constructor(element, from, to, anime, complete = null, uncomplete = null) {
         this.anime = anime;
         this.element = element;
         this.rect = element.getBoundingClientRect();
@@ -338,3 +464,4 @@ class AnimeScroll {
         this.anime.seek(0);
     }
 }
+

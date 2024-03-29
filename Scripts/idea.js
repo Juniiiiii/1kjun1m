@@ -119,7 +119,7 @@ class IdeaWord {
                 y: ideaLineRect.top + window.scrollY,
                 relPosition: false,
                 relSize: true,
-                color: [blue, green, yellow, red],
+                color: charColors,
                 category: charCategory,
                 mask: charCategory,
             }).forEach(letter => {
