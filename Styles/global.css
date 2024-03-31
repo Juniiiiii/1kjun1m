@@ -130,6 +130,13 @@ html {
     height: 800vh;
 }
 
+.fourth-page {
+    background-color: var(--red);
+    position: relative;
+    width: 100%;
+    height: 200vh;
+}
+
 .page-padding {
     width: 100%;
     aspect-ratio: 10 / 1;

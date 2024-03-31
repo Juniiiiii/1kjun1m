@@ -4,7 +4,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 3rem;
-    font-family: 'Libre Caslon Text', serif;
+    font-family: 'Prata', serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,7 +34,7 @@
     z-index: 10;
     background-color: var(--white);
     font-size: 3rem;
-    font-family: 'Libre Caslon Text', serif;
+    font-family: 'Prata', serif;
     text-align: center;
     display: flex;
     justify-content: center;

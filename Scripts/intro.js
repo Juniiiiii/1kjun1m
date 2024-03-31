@@ -18,6 +18,7 @@ const threeWrapper = wrapLetter(questions[2]);
 const colorOffset = 1;
 
 let whoWrapperCenter = null, wrapperCenterRect = null;
+let introFixed = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     var catTextPS = new PercentScroll(
@@ -193,24 +194,24 @@ document.addEventListener('DOMContentLoaded', () => {
         easing: 'linear',
     }, onePureDuration);
 
+    followColorful();
     var introTextAS = new AnimeScroll(introPage, 0.15, 0.5, introTextAnime, () => {
         followColorful();
-        window.addEventListener('resize', followColorful);
         introFold.style.pointerEvents = 'none';
+        window.addEventListener('resize', followColorful);
     }, () => {
-        window.removeEventListener('resize', followColorful);
         introFold.style.pointerEvents = 'auto';
+        window.removeEventListener('resize', followColorful);
     });
     introTextAnime.seek(0);
 
-    followColorful();
     var introWhoAnime = anime({
         targets: whoOverlay,
         clipPath:[
             'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)',
             'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)'
         ],
-        easing: 'linear',
+        easing: 'easeInExpo',
         autoplay: false,
     });
     introWhoAnime.seek(0);
@@ -238,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         delay: anime.stagger(100, {start: 0}),
         autoplay: false,
     });
-    const whoTransitionAS = new AnimeScroll(introPage, 0.65, 1, whoTransitionAnime);
+    const whoTransitionAS = new AnimeScroll(introPage, 0.7, 1, whoTransitionAnime);
 
     document.addEventListener('introIntersection', () => {
         if (introIntersecting) {
@@ -252,13 +253,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     //Please fix triggerScroll
-    var introTextTS = new TriggerScroll(introText, 1, fixIntroText, releaseIntroText);
-    var foldShowTS = new TriggerScroll(introPage, 0.25, () => {
+    /* var introTextTS = new TriggerScroll(introText, 1, fixIntroText, releaseIntroText); */
+    var introTextTS = new TriggerScroll(introPage, 0, 1, () => {
+        if (introFixed) { //At the top
+            releaseIntroText();
+            putIntroTextTop();
+        } else fixIntroText();
+        introFixed = !introFixed;
+    }, () => {
+        if (introFixed) { //At the bottom
+            releaseIntroText();
+            putIntroTextBot();
+        } else {
+            fixIntroText();
+            followColorful();
+        }
+        introFixed = !introFixed;
+    });
+    var foldShowTS = new SimpleTriggerScroll(introPage, 0.25, () => {
         introFold.classList.add('show');
     }, () => {
         introFold.classList.remove('show');
     });
-    
+
     document.addEventListener('introTextIntersection', () => {
         if (introTextIntersecting) {
             introTextTS.start();
@@ -288,6 +305,9 @@ function setWhoWrapperPosition(x, y) {
 }
 
 function fixIntroText() {
+    catPath.style.top = 0;
+    introText.style.top = 0;
+    whoPage.style.top = 0;
     catPath.style.position = 'fixed';
     introText.style.position = 'fixed';
     whoOverlay.style.position = 'fixed';
@@ -300,6 +320,27 @@ function releaseIntroText() {
     whoOverlay.style.position = 'absolute';
     whoPage.style.position = 'absolute';
 }
+
+function putIntroTextTop() {
+    catPath.style.top = 0;
+    introText.style.top = 0;
+    whoOverlay.style.top = 0;
+    whoPage.style.top = 0;
+}
+
+function putIntroTextBot() {
+    //third-page is 800vh
+    //Every elemenit is 100vh tall
+    catPath.style.top = '700vh';
+    introText.style.top = '700vh';
+    //whoOverlay is fixed to the colorful 'o', followColorful() will handle it
+    /* whoOverlay.style.top = '700vh'; */
+    //whoPage is relative to whoOverlay
+    whoOverlay.style.top = 0;
+    whoOverlay.style.left = 0;
+    whoPage.style.top = '700vh';
+}
+
 
 function classifyWhyNots(letters) {
     var whyWords = findWord(letters, 'Why');

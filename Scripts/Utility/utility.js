@@ -314,7 +314,7 @@ function totalStaggerDuration(targets, duration, delay, start) {
     else if (typeof targets === 'object' && targets.length) return (targets.length - 1) * delay + start + duration;
 }
 
-class TriggerScroll {
+class SimpleTriggerScroll {
     constructor(element, trigger, triggedCallback, untriggeredCallback) {
         this.element = element;
         this.rect = element.getBoundingClientRect();
@@ -352,6 +352,69 @@ class TriggerScroll {
     stop() {
         window.removeEventListener('scroll', this.update.bind(this));
         window.removeEventListener('resize', this.update.bind(this));
+    }
+}
+
+class TriggerScroll {
+    constructor(element, from, to, fromTopCallback, toBotCallback) {
+        this.element = element;
+        this.rect = element.getBoundingClientRect();
+
+        this.from = from;
+        this.to = 1 - to;
+
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
+
+        this.fromTopCallback = fromTopCallback;
+        this.toBotCallback = toBotCallback;
+
+        this.topTriggerd = false;
+        this.botTriggered = false;
+
+        this.isRunning = false;
+    }
+
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+
+        window.addEventListener('scroll', this.scrollUpdate.bind(this));
+        window.addEventListener('resize', this.resizeUpdate.bind(this));
+    }
+
+    scrollUpdate() {
+        this.rect = this.element.getBoundingClientRect();
+
+        this.lower = this.rect.top + this.rect.height * this.from;
+        this.upper = this.rect.bottom - this.rect.height * this.to;
+
+        if (!this.topTriggerd && 0 > this.lower) {
+            this.topTriggerd = true;
+            this.fromTopCallback();
+        } else if (this.topTriggerd && 0 <= this.lower) {
+            this.topTriggerd = false;
+            this.fromTopCallback();
+        } else if (!this.botTriggered && window.innerHeight > this.upper) {
+            this.botTriggered = true;
+            this.toBotCallback();
+        } else if (this.botTriggered && window.innerHeight <= this.upper) {
+            this.botTriggered = false;
+            this.toBotCallback();
+        }
+
+    }
+
+    resizeUpdate() {
+
+    }
+
+    stop() {
+        if (!this.isRunning) return;
+        this.isRunning = false;
+
+        window.removeEventListener('scroll', this.scrollUpdate.bind(this));
+        window.removeEventListener('resize', this.resizeUpdate.bind(this));
     }
 }
 
