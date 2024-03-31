@@ -464,4 +464,3 @@ class AnimeScroll {
         this.anime.seek(0);
     }
 }
-

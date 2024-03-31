@@ -40,11 +40,11 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .intro-text {
-    margin-top: 30rem;
+    margin-bottom: 15.3rem;
 }
 
 .intro-text .fold {
@@ -86,7 +86,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     color: var(--white);
-    font-family: 'FilledOrigami', serif;
+    font-family: 'DM Sans', serif;
     padding-left: 2%;
     font-size: 4.2vw;
 }

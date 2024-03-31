@@ -48,6 +48,15 @@ html {
     user-select: none;
 }
 
+.select {
+    -webkit-touch-callout: initial;
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+}
+
 .cursor {
     position: fixed;
     top: 0;
@@ -118,7 +127,7 @@ html {
     background-color: var(--black);
     position: relative;
     width: 100%;
-    height: 500vh;
+    height: 800vh;
 }
 
 .page-padding {

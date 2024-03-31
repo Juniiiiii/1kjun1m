@@ -57,7 +57,7 @@ let introObserver = new IntersectionObserver(entries => {
         document.dispatchEvent(introIntersection);
     });
 }, {
-    threshold: 0.2
+    threshold: 0.1
 });
 introObserver.observe(document.querySelector('.intro-page'));
 

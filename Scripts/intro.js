@@ -1,4 +1,5 @@
 const introPage = document.querySelector('.intro-page');
+const whoOverlay = document.querySelector('.who-overlay');
 const whoPage = document.querySelector('.who-page');
 const introText = document.querySelector('.intro-text-wrapper');
 const catPath = document.querySelector('.intro-page .cat-path');
@@ -16,9 +17,11 @@ const threeWrapper = wrapLetter(questions[2]);
 
 const colorOffset = 1;
 
+let whoWrapperCenter = null, wrapperCenterRect = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     var catTextPS = new PercentScroll(
-        introPage, 0.25, 0.7, (percentage) => {
+        introPage, 0.15, 0.5, (percentage) => {
             catTextPath.setAttribute('startOffset', (1-percentage) * 100 + '%');
         }
     );
@@ -27,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (introIntersecting) catTextPS.start(); 
         else catTextPS.stop();
     });
-
     var oneWhyLetters = classifyWhyNots(oneLetters);
     var twoWhyLetters = classifyWhyNots(twoLetters);
     var threeWhyLetters = classifyWhyNots(threeLetters);
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var twoPureLetters = pureGlyphs(twoLetters);
     var dragLetters = findAndClassify(twoLetters, 'drag');
     var colorfulLetters = findAndClassify(twoLetters, 'colorful');
+    whoWrapperCenter = colorfulLetters[1]; // the second 'o' in colorful
     var colorfulPS = new PercentScroll(
         introPage, 0.3, 0.7, (percentage) => {
             colorfulLetters.forEach((letter, index) => {
@@ -190,21 +193,72 @@ document.addEventListener('DOMContentLoaded', () => {
         easing: 'linear',
     }, onePureDuration);
 
-    var introTextAS = new AnimeScroll(introPage, 0.25, 0.7, introTextAnime);
+    var introTextAS = new AnimeScroll(introPage, 0.15, 0.5, introTextAnime, () => {
+        followColorful();
+        window.addEventListener('resize', followColorful);
+        introFold.style.pointerEvents = 'none';
+    }, () => {
+        window.removeEventListener('resize', followColorful);
+        introFold.style.pointerEvents = 'auto';
+    });
     introTextAnime.seek(0);
 
-    document.addEventListener('introIntersection', () => {
-        if (introIntersecting) introTextAS.start();
-        else introTextAS.stop();
+    followColorful();
+    var introWhoAnime = anime({
+        targets: whoOverlay,
+        clipPath:[
+            'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)',
+            'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)'
+        ],
+        easing: 'linear',
+        autoplay: false,
     });
+    introWhoAnime.seek(0);
+    var introWhoAS = new AnimeScroll(introPage, 0.5, 0.7, introWhoAnime);
 
+    var tunnels = document.querySelectorAll('.who-background .tunnel-wrapper');
+    var toCopy = [];
+    tunnels.forEach(tunnel => {
+        if (tunnel.parentNode.classList.contains('transition')) return;
+        toCopy.push(tunnel);
+    })
+    //There will be 3 tunnels. Copy twice to cover all background.
+    copyTunnels(toCopy);
+    copyTunnels(toCopy);
+
+    const whoTransition = document.querySelectorAll('.who-background.transition .tunnel-wrapper');
+    const whoTransitionAnime = anime({
+        targets: whoTransition,
+        clipPath: [
+            'polygon(0 0, 0 0, 0 100%, 0% 100%)',
+            'polygon(100% 0, 0 0, 0 100%, 100% 100%)'
+        ],
+        easing: 'easeOutQuart',
+        duration: 400,
+        delay: anime.stagger(100, {start: 0}),
+        autoplay: false,
+    });
+    const whoTransitionAS = new AnimeScroll(introPage, 0.65, 1, whoTransitionAnime);
+
+    document.addEventListener('introIntersection', () => {
+        if (introIntersecting) {
+            introTextAS.start();
+            introWhoAS.start();
+            whoTransitionAS.start();
+        } else {
+            introTextAS.stop();
+            introWhoAS.stop();
+            whoTransitionAS.stop();
+        }
+    });
+    //Please fix triggerScroll
     var introTextTS = new TriggerScroll(introText, 1, fixIntroText, releaseIntroText);
-    var foldShowTS = new TriggerScroll(introPage, 0.35, () => {
+    var foldShowTS = new TriggerScroll(introPage, 0.25, () => {
         introFold.classList.add('show');
     }, () => {
         introFold.classList.remove('show');
     });
-
+    
     document.addEventListener('introTextIntersection', () => {
         if (introTextIntersecting) {
             introTextTS.start();
@@ -214,29 +268,36 @@ document.addEventListener('DOMContentLoaded', () => {
             foldShowTS.stop();
         }
     });
-
-    
-    window.addEventListener('scroll', () => {
-        
-        var centerCircle = colorfulLetters[1];
-        var circleRect = centerCircle.getBoundingClientRect();
-        var centerXPercent = (circleRect.left + circleRect.width / 2) / window.innerWidth;
-        var centerYPercent = (circleRect.top + circleRect.height / 2) / window.innerHeight;
-    
-        console.log(centerXPercent, centerYPercent);
-    })
-
 });
+
+function copyTunnels(tunnels) {
+    tunnels.forEach(tunnel => {
+        tunnel.parentNode.appendChild(tunnel.cloneNode(true));
+    });
+}
+
+function followColorful() {
+    wrapperCenterRect = whoWrapperCenter.getBoundingClientRect();
+    setWhoWrapperPosition(wrapperCenterRect.left + wrapperCenterRect.width / 2, 
+                        wrapperCenterRect.top + wrapperCenterRect.height / 2);
+}
+
+function setWhoWrapperPosition(x, y) {
+    whoOverlay.style.left = x - whoOverlay.clientWidth/2 + 'px';
+    whoOverlay.style.top = y - whoOverlay.clientHeight/2 + 'px';
+}
 
 function fixIntroText() {
     catPath.style.position = 'fixed';
     introText.style.position = 'fixed';
+    whoOverlay.style.position = 'fixed';
     whoPage.style.position = 'fixed';
 }
 
 function releaseIntroText() {
     catPath.style.position = 'absolute';
     introText.style.position = 'absolute';
+    whoOverlay.style.position = 'absolute';
     whoPage.style.position = 'absolute';
 }
 
