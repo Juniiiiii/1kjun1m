@@ -42,7 +42,7 @@
 }
 
 .footer-grid .click {
-    grid-area: 3 / 6 / 4 / 9;
+    grid-area: 4 / 7 / 5 / 10;
 }
 
 .footer-grid .website {
@@ -54,11 +54,11 @@
 }
 
 .footer-grid .socials {
-    grid-area: 3 / 13 / 4 / 16;
+    grid-area: 4 / 12 / 5 / 15;
 }
 
 .footer-grid .made-by {
-    grid-area: 4 / 6 / 5 / 16;
+    grid-area: 3 / 6 / 4 / 16;
     font-family: 'Prata', serif;;
 }
 
