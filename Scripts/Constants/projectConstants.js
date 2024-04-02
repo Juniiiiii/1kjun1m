@@ -452,8 +452,6 @@ const minimumPixelCount = Math.max(
     insideTheMindOfCoordinates.length
 );
 
-
-
 const ourVoicePictures = [
     '/Media/ourVoice.png',
 ];

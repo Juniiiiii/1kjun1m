@@ -1,6 +1,8 @@
 const projectPage = document.querySelector('.project-page');  
 const pixelGrid = projectPage.querySelector('.pixel-grid');
 const projectBar = projectPage.querySelector('.bar');
+const pictureContainer = projectPage.querySelector('.paper-container .picture-container');
+const textContainer = projectPage.querySelector('.paper-container .text-container');
 
 const pixelRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-rows'));
 const pixelCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-cols'));
@@ -121,9 +123,35 @@ class ProjectCard {
         }
 
         this.ignoreUnhover = false;
+
+        this.picture = this.parser.parseFromString(`
+            <div class="picture">
+                <img src="${thumbnail}" alt="${name}">
+            </div>
+        `, 'text/html').body.firstChild;
+
+        pictureContainer.appendChild(this.picture);
     }
 
     clickHandler() {
+        if (clickedCard == this) return;
+
+        if (clickedCard) {
+            clickedCard.element.classList.remove('clicked');
+            clickedCard.picture.classList.remove('show');
+            clickedCard.picture.classList.remove('bot');
+            clickedCard.picture.style.setProperty('--gravity-rotation', `${Math.random() * 80 - 40}deg`);
+            clickedCard.picture.style.setProperty('--gravity-y', `-${Math.random() * 10 + 20}vh`);
+            clickedCard.picture.style.setProperty('--gravity-x', `${Math.random() * 40 - 20}vw`);
+            clickedCard.picture.classList.add('fall');
+        }
+
+        this.element.classList.add('clicked');
+        this.picture.classList.add('bot');
+        this.picture.classList.remove('fall');
+        this.picture.classList.add('show');
+
+        clickedCard = this;
     }
 
     movePixels() {
@@ -139,7 +167,7 @@ class ProjectCard {
     }
 
     hoverHandler() {
-        if (hoveredCard == this) return;
+        if (hoveredCard == this || clickedCard == this) return;
 
         if (hoveredCard) {
             hoveredCard.ignoreUnhover = false;
@@ -158,9 +186,18 @@ class ProjectCard {
     }
 
     unhoverHandler() {
-        /* if (this.ignoreUnhover) return;
-        this.pixels.forEach(pixel => {
-            pixel.element.style.setProperty('--pixel-color', ghost);
-        }); */
+        if (clickedCard && clickedCard != this) {
+            this.pixels.forEach(pixel => {
+                pixel.element.style.setProperty('--pixel-color', ghost);
+            });
+            this.movePixelsBack();
+
+            clickedCard.pixels.forEach(pixel => {
+                pixel.element.style.setProperty('--pixel-color', clickedCard.color);
+            });
+            clickedCard.movePixels();
+            
+            hoveredCard = clickedCard;
+        }
     }
 }

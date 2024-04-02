@@ -89,6 +89,12 @@
     width: 17%;
 }
 
+.project-page .bar .card.clicked {
+    opacity: 1;
+    border: 2px solid var(--card-color);
+    width: 17%;
+}
+
 .project-page .paper-container {
     grid-area: 2 / 1 / -1 / -1;
     display: grid;
@@ -96,20 +102,76 @@
     grid-template-rows: 1fr;
 }
 
-.project-page .paper-container div {
-    overflow: hidden;
-}
-
-.project-page .paper-container .picture {
+.project-page .paper-container .picture-container {
     grid-area: 1 / 1 / -1 / 2;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.project-page .paper-container .picture-container .picture {
+    grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+    --gravity-x: 10vw;
+    --gravity-y: 10vh;
+    --gravity-rotation: 0deg;
+}
+
+.project-page .paper-container .picture-container .picture.top {
+    z-index: 3;
+}
+
+.project-page .paper-container .picture-container .picture.bot {
+    z-index: 1;
+}
+
+.project-page .paper-container .picture-container .picture.show {
+    animation: slide-in-left 1s ease forwards;
+}
+
+.project-page .paper-container .picture-container .picture.fall {
+    animation: gravity-fall 0.6s ease;
+}
+
+.project-page .paper-container .picture-container .picture img {
+    width: 100%;
 }
 
 .project-page .paper-container .text {
     grid-area: 1 / 2 / -1 / -1; 
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes slide-in-left {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes gravity-fall {
+    0% { 
+        transform: translateX(0) translateY(0) rotate(0);
+        animation-timing-function: cubic-bezier(0.33333, 0.66667, 0.66667, 1);
+    }
+    69.0983% { 
+        transform: translateX(calc(var(--gravity-x) / 2)) translateY(var(--gravity-y)) rotate(calc(var(--gravity-rotation) / 2));
+        animation-timing-function: cubic-bezier(0.33333, 0, 0.66667, 0.33333) ;
+    }
+    100% { 
+        transform: translateX(var(--gravity-x)) translateY(100vh) rotate(var(--gravity-rotation));
+    }
 }
