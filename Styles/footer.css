@@ -42,7 +42,7 @@
 }
 
 .footer-grid .click {
-    grid-area: 3 / 6 / 4 / 16;
+    grid-area: 3 / 6 / 4 / 9;
 }
 
 .footer-grid .website {
@@ -54,7 +54,7 @@
 }
 
 .footer-grid .socials {
-    grid-area: 4 / 6 / 5 / 16;
+    grid-area: 3 / 13 / 4 / 16;
 }
 
 .footer-grid .made-by {
