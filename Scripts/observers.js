@@ -47,7 +47,7 @@ let ideaEndObserver = new IntersectionObserver(entries => {
         document.dispatchEvent(ideaEndIntersection);
     });
 }, {
-    threshold: 0.95
+    threshold: 0.7
 });
 ideaEndObserver.observe(document.querySelector('.idea-page'));
 

@@ -15,6 +15,12 @@
     --spec-length: 3vw;
     --project-cols: 60;
     --project-rows: 30;
+    --pixel-cols: 50;
+    --pixel-rows: 24;
+    --pixel-length: 2vw;
+    --footer-cols: 20;
+    --footer-rows: 4;
+    --footer-length: 5vw;
     --ghost-border: 2px solid var(--ghost);
 }
 
@@ -22,13 +28,13 @@ body,
 html {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background-color: transparent;
+    width: 100%;
+    overflow: hidden;
     scrollbar-width: 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
     pointer-events: none;
-    /* cursor: none; */
 }
 
 ::webkit-scrollbar {
@@ -119,22 +125,33 @@ html {
     flex-direction: column;
 }
 
+.first-page {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    pointer-events: all;
+}
+
 .second-page {
     background-color: var(--black);
 }
 
 .third-page {
     background-color: var(--black);
+    overflow: hidden;
     position: relative;
     width: 100%;
-    height: 800vh;
+    height: 500vh;
 }
 
 .fourth-page {
-    background-color: var(--red);
-    position: relative;
-    width: 100%;
-    height: 200vh;
+    background-color: var(--black);
+    height: 100vh;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
 }
 
 .page-padding {
@@ -144,13 +161,10 @@ html {
 }
 
 #matter-container {
+    grid-area: 1 / 1 / -1 / -1;
     pointer-events: all;
     background-color: var(--black);
-    position: absolute;
     width: 100%;
-    z-index: -10;
-    top: 0;
-    left: 0;
 }
 
 .origami {

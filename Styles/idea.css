@@ -5,6 +5,7 @@
     color: var(--white);
     font-family: 'Prata', serif;
     transform: translateY(-26.8%);
+    pointer-events: none;
 }
 
 .idea-page .line {
@@ -17,6 +18,7 @@
     font-size: 5vw;
     overflow: hidden;
     display: flex;
+    pointer-events: none;
 }
 
 .idea-page .inside > span {
@@ -55,7 +57,6 @@
     font-family: 'Prata', serif;
     color: var(--white);
     grid-area: 1 / 1 / -1 / -1;
-    pointer-events: none;
     display: flex;
     align-items: center;
 }

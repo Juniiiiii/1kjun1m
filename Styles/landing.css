@@ -1,9 +1,10 @@
 .landing-page {
+    grid-area: 1 / 1 / -1 / -1;
     width: 100%;
-    aspect-ratio: 2 / 1;
     display:grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
+    pointer-events: none;
 }
 
 .landing-title {
@@ -42,6 +43,7 @@
 }
 
 .landing-in {
+    position: relative;
     grid-area: 9 / 6 / 10 / 10;
     display: flex;
     flex-direction: column;

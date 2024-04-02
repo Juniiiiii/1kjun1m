@@ -55,12 +55,12 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, 1fr);
     color: var(--black);
-    font-size: 10vh;
+    font-size: 5vw;
     font-weight: 500;
 }
 
 .transition {
-    font-size: 4vh;
+    font-size: 2vw;
 }
 
 .who-background .tunnel-wrapper {
@@ -141,6 +141,7 @@
 .who-page .transition .tunnel-wrapper {
     background-color: var(--black);
     clip-path: polygon(0 0, 41% 0, 41% 100%, 0% 100%);
+    border: 1px solid var(--black);
 }
 
 .who-page .transition span {
@@ -181,7 +182,7 @@
 }
 
 .transition .tunnel-wrapper .fast span {
-    color: var(--yellow);
+    color: var(--red);
     animation: runAnimation 3s infinite;
 }
 
@@ -269,36 +270,24 @@
     }
 }
 
-.transition .tunnel-wrapper.main {
-    text-align: center;
+.transition .tunnel-wrapper.main .tunnel {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
 }
 
 .transition .tunnel-wrapper.main .tunnel span {
     font-family: 'Prata', serif;
-    font-size: 6vh;
+    font-size: 3vw;
 }
 
-.transition .tunnel-wrapper .scroll span {
-    color: var(--white);
-    font-size: 3vh;
-    font-family: "Pixelify Sans", sans-serif;
-}
-
-.transition .tunnel-wrapper.main.why-not {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.transition .tunnel-wrapper.main span.scroll {
+    font-size: 1.5vw;
+    margin-right: 47%;
 }
 
 .transition .tunnel-wrapper .tunnel span span.why-not {
     color: var(--yellow);
     font-style: italic;
     margin-right: 1vh;
-}
-
-.transition .tunnel-wrapper .scroll span .projects {
-    color: var(--blue);
 }

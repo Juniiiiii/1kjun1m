@@ -96,4 +96,37 @@ function expansionComplete() {
 
     document.documentElement.style.overflowX = "hidden";
     document.documentElement.style.overflowY = "auto";
+
+    enableNav();
+}
+
+//Activate navbar
+
+const topNav = document.getElementById('top-button');
+const aboutNav = document.getElementById('about-button');
+const projectNav = document.getElementById('project-button');
+const contactNav = document.getElementById('contact-button');
+
+function enableNav() {
+    topNav.addEventListener('click', () => {
+        document.getElementById('matter-container').scrollIntoView({behavior: 'smooth'});
+    });
+
+    aboutNav.addEventListener('click', () => {
+        document.getElementById('third-page').scrollIntoView({behavior: 'smooth'});
+    });
+
+    projectNav.addEventListener('click', () => {
+        document.getElementById('fourth-page').scrollIntoView({behavior: 'smooth'});
+    });
+
+    contactNav.addEventListener('click', () => {
+        document.getElementById('footer').scrollIntoView({behavior: 'smooth'});
+    });
+}
+
+function myAutoScroll() {
+      //with scrollTop we check if the page has been scrolled
+      //if == 0, it hasnt
+    document.getElementById('matter-container').scrollIntoView({behavior: "smooth"});
 }

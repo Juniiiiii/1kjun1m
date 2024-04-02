@@ -19,7 +19,7 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-	document.addEventListener('ideaEndIntersection', slide);
+    document.addEventListener('ideaEndIntersection', slide);    
 });
 
 function slide() {

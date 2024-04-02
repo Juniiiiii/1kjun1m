@@ -1,0 +1,59 @@
+.nav {
+    width: 100%;
+    background-color: transparent;
+    color: var(--white);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: 'Prata', serif;
+    font-size: 2vw;
+}
+
+.nav .bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav .bar button {
+    font-family: 'Prata', serif;
+    font-size: 1vw;
+    color: var(--white);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    pointer-events: all;
+    cursor: pointer;
+    margin-right: 1%;
+    position: relative;
+}
+
+.nav .bar button:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.nav .bar button:hover:after { 
+    width: 100%; 
+    left: 0; 
+}
+
+.nav .recommend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+    margin-right: auto;
+    pointer-events: none;
+}

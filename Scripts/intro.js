@@ -15,14 +15,12 @@ const oneWrapper = wrapLetter(questions[0]);
 const twoWrapper = wrapLetter(questions[1]);
 const threeWrapper = wrapLetter(questions[2]);
 
-const colorOffset = 1;
-
 let whoWrapperCenter = null, wrapperCenterRect = null;
 let introFixed = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     var catTextPS = new PercentScroll(
-        introPage, 0.15, 0.5, (percentage) => {
+        introPage, 0.25, 0.5, (percentage) => {
             catTextPath.setAttribute('startOffset', (1-percentage) * 100 + '%');
         }
     );
@@ -54,17 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     var dragLetters = findAndClassify(twoLetters, 'drag');
     var colorfulLetters = findAndClassify(twoLetters, 'colorful');
     whoWrapperCenter = colorfulLetters[1]; // the second 'o' in colorful
-    var colorfulPS = new PercentScroll(
-        introPage, 0.3, 0.7, (percentage) => {
-            colorfulLetters.forEach((letter, index) => {
-                letter.style.color = charColors[(colorOffset + index + Math.floor(percentage * 20))%4];
-            });
-        }
-    );
-
-    document.addEventListener('introIntersection', () => {
-        if (introIntersecting) colorfulPS.start();
-        else colorfulPS.stop();
+    colorfulLetters.forEach((letter, index) => {
+        letter.style.color = charColors[(3 + index)%4];
     });
     
     var threePureLetters = pureGlyphs(threeLetters);
@@ -195,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, onePureDuration);
 
     followColorful();
-    var introTextAS = new AnimeScroll(introPage, 0.15, 0.5, introTextAnime, () => {
+    var introTextAS = new AnimeScroll(introPage, 0.25, 0.5, introTextAnime, () => {
         followColorful();
         introFold.style.pointerEvents = 'none';
         window.addEventListener('resize', followColorful);
@@ -223,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tunnel.parentNode.classList.contains('transition')) return;
         toCopy.push(tunnel);
     })
-    //There will be 3 tunnels. Copy twice to cover all background.
+    //There will be 2 tunnels. Copy twice to cover all background.
     copyTunnels(toCopy);
     copyTunnels(toCopy);
 
@@ -252,8 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             whoTransitionAS.stop();
         }
     });
-    //Please fix triggerScroll
-    /* var introTextTS = new TriggerScroll(introText, 1, fixIntroText, releaseIntroText); */
+
     var introTextTS = new TriggerScroll(introPage, 0, 1, () => {
         if (introFixed) { //At the top
             releaseIntroText();
@@ -312,6 +300,7 @@ function fixIntroText() {
     introText.style.position = 'fixed';
     whoOverlay.style.position = 'fixed';
     whoPage.style.position = 'fixed';
+    window.removeEventListener('resize', fixToBot);
 }
 
 function releaseIntroText() {
@@ -329,18 +318,22 @@ function putIntroTextTop() {
 }
 
 function putIntroTextBot() {
-    //third-page is 800vh
+    //third-page is 500vh
     //Every elemenit is 100vh tall
-    catPath.style.top = '700vh';
-    introText.style.top = '700vh';
+    catPath.style.top = '400vh';
+    introText.style.top = '400vh';
     //whoOverlay is fixed to the colorful 'o', followColorful() will handle it
     /* whoOverlay.style.top = '700vh'; */
     //whoPage is relative to whoOverlay
-    whoOverlay.style.top = 0;
-    whoOverlay.style.left = 0;
-    whoPage.style.top = '700vh';
+    fixToBot();
+    window.addEventListener('resize', fixToBot);
 }
 
+function fixToBot() {
+    whoOverlay.style.top = 0;
+    whoOverlay.style.left = 0;
+    whoPage.style.top = '400vh';
+}
 
 function classifyWhyNots(letters) {
     var whyWords = findWord(letters, 'Why');

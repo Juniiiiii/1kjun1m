@@ -432,14 +432,14 @@ let insideTheMindOfCoordinates = [
     
 ];
 
-const gridRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-rows'));
-const gridCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--project-cols'));
+const gridRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-rows'));
+const gridCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-cols'));
 
 function centraliseCoordinates(rows, cols, arr) {
     let { width, height } = boundingBoxOfPoints(arr);
     let rowOffset = Math.floor((rows - width) / 2);
     let colOffset = Math.floor((cols - height) / 2);
-    return arr.map(point => [point[0] + rowOffset, point[1] + colOffset + 5]);
+    return arr.map(point => [point[0] + rowOffset, point[1] + colOffset]);
 }
 
 projectCoordinates = centraliseCoordinates(gridRows, gridCols, projectCoordinates);

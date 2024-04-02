@@ -24,16 +24,6 @@ function isInViewport(element) {
     );
 }
 
-function isHovering(position, element) {
-    var rect = element.getBoundingClientRect();
-    return (
-        rect.top <= position.y &&
-        rect.bottom >= position.y &&
-        rect.left <= position.x &&
-        rect.right >= position.x
-    );
-}
-
 function isIntersecting(element1, element2) {
     var rect1 = element1.getBoundingClientRect();
     var rect2 = element2.getBoundingClientRect();
@@ -194,7 +184,7 @@ function duplicateElement(element) {
 
 let mousePosition = { x: 0, y : 0};
 window.addEventListener('mousemove', function(e) {
-    mousePosition = { x: e.clientX, y: e.clientY };
+    mousePosition = { x: e.offsetX, y: e.offsetY };
 });
 
 let scrollDown = true;
@@ -379,11 +369,11 @@ class TriggerScroll {
         if (this.isRunning) return;
         this.isRunning = true;
 
-        window.addEventListener('scroll', this.scrollUpdate.bind(this));
-        window.addEventListener('resize', this.resizeUpdate.bind(this));
+        window.addEventListener('scroll', this.update.bind(this));
+        window.addEventListener('resize', this.update.bind(this));
     }
 
-    scrollUpdate() {
+    update() {
         this.rect = this.element.getBoundingClientRect();
 
         this.lower = this.rect.top + this.rect.height * this.from;
@@ -402,19 +392,14 @@ class TriggerScroll {
             this.botTriggered = false;
             this.toBotCallback();
         }
-
-    }
-
-    resizeUpdate() {
-
     }
 
     stop() {
         if (!this.isRunning) return;
         this.isRunning = false;
 
-        window.removeEventListener('scroll', this.scrollUpdate.bind(this));
-        window.removeEventListener('resize', this.resizeUpdate.bind(this));
+        window.removeEventListener('scroll', this.update.bind(this));
+        window.removeEventListener('resize', this.update.bind(this));
     }
 }
 

@@ -1,98 +1,63 @@
-const clock = document.querySelector('.clock');
+const footer = document.querySelector('.footer');
+const footerGrid = document.querySelector('.footer .footer-grid');
+const textGrid = document.querySelector('.footer .text-grid');
+const footerLinks = document.querySelectorAll('.footer-grid a');
 
-const clockOffset = 7.5;
-const numberRadius = 7;
-const wordRadius = 7;
+const footerCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--footer-cols'));
+const footerRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--footer-rows'));
 
-const dozen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const dozenWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
-const placements = [null, "full-name", "website", "github", null, null, null, "social", "linkedin", "email", null, null];
+const allSquares = [];
+const squareDuration = 100;
+const squareSpeed = 35;
 
-const clockNumbers = {};
-
-const hourHand = document.querySelector('.hour-hand');
-const minuteHand = document.querySelector('.minute-hand');
-const secondHand = document.querySelector('.second-hand');
-
-const hourTransform = "translateX(50%) translateY(150%) rotate(";
-const minuteTransform = "translateX(20%) translateY(350%) rotate(";
-const secondTransform = "translateY(350%) rotate(";
-let date;
-
-const burstDistance = 60;
-class LetterBurst {
-    constructor(element) {
-        if (!element) return;
-        this.letters =  spanifyLetter(element);
-        this.once = false;
-    }
-
-    burst() {
-        anime({
-            targets: this.letters,
-            translateX: () => (Math.random() - 0.5) * burstDistance + "%",
-            translateY: () => (Math.random() - 0.5) * burstDistance + "%",
-            rotate: () => (Math.random() - 0.5) * 15,
-            duration: 300,
-            easing: 'easeOutExpo',
-        });
-    }
-
-    unburst() {
-        anime({
-            targets: this.letters,
-            translateX: 0,
-            translateY: 0,
-            rotate: 0,
-            duration: 300,
-            easing: 'easeOutExpo',
-        });
-    }
-}
-
-for (var i = 0; i < 12; i++) {
-    clockNumbers[dozen[i]] = {
-        element: document.getElementById(dozenWords[i]),
-        hoverElement: document.getElementById(dozenWords[i]).querySelector('span'),
-        placement: placements[i] ? document.getElementById(placements[i]) : null,
-        burst: placements[i] ? new LetterBurst(document.getElementById(placements[i])) : null,
-    };
-}
+let squareAnimating = false;
+let prevColor = null, curColor = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    dozen.forEach(number => {
-        clockNumbers[number].element.style.transform = `
-            translateX(${Math.sin(number * Math.PI / 6) * numberRadius}em)
-            translateY(${-Math.cos(number * Math.PI / 6) * numberRadius}em)`;
-        
-        if (clockNumbers[number].placement) {
-            if (number < 6) {
-                clockNumbers[number].placement.style.transform = `
-                    translateX(calc(${Math.sin(number * Math.PI / 6) * wordRadius}em + ${clockOffset}em))
-                    translateY(${-Math.cos(number * Math.PI / 6) * wordRadius}em)`;
-            } else {
-                clockNumbers[number].placement.style.transform = `
-                    translateX(calc(${Math.sin(number * Math.PI / 6) * wordRadius}em - ${clockOffset}em))
-                    translateY(${-Math.cos(number * Math.PI / 6) * wordRadius}em)`;
+    for (var i = 0; i < footerCols * footerRows; i++) {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.setAttribute('index', i);
+        footerGrid.appendChild(square);
+        allSquares.push(square);
+    }
+
+    allSquares.forEach(square => {
+        square.addEventListener('click', () => {
+            rippleAt(square.getAttribute('index'));
+        })
+    });
+});
+
+function rippleAt(index) {
+    if (squareAnimating) return;
+    squareAnimating = true;
+    anime({
+        targets: allSquares,
+        scale: [
+            {value: 0, easing: 'easeInOutQuad', duration: squareDuration},
+            {value: 1, easing: 'easeInOutQuad', duration: squareDuration * 1.5}
+        ],
+        delay: anime.stagger(squareSpeed,
+            {
+                grid: [footerCols, footerRows],
+                from: index
             }
-        }
-
-        if (clockNumbers[number].burst) {
-            clockNumbers[number].hoverElement.addEventListener('mouseover', () => {
-                clockNumbers[number].burst.burst();
-            });
-
-            clockNumbers[number].hoverElement.addEventListener('mouseout', () => {
-                clockNumbers[number].burst.unburst();
-            });
+        ),
+        begin: function(anim) {
+            changeColor();
+        },
+        complete: function(anim) {
+            squareAnimating = false;
         }
     });
+}
 
-    new AdjustingInterval(() => {
-        date = new Date();
+function changeColor() {
+    prevColor = curColor;
+    while (prevColor == curColor) curColor = randomElement(particleColors);
 
-        hourHand.style.transform = hourTransform + ((date.getHours() % 12) * 30 + 90) + 'deg)';
-        minuteHand.style.transform = minuteTransform + (date.getMinutes() * 6 + 90) + 'deg)';
-        secondHand.style.transform = secondTransform + (date.getSeconds() * 6 + 90) + 'deg)';
-    }, 250, null).start();
-});
+    footer.style.backgroundColor = curColor;
+    textGrid.style.color = curColor;
+    footerLinks.forEach(link => link.style.color = curColor);
+}

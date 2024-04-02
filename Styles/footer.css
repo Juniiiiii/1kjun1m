@@ -1,138 +1,86 @@
 .footer {
+    background-color: var(--red);
     width: 100%;
-    aspect-ratio: 5 / 1;
-    background-color: var(--black);
-    display: flex;
-    justify-content: flex-end;
-    pointer-events: all;
-}
-
-.footer-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: "Space Mono", monospace;
-    color: var(--white);
-    opacity: 0.8;
-    font-size: 2vw;
-    padding-right: 4vw;
-}
-
-.footer-divider {
-    background-color: var(--white);
-    opacity: 0.8;
-    width: 0.2vw;
-    height: 80%;
-    align-self: center;
-    margin-right: 5vw;
-}
-
-.clock-wrapper {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.clock {
+    height: max-content;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
+    transition: background-color 600ms linear;
 }
 
-.clock > span {
-    grid-area: 1 / 1;
-    font-size: 1vw;
+.footer-grid {
+    grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(var(--footer-cols), var(--footer-length));
+    grid-template-rows: repeat(var(--footer-rows), var(--footer-length));
+    overflow: hidden;
+}
+
+.text-grid {
+    z-index: 10;
+    pointer-events: none;
     color: var(--white);
-    font-family: "Space Mono", monospace;
+    transition: color 600ms linear;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-grid .square {
+    background-color: var(--black);
+    width: var(--footer-length);
+    height: var(--footer-length);
+    pointer-events: all;
+    border: 1px solid var(--black);
+    overflow: hidden;
+}
+
+.footer-grid .email {
+    grid-area: 1 / 6 / 3 / 16;
+    font-size: 6vw;
+    pointer-events: all;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-grid .click {
+    grid-area: 3 / 6 / 4 / 16;
+}
+
+.footer-grid .website {
+    grid-area: 4 / 2 / 5 / 4;
+}
+
+.footer-grid .github {
+    grid-area: 4 / 4 / 5 / 6;
+}
+
+.footer-grid .socials {
+    grid-area: 4 / 6 / 5 / 16;
+}
+
+.footer-grid .made-by {
+    grid-area: 4 / 6 / 5 / 16;
+    font-family: 'Prata', serif;;
+}
+
+.footer-grid .matter-link {
+    grid-area: 4 / 16 / 5 / 18;
+}
+
+.footer-grid .anime-link {
+    grid-area: 4 / 18 / 5 / 20;
+}
+
+.text-grid div {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.5vw;
 }
 
-.clock > span > span {
-    width: max-content;
-    height: max-content;
-}
-
-.clock .word {
-    grid-area: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.footer-grid a {
     color: var(--white);
-    font-size: 1vw;
-    font-family: "Space Mono", monospace;
     text-decoration: none;
-}
-
-.clock .hour-hand {
-    grid-area: 1 / 1;
-    width: 4vw;
-    height: 0.4vw;
-    background-color: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(50%) translateY(150%) rotate(0deg);
-    transform-origin: 100% 50%;
-}
-
-.clock .minute-hand {
-    grid-area: 1 / 1;
-    width: 5vw;
-    height: 0.2vw;
-    background-color: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(20%) translateY(350%) rotate(0deg);
-    transform-origin: 100% 50%;
-}
-
-.clock .second-hand {
-    grid-area: 1 / 1;
-    width: 6vw;
-    height: 0.2vw;
-    background-color: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateY(350%) rotate(0deg);
-    transform-origin: 100% 50%;
-	transition: background-color 0.5s ease;
-}
-
-/* .minute-hand {
-    width: 0.1vw;
-    height: 50%;
-    background-color: var(--white);
-    border-radius: 0.05vw;
-    transform-origin: 50% 100%;
-}
-
-.second-hand {
-    width: 0.05vw;
-    height: 60%;
-    background-color: var(--white);
-    border-radius: 0.025vw;
-    transform-origin: 50% 100%;
-}
- */
-#website,
-#github,
-#full-name {
-    justify-content: flex-start;
-}
-
-#email,
-#social,
-#linkedin {
-    justify-content: flex-end;
-}
-
-
-/* individual numbers */
-#eleven {
-    color: transparent;
+    transition: color 600ms linear;
+    cursor: pointer;
+    pointer-events: all;
 }
