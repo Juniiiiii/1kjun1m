@@ -1,59 +1,79 @@
 .nav {
     width: 100%;
+    height: max-content;
     background-color: transparent;
-    color: var(--white);
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    font-family: 'Prata', serif;
-    font-size: 2vw;
+    mix-blend-mode: difference;
+    z-index: 100;
 }
 
 .nav .bar {
-    width: 100%;
+    margin-top: 0.5vh;
+    margin-right: 0.5vw;
     display: flex;
-    justify-content: flex-end;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
 }
 
-.nav .bar button {
-    font-family: 'Prata', serif;
-    font-size: 1vw;
+.nav .bar .button {
     color: var(--white);
-    background-color: transparent;
-    border: none;
-    outline: none;
+    border: 2px solid var(--ghost);
+    width: 5vw;
+    height: 2vw;
+    font-family: 'Prata', serif;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+    font-size: 1vw;
     pointer-events: all;
     cursor: pointer;
-    margin-right: 1%;
-    position: relative;
+    margin: 0 0.1vw;
 }
 
-.nav .bar button:after {    
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: #fff;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
+.nav .bar .button:first-child {
+    border-top-left-radius: 1vw;
+    border-bottom-left-radius: 1vw;
 }
 
-.nav .bar button:hover:after { 
-    width: 100%; 
-    left: 0; 
+.nav .bar .button:last-child {
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
 }
 
-.nav .recommend {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: max-content;
-    margin-right: auto;
-    pointer-events: none;
+.nav .bar .button .text {
+    grid-area: 1 / 1 / -1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav .bar .button .background {
+    grid-area: 1 / 1 / -1 / -1;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+}
+
+#top-button .background {
+    background-color: var(--red);
+}
+
+#about-button .background {
+    background-color: var(--yellow);
+}
+
+#project-button .background {
+    background-color: var(--green);
+}
+
+#contact-button .background {
+    background-color: var(--blue);
+}
+
+.nav .bar .button:hover .background {
+    transform: translateY(0%);
 }

@@ -325,6 +325,22 @@ function totalStaggerDuration(targets, duration, delay, start) {
     else if (typeof targets === 'object' && targets.length) return (targets.length - 1) * delay + start + duration;
 }
 
+function scaleRect(rect, scale) {
+    const scaledWidth = rect.width * scale;
+    const scaledHeight = rect.height * scale;
+    const scaledLeft = rect.left - (scaledWidth - rect.width) / 2;
+    const scaledTop = rect.top - (scaledHeight - rect.height) / 2;
+
+    return {
+        x: scaledLeft,
+        y: scaledTop,
+        left: scaledLeft,
+        top: scaledTop,
+        width: scaledWidth,
+        height: scaledHeight
+    };
+}
+
 class SimpleTriggerScroll {
     constructor(element, trigger, triggedCallback, untriggeredCallback) {
         this.element = element;

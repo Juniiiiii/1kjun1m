@@ -1,6 +1,5 @@
-const thirdPage = document.querySelector('.third-page'); //700vh
-const introPage = document.querySelector('.intro-page'); //100vh
-const catTextPath = document.querySelector('.intro-page .cat-path textPath');
+const thirdPage = document.querySelector('.third-page');
+const introPage = document.querySelector('.intro-page');
 const texts = document.querySelectorAll('.intro-page .text');
 const whyNotSvg = document.querySelector('.intro-page .why-not svg');
 const whyNotPath = document.getElementById('why-not-path');
@@ -216,18 +215,5 @@ function fixIntroPage() {
     document.addEventListener('introIntersection', () => {
         if (introIntersecting) introPageTS.start();
         else introPageTS.stop();
-    });
-}
-
-function traceCathPath() {
-    var catTextPS = new PercentScroll(
-        thirdPage, 0.25, 0.5, (percentage) => {
-            catTextPath.setAttribute('startOffset', (1 - percentage) * 100 + '%');
-        }
-    );
-    
-    document.addEventListener('introIntersection', () => {
-        if (introIntersecting) catTextPS.start(); 
-        else catTextPS.stop();
     });
 }

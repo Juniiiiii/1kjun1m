@@ -100,7 +100,7 @@ function expansionComplete() {
     enableNav();
 }
 
-//Activate navbar
+//Navbar stuff
 
 const topNav = document.getElementById('top-button');
 const aboutNav = document.getElementById('about-button');
@@ -123,10 +123,46 @@ function enableNav() {
     contactNav.addEventListener('click', () => {
         document.getElementById('footer').scrollIntoView({behavior: 'smooth'});
     });
+
+    new ButtonFollow(topNav);
+    new ButtonFollow(aboutNav);
+    new ButtonFollow(projectNav);
+    new ButtonFollow(contactNav);
 }
 
-function myAutoScroll() {
-      //with scrollTop we check if the page has been scrolled
-      //if == 0, it hasnt
-    document.getElementById('matter-container').scrollIntoView({behavior: "smooth"});
+class ButtonFollow {
+    constructor(element){
+        this.element = element;
+        this.rect = this.element.getBoundingClientRect();
+
+        window.addEventListener('resize', () => {
+            this.rect = this.element.getBoundingClientRect();
+        });
+
+        this.element.addEventListener('mouseover', () => {
+            this.element.addEventListener('mousemove', this.followMouse.bind(this));
+        });
+
+        this.element.addEventListener('mouseout', () => {
+            this.element.removeEventListener('mousemove', this.followMouse.bind(this));
+
+            this.anime = anime({
+                targets: this.element,
+                translateX: 0,
+                translateY: 0,
+                duration: 200,
+                easing: 'linear',
+            });
+        });
+    }
+
+    followMouse(event) {
+        this.anime = anime({
+            targets: this.element,
+            translateX: 0.2 * (event.clientX - this.rect.x - this.rect.width/2),
+            translateY: 0.2 * (event.clientY - this.rect.y - this.rect.height/2),
+            duration: 50,
+            easing: 'linear',
+        });
+    }
 }
