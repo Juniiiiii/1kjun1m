@@ -60,13 +60,3 @@ let introObserver = new IntersectionObserver(entries => {
     threshold: 0.1
 });
 introObserver.observe(document.querySelector('.intro-page'));
-
-let introTextObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        introTextIntersecting = entry.isIntersecting;
-        document.dispatchEvent(introTextIntersection);
-    });
-}, {
-    threshold: 0.4
-});
-introTextObserver.observe(document.querySelector('.intro-text-wrapper'));

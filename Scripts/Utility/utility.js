@@ -254,6 +254,27 @@ function boundingBoxOfPoints(arr) {
     };
 }
 
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+    } : null;
+}
+  
+function rgbToHex(rgb) {
+    return "#" + ((1 << 24) | (rgb.r << 16) | (rgb.g << 8) | rgb.b).toString(16).slice(1).toUpperCase();
+}
+
+function interpolateColor(rgbA, rgbB, percent) {
+    return rgbToHex({
+        r: Math.round(rgbA.r * (1 - percent) + rgbB.r * percent),
+        g: Math.round(rgbA.g * (1 - percent) + rgbB.g * percent),
+        b: Math.round(rgbA.b * (1 - percent) + rgbB.b * percent),
+    });
+  }
+
 function offsetPoints(arr, row, col) {
     return arr.map(point => [point[0] + row, point[1] + col]);
 }

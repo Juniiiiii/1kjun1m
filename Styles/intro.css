@@ -1,177 +1,70 @@
 .intro-page {
     position: relative;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: var(--black);
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
+    font-family: 'Prata', serif;
+    pointer-events: all;
 }
 
 .cat-path {
-    position: absolute;
-    top: 0;
-    left: 0;
     grid-area: 1 / 1 / -1 / -1;
-    width: 100%;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
-.cat-path svg {
-    width: 100%;
-    height: auto;
-}
-
-.cat-path path {
-    fill: none;
-    stroke: var(--white);
-    stroke-width: 0.2;
-}
-
-.intro-text-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
+.intro-page .text-container-wrapper {
     grid-area: 1 / 1 / -1 / -1;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.intro-text {
-    margin-bottom: 15.3rem;
-}
-
-.intro-text .fold {
-    background-color: var(--red);
     height: 100%;
-    z-index: 5;
-    clip-path: polygon(0 0, 0 0, 0 0);
-    pointer-events: all;
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: clip-path 1s ease;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.intro-text .fold-inner {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-}
-
-.intro-text .hover-background {
+.intro-page .text-container {
     grid-area: 1 / 1 / -1 / -1;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    color: var(--light-red);
-    font-family: 'Prata', serif;
+}
+
+.intro-page .text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--white);
     font-size: 2vw;
 }
 
-.intro-text .instructions {
+.intro-page .why-not {
     grid-area: 1 / 1 / -1 / -1;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    color: var(--white);
-    font-family: 'DM Sans', serif;
-    padding-left: 2%;
-    font-size: 4.2vw;
-}
-
-.intro-text .fold.show {
-    clip-path: polygon(0 0, 0 30%, 8% 0);
-}
-
-.intro-text .fold:hover {
-    clip-path: polygon(0 0, 0 200%, 200% 0);
-}
-
-.intro-text .paper {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 3vw;
-    pointer-events: none;
-}
-
-.intro-text div {
-    display: flex;
-}
-
-.intro-text .letter {
-    transform: translateY(100%);
-}
-
-.intro-text #first-line .letter.why-not {
-    transform: translate(0);
-}
-
-.intro-text .letter.type {
-    transform: translateY(-10%);
-    font-family: 'Space Mono', monospace;
-    opacity: 0;
-    border-right: 1px solid var(--white);
-    border-left: 5px solid var(--black);
-    box-sizing: content-box;
-    animation: blink 1s steps(1) infinite;
-}
-
-.intro-text .letter-wrapper.colorful {
-    font-family: 'FilledOrigami', sans-serif;
-    margin-top: 1%;
-}
-
-.intro-text .letter-wrapper.why-not,
-.intro-text .letter-wrapper.question {
-    color: var(--yellow);
-    font-family: 'Prata', serif;
-}
-
-.intro-text .letter-wrapper.why-not {
-    overflow: visible;
-    font-style: italic;
-}
-
-.intro-text .letter-wrapper.red {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-}
-
-.intro-text .letter.red {
-    grid-area: 1 / 1 / -1 / -1;
-}
-
-.intro-text .letter.red.clone {
-    grid-area: 1 / 1 / -1 / -1;
+    align-items: center;
     z-index: 1;
-    color: var(--red);
-    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
 }
 
-.intro-text .letter-wrapper.type,
-.intro-text .letter-wrapper.drag {
-    overflow: visible;
+.intro-page .why-not path {
+    fill: transparent;
 }
 
-@keyframes blink {
-    50% {
-        border-right-color: transparent;
-    }
+.intro-page .halfline {
+    grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--white);
+    z-index: 2;
+    font-size: 1vw;
+    white-space: nowrap;
+    overflow: hidden;
 }

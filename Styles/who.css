@@ -1,79 +1,42 @@
 .who-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
     grid-area: 1 / 1 / -1 / -1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     z-index: 20;
-    width: 20000px;
-    height: 20000px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.who-page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100vw;
-    height: 100vh;
+    clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
     background-color: var(--white);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
 }
 
-.cat-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
+.tunnel-collection {
+    grid-area: 1 / 1 / -1 / -1;
     width: 100vw;
     height: 100vh;
-    z-index: 11;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-}
-
-.cat-fill .cat-svg-wrapper {
-    grid-area: 1 / 1 / -1 / -1;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: column;
 }
 
-.cat-fill path {
-    fill: var(--yellow);
+.cat-background {
+    -webkit-mask-image: url("/Media/catPath.svg");
+    mask-image: url("/Media/catPath.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: bottom center;
+    mask-position: bottom center;
+    z-index: 1;
 }
 
-.who-background {
-    grid-area: 1 / 1 / -1 / -1;
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, 1fr);
-    color: var(--black);
-    font-size: 5vw;
-    font-weight: 500;
-}
-
-.transition {
-    font-size: 2vw;
-}
-
-.who-background .tunnel-wrapper {
-    background-color: var(--white);
+.tunnel-wrapper {
+    background-color: transparent;
     border-bottom: 1.125vh solid var(--black);
     flex-grow: 1;
+    flex-basis: 0;
 }
 
-.cat-background .tunnel-wrapper {
-    background-color: var(--blue);
-}
-
-.who-background .tunnel {
+.tunnel {
     height: 100%;
     white-space: nowrap;
     display: flex;
@@ -83,46 +46,21 @@
     width: fit-content;
 }
 
-.who-background .tunnel.move {
+.tunnel.move {
     animation: slideText 100s linear infinite;
 }
 
-.who-background .tunnel span {
+.tunnel span {
     display: inline-block;
     margin-right: 0.5em;
     color: var(--black);
+    font-size: 9vh;
 }
 
-.who-background .tunnel-wrapper:first-child {
-    border-top: 1.125vh solid var(--black);
-}
-
-.who-background .tunnel-wrapper.designer {
-    font-family: 'Playfair Display', serif;
-}
-
-.who-background .tunnel-wrapper.professional {
-    font-family: 'Roboto', sans-serif;
-}
-
-.who-background .tunnel-wrapper.developer {
-    font-family: 'Space Mono', monospace;
-}
-
-.who-background .tunnel-wrapper .not {
+.tunnel-wrapper .not {
     color: var(--red);
     margin: 0;
     padding: 0;
-}
-
-.cat-background {
-    grid-area: 1 / 1 / -1 / -1;
-    -webkit-mask-image: url("/Media/catPath.svg");
-    mask-image: url("/Media/catPath.svg");
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: bottom;
-    mask-position: bottom;
 }
 
 @keyframes slideText {
@@ -134,34 +72,62 @@
     }
 }
 
-.who-page .transition {
-    z-index: 19;
+.tunnel-wrapper.designer {
+    font-family: 'Playfair Display', serif;
 }
 
-.who-page .transition .tunnel-wrapper {
+.tunnel-wrapper.professional {
+    font-family: 'Roboto', sans-serif;
+}
+
+.tunnel-wrapper:first-child {
+    border-top: 1.125vh solid var(--black);
+}
+
+.transition-background {
+    z-index: 2;
+}
+
+.transition-background .tunnel-wrapper {
     background-color: var(--black);
-    clip-path: polygon(0 0, 41% 0, 41% 100%, 0% 100%);
-    border: 1px solid var(--black);
+    clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
 }
 
-.who-page .transition span {
+.transition-background .tunnel-wrapper,
+.transition-background .tunnel-wrapper span {
     color: var(--white);
-}
-
-.transition .tunnel-wrapper span {
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
+    font-size: 4vh;
     margin: 0;
 }
 
-.transition .tunnel-wrapper .but {
+.transition-background .tunnel-wrapper .but {
     color: var(--yellow);
     font-family: 'Prata', serif;
     font-style: italic;
+    font-size: 6vh;
 }
 
-.transition .tunnel-wrapper .name {
-    font-family: 'Prata', serif;
+.transition-background .tunnel-wrapper .jump span {
+    animation: jumpAnimation 2s infinite;
+    color: var(--green);
+}
+
+.transition-background .tunnel-wrapper .jump span:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.transition-background .tunnel-wrapper .jump span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.transition-background .tunnel-wrapper .jump span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.transition-background .tunnel-wrapper .jump span:nth-child(4) {
+    animation-delay: 0.1s;
 }
 
 @keyframes jumpAnimation {
@@ -176,30 +142,9 @@
     }
 }
 
-.transition .tunnel-wrapper .jump span {
-    animation: jumpAnimation 2s infinite;
-    color: var(--green);
-}
-
-.transition .tunnel-wrapper .fast span {
+.transition-background .tunnel-wrapper .fast span {
     color: var(--red);
     animation: runAnimation 3s infinite;
-}
-
-.transition .tunnel-wrapper .jump span:nth-child(1) {
-    animation-delay: 0.4s;
-}
-
-.transition .tunnel-wrapper .jump span:nth-child(2) {
-    animation-delay: 0.3s;
-}
-
-.transition .tunnel-wrapper .jump span:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.transition .tunnel-wrapper .jump span:nth-child(4) {
-    animation-delay: 0.1s;
 }
 
 @keyframes runAnimation {
@@ -221,42 +166,42 @@
     }
 }
 
-.transition .tunnel-wrapper .fast span:nth-child(1) {
+.transition-background .tunnel-wrapper .fast span:nth-child(1) {
     animation-delay: 0.4s;
 }
 
-.transition .tunnel-wrapper .fast span:nth-child(2) {
+.transition-background .tunnel-wrapper .fast span:nth-child(2) {
     animation-delay: 0.3s;
 }
 
-.transition .tunnel-wrapper .fast span:nth-child(3) {
+.transition-background .tunnel-wrapper .fast span:nth-child(3) {
     animation-delay: 0.2s;
 }
 
-.transition .tunnel-wrapper .fast span:nth-child(4) {
+.transition-background .tunnel-wrapper .fast span:nth-child(4) {
     animation-delay: 0.1s;
 }
 
-.transition .tunnel-wrapper .better span {
+.transition-background .tunnel-wrapper .better span {
     color: #50C878;
 }
 
-.transition .tunnel-wrapper .better span:nth-child(3) {
+.transition-background .tunnel-wrapper .better span:nth-child(3) {
     animation: moveUp 1.5s infinite alternate;
     --percentage: -4%;
 }
 
-.transition .tunnel-wrapper .better span:nth-child(4) {
+.transition-background .tunnel-wrapper .better span:nth-child(4) {
     animation: moveUp 1.5s infinite alternate;
     --percentage: -16%;    
 }
 
-.transition .tunnel-wrapper .better span:nth-child(5) {
+.transition-background .tunnel-wrapper .better span:nth-child(5) {
     animation: moveUp 1.5s infinite alternate;
     --percentage: -32%;
 }
 
-.transition .tunnel-wrapper .better span:nth-child(6) {
+.transition-background .tunnel-wrapper .better span:nth-child(6) {
     animation: moveUp 1.5s infinite alternate;
     --percentage: -48%;
 }
@@ -270,24 +215,14 @@
     }
 }
 
-.transition .tunnel-wrapper.main .tunnel {
+.transition-background .tunnel.main {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-}
-
-.transition .tunnel-wrapper.main .tunnel span {
     font-family: 'Prata', serif;
-    font-size: 3vw;
+    font-size: 5vh;
 }
 
-.transition .tunnel-wrapper.main span.scroll {
-    font-size: 1.5vw;
-    margin-right: 47%;
-}
-
-.transition .tunnel-wrapper .tunnel span span.why-not {
-    color: var(--yellow);
-    font-style: italic;
-    margin-right: 1vh;
+.transition-background .tunnel.final .but {
+    margin-right: 1%;
 }
