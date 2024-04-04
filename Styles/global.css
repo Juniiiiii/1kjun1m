@@ -37,8 +37,8 @@ html {
     pointer-events: none;
 }
 
-::webkit-scrollbar {
-    width: 0;
+body::-webkit-scrollbar {
+	display: none;
 }
 
 .hidden {
