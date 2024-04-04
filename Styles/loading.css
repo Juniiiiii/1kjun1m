@@ -46,8 +46,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 13rem;
-    height: 13rem;
+    width: 9vw;
+    height: 9vw;
     border-radius: 50%;
     background-color: var(--white);
     mix-blend-mode: difference;

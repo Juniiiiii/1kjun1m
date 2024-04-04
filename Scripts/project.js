@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     new ProjectCard(
         'inside-the-mind-of',
-        '/Media/insideTheMindOf.png',
+        '/Media/ourVoice.png',
         yellow, insideTheMindOfCoordinates
     );
 

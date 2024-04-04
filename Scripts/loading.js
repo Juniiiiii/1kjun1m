@@ -25,22 +25,22 @@ const firstCircle = document.getElementById('loading-circle-one');
 const secondCircle = document.getElementById('loading-circle-two');
 const expansionCircle = document.getElementById('expansion-circle');
 
-firstCircle.style.left =  '-2.5em';
-secondCircle.style.left = 'calc(100vw + 2.5em)';
+firstCircle.style.left =  '-6vw';
+secondCircle.style.left = '106vw';
 
 function startCollision() {
     anime({
         targets: firstCircle,
-        left: ['-2.5em', '50vw'],
-        easing: 'easeOutExpo',
-        duration: 500,
+        left: '50vw',
+        easing: 'easeOutCubic',
+        duration: 1400,
     });
 
     anime({
         targets: secondCircle,
-        left: ['calc(100vw + 2.5em)', '50vw'],
-        easing: 'easeOutExpo',
-        duration: 500,
+        left: '50vw',
+        easing: 'easeOutCubic',
+        duration: 1400,
         complete: function(anim) {
             collisionComplete();
         }
