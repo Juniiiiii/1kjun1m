@@ -1,7 +1,9 @@
 const thirdPage = document.querySelector('.third-page');
 const introPage = document.querySelector('.intro-page');
 const texts = document.querySelectorAll('.intro-page .text');
+const whyNotSvg = document.getElementById('why-not-svg');
 const whyNotPath = document.getElementById('why-not-path');
+const scrollSvg = document.getElementById('scroll-svg');
 const scrollPath = document.getElementById('scroll-path');
 const halfLine = document.querySelector('.intro-page .halfline div');
 const whoOverlay = document.querySelector('.intro-page .who-overlay');
@@ -48,11 +50,16 @@ function duplicateTunnels() {
 }
 
 function generateRandomPoints() {
+    var point;
     while (whyNotPoints.length < allLetters.length) {
         x = Math.random() * whyWidth;
         y = Math.random() * whyHeight;
 
-        if (whyNotPath.isPointInFill(new DOMPoint(x, y))) {
+        point = whyNotSvg.createSVGPoint();
+        point.x = x;
+        point.y = y;
+
+        if (whyNotPath.isPointInFill(point)) {
             whyNotPoints.push([x/whyWidth*100, y/whyHeight*100]);
         }
     }
@@ -61,7 +68,11 @@ function generateRandomPoints() {
         x = Math.random() * scrollWidth;
         y = Math.random() * scrollHeight;
 
-        if (scrollPath.isPointInFill(new DOMPoint(x, y))) {
+        point = scrollSvg.createSVGPoint();
+        point.x = x;
+        point.y = y;
+
+        if (scrollPath.isPointInFill(point)) {
             scrollPoints.push([x/scrollWidth*100, y/scrollHeight*100]);
         }
     }

@@ -7,29 +7,25 @@ window.onload = function() {
     history.scrollRestoration = "manual";
 };
 
-(async () => {
-    await Foundry.load();
+startCollision();
 
-    startCollision();
+window.addEventListener("resize", OnResize);
+OnResize();
 
-    window.addEventListener("resize", OnResize);
-    OnResize();
+Events.on(matterInstance.engine, 'beforeUpdate', (event) => {
+    if (firstIntersecting && cloud.isForcing) {
+        if (matterHovering) cloud.applyForce(mousePosition);
+        else cloud.applyForce();
+    }
+});
 
-    Events.on(matterInstance.engine, 'beforeUpdate', (event) => {
-        if (firstIntersecting && cloud.isForcing) {
-            if (matterHovering) cloud.applyForce(mousePosition);
-            else cloud.applyForce();
-        }
-    });
+firstPage.addEventListener('mouseover', () => {
+    matterHovering = true;
+});
 
-    firstPage.addEventListener('mouseover', () => {
-        matterHovering = true;
-    });
-
-    firstPage.addEventListener('mouseout', () => {
-        matterHovering = false;
-    });
-})();
+firstPage.addEventListener('mouseout', () => {
+    matterHovering = false;
+});
 
 function OnResize() {
     firstPageRect = firstPage.getBoundingClientRect();
