@@ -35,7 +35,6 @@ function OnResize() {
     firstPageRect = firstPage.getBoundingClientRect();
     matterInstance.resize(firstPageRect.width, firstPageRect.height);
 
-    cloud.updateDiagonal();
     cloud.adjustForces();
     cloud.repositionWalls();
 

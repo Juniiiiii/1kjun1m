@@ -1,21 +1,28 @@
 const thirdPage = document.querySelector('.third-page');
 const introPage = document.querySelector('.intro-page');
 const texts = document.querySelectorAll('.intro-page .text');
-const whyNotSvg = document.querySelector('.intro-page .why-not svg');
 const whyNotPath = document.getElementById('why-not-path');
+const scrollPath = document.getElementById('scroll-path');
 const halfLine = document.querySelector('.intro-page .halfline div');
 const whoOverlay = document.querySelector('.intro-page .who-overlay');
 const catBackground = document.querySelector('.intro-page .cat-background');
 const catTunnels = document.querySelectorAll('.intro-page .cat-background .tunnel-wrapper');
 const whoTunnels = document.querySelectorAll('.intro-page .who-background .tunnel-wrapper');
 const transitionTunnels = document.querySelectorAll('.intro-page .transition-background .tunnel-wrapper');
+const textContainer = document.querySelector('.intro-page .text-container');
 
 let introFixed = false;
-let textLetters = [], allLetters = [], whyNotPoints = [], whyNotPointsBounding = {};
+let textLetters = [], allLetters = [], allOriginals = [], textOriginals = [];
+let whyNotPoints = [], whyBox = whyNotPath.getBBox(), whyWidth = whyBox.width, whyHeight = whyBox.height;
+let scrollPoints = [], scrollBox = scrollPath.getBBox(), scrollWidth = scrollBox.width, scrollHeight = scrollBox.height;
+
+textContainer.style.aspectRatio = `${whyWidth}/${whyHeight}`;
 
 document.addEventListener('DOMContentLoaded', () => {
     fixIntroPage();
     spanifyAllText();
+    generateRandomPoints();
+    setScrollPositions();
     duplicateTunnels();
 
     letterInitialOpacity();
@@ -41,41 +48,27 @@ function duplicateTunnels() {
 }
 
 function generateRandomPoints() {
-    var box = whyNotSvg.getBBox();
-    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-
     while (whyNotPoints.length < allLetters.length) {
-        var x = Math.random() * box.width + box.x;
-        var y = Math.random() * box.height + box.y;
+        x = Math.random() * whyWidth;
+        y = Math.random() * whyHeight;
 
         if (whyNotPath.isPointInFill(new DOMPoint(x, y))) {
-            whyNotPoints.push([x * 1.5, y * 1.5]);
-
-            if (x < minX) minX = x;
-            if (x > maxX) maxX = x;
-            if (y < minY) minY = y;
-            if (y > maxY) maxY = y;
-            /* var div = document.createElement('div');
-            div.style.position = 'absolute';
-            div.style.width = '5px';
-            div.style.height = '5px';
-            div.style.backgroundColor = 'red';
-            div.style.left = x * 1.5 + 'px';
-            div.style.top = y * 1.5 + 'px';
-            document.body.appendChild(div); */
+            whyNotPoints.push([x/whyWidth*100, y/whyHeight*100]);
         }
     }
 
-    whyNotPointsBounding = {
-        minX: minX * 1.5 / window.innerWidth * 100,
-        minY: minY * 1.5 / window.innerHeight * 100,
-        maxX: maxX * 1.5 / window.innerWidth * 100,
-        maxY: maxY * 1.5 / window.innerHeight * 100,
-    };
+    while (scrollPoints.length < allLetters.length) {
+        x = Math.random() * scrollWidth;
+        y = Math.random() * scrollHeight;
+
+        if (scrollPath.isPointInFill(new DOMPoint(x, y))) {
+            scrollPoints.push([x/scrollWidth*100, y/scrollHeight*100]);
+        }
+    }
 }
 
 function letterInitialOpacity() {
-    var opacityAS = new AnimeScroll(thirdPage, 0, 0.15, anime({
+    var opacityAS = new AnimeScroll(thirdPage, 0, 0.1, anime({
         targets: allLetters,
         opacity: [0, 0.15],
         easing: 'linear',
@@ -96,11 +89,15 @@ function textMagic() {
         autoplay: false,
     });
 
-    textLetters.forEach(text => {
+    textLetters.forEach((text, index) => {
         textsTimeline.add({
             targets: text,
-            translateX: 0,
-            translateY: 0,
+            top: function(el, i) {
+                return textOriginals[index][i][1] + 'vw';
+            },
+            left: function(el, i) {
+                return textOriginals[index][i][0] + 'vw';
+            },
             opacity: [0.15, 1],
             easing: 'linear',
             duration: 1000,
@@ -108,31 +105,28 @@ function textMagic() {
         }, '+=400');
     });
 
-    generateRandomPoints();
-
-    var xOffset = whyNotPointsBounding.minX + (whyNotPointsBounding.maxX - whyNotPointsBounding.minX)/2;
-    var yOffset = whyNotPointsBounding.minY + (whyNotPointsBounding.maxY - whyNotPointsBounding.minY)/2
-                + (whyNotPath.getBoundingClientRect().top + introPage.getBoundingClientRect().top) / window.innerHeight * 100;
     var colorA = randomElement(charColorsRGB);
     var colorB = randomElement(charColorsRGB);
     while (colorA == colorB) colorB = randomElement(charColorsRGB);
     catBackground.style.background = `linear-gradient(to right, ${rgbToHex(colorA)}, ${rgbToHex(colorB)})`;
 
+    var aspect = whyHeight/whyWidth;
+
     textsTimeline
     .add({
         targets: allLetters,
-        translateX: function(el, i) {
-            return 100 * (whyNotPoints[i][0] - el.offsetLeft + xOffset)/window.innerWidth + 'vw';
+        top: function(el, i) {
+            return whyNotPoints[i][1] * aspect + 'vw';
         },
-        translateY: function(el, i) {
-            return 100 * (whyNotPoints[i][1] - el.offsetTop + yOffset)/window.innerHeight + 'vh';
+        left: function(el, i) {
+            return whyNotPoints[i][0] + 'vw';
         },
         duration: 5000,
         color: function(el, i) {
-            return interpolateColor(colorA, colorB, whyNotPoints[i][0]/window.innerWidth);
+            return [white, interpolateColor(colorA, colorB, whyNotPoints[i][0]/100)];
         },
         easing: 'linear',
-    }, '+=1000')
+    }, '+=1500')
     .add({
         targets: halfLine,
         translateX: ['-100%', 0],
@@ -159,7 +153,7 @@ function textMagic() {
         delay: anime.stagger(1500, {start: 0})
     }, '+=1000')
 
-    var textsAS = new AnimeScroll(thirdPage, 0.15, 0.95, textsTimeline);
+    var textsAS = new AnimeScroll(thirdPage, 0.2, 0.95, textsTimeline);
 
     document.addEventListener('introIntersection', () => {
         if (introIntersecting) textsAS.start();
@@ -168,22 +162,38 @@ function textMagic() {
 }
 
 function spanifyAllText() {
-    texts.forEach(text => {
+    var introRect = introPage.getBoundingClientRect();
+    var textRect = textContainer.getBoundingClientRect();
+
+    texts.forEach((text, index) => {
         var letters = spanifyLetter(text);
         textLetters.push(letters);
         letters.forEach(letter => {
             allLetters.push(letter);
         });
+
+        var originals = [];
+
+        letters.forEach(letter => {
+            var rect = letter.getBoundingClientRect();
+            originals.push([rect.left/textRect.width * 100, (rect.top - textRect.top)/textRect.width * 100]);
+        });
+
+        originals.forEach(original => {
+            allOriginals.push(original);
+        });
+
+        textOriginals.push(originals);
     });
+}
 
-    allLetters.forEach(letter => {
-        var randX = Math.random() * 98;
-        var randY = Math.random() * 90 + 5;
+function setScrollPositions() {
+    var aspect = scrollHeight/scrollWidth;
 
-        letter.style.transform = `
-            translateX(${randX - 100 * letter.offsetLeft/window.innerWidth}vw)
-            translateY(${randY - 100 * letter.offsetTop/window.innerHeight}vh)
-        `;
+    allLetters.forEach((letter, index) => {
+        letter.style.position = 'absolute';
+        letter.style.top = scrollPoints[index][1] * aspect + 'vw';
+        letter.style.left = scrollPoints[index][0] + 'vw';
     });
 }
 

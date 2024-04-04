@@ -1,3 +1,8 @@
+const circleRadiusRem = 3;
+const circleCollisionCorrection = 1.5;
+
+const expansionSpeed = 0.03;
+
 const loadingText = document.querySelector('.loading-text');
 
 function hoverLoading(event) {
@@ -107,27 +112,22 @@ const aboutNav = document.getElementById('about-button');
 const projectNav = document.getElementById('project-button');
 const contactNav = document.getElementById('contact-button');
 
+const navs = [topNav, aboutNav, projectNav, contactNav];
+const navigations = [
+    document.getElementById('matter-container'),
+    document.getElementById('third-page'),
+    document.getElementById('fourth-page'),
+    document.getElementById('footer')
+]
+
 function enableNav() {
-    topNav.addEventListener('click', () => {
-        document.getElementById('matter-container').scrollIntoView({behavior: 'smooth'});
+    navs.forEach((nav, i) => {
+        nav.style.pointerEvents = 'all';
+        nav.addEventListener('click', () => {
+            navigations[i].scrollIntoView({behavior: 'smooth'});
+        });
+        new ButtonFollow(nav);
     });
-
-    aboutNav.addEventListener('click', () => {
-        document.getElementById('third-page').scrollIntoView({behavior: 'smooth'});
-    });
-
-    projectNav.addEventListener('click', () => {
-        document.getElementById('fourth-page').scrollIntoView({behavior: 'smooth'});
-    });
-
-    contactNav.addEventListener('click', () => {
-        document.getElementById('footer').scrollIntoView({behavior: 'smooth'});
-    });
-
-    new ButtonFollow(topNav);
-    new ButtonFollow(aboutNav);
-    new ButtonFollow(projectNav);
-    new ButtonFollow(contactNav);
 }
 
 class ButtonFollow {

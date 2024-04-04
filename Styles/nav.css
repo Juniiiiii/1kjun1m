@@ -29,7 +29,7 @@
     grid-template-rows: 1fr;
     overflow: hidden;
     font-size: 1vw;
-    pointer-events: all;
+    pointer-events: none;
     cursor: pointer;
     margin: 0 0.1vw;
 }
@@ -54,7 +54,7 @@
 .nav .bar .button .background {
     grid-area: 1 / 1 / -1 / -1;
     z-index: -1;
-    transform: translateY(100%);
+    transform: translateY(110%);
     transition: transform 0.5s ease;
 }
 

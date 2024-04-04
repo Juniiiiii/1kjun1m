@@ -1,3 +1,14 @@
+const particleRestitution = 0.8;
+const particleCount = 50;
+const particleSize = 0.003;
+
+const wallThickness = 300;
+const wallLength = 10000;
+
+const particleForceRange = 0.06;
+const particleInitialForce = 0.000005;
+const particleConsistentForce = 0.002;
+
 class Cloud {
     constructor(matterInstance) {
         this.engine = matterInstance.engine;
@@ -12,7 +23,6 @@ class Cloud {
         this.alteringForce = false;
 
         //Assign this
-        this.danceForce = particleDanceForce * this.diagonal;
         this.repulsionRange = particleForceRange * this.diagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
         this.repulsionForce = particleInitialForce * this.diagonal;
@@ -37,7 +47,7 @@ class Cloud {
             options.render.fillStyle = this.pickedColor;
             options.render.strokeStyle = this.pickedColor;
             options.label = "Particle" + i;
-            switch(randomInt(1, 4)) {
+            switch(Math.floor(Math.random() * 4 + 1)) {
                 case 1:
                     this.particles.push(Bodies.circle(0, 0, particleSize * this.diagonal, JSON.parse(JSON.stringify(options))));
                     break;
@@ -47,7 +57,7 @@ class Cloud {
                 case 3:
                     this.particles.push(Bodies.rectangle(0, 0, particleSize * this.diagonal * Math.SQRT2, particleSize * this.diagonal * Math.SQRT2, JSON.parse(JSON.stringify(options))));
                     break;
-                case 4:
+                case 4, 5:
                     this.particles.push(Bodies.polygon(0, 0, 5, particleSize * this.diagonal * 2 * Math.sin(Math.PI / 5), JSON.parse(JSON.stringify(options))));
                     break;
             }
@@ -94,14 +104,6 @@ class Cloud {
 
             Body.applyForce(p1, p1.position, this.netForce);
             this.netForce = Vector.create(0, 0);
-        });
-    }
-
-    dance() {
-        this.particles.forEach(p => {
-            Body.applyForce(p, p.position, 
-                Vector.create(p.mass * randomFloat(-this.danceForce, this.danceForce), 
-                p.mass * randomFloat(-this.danceForce, this.danceForce)));
         });
     }
 
@@ -155,19 +157,10 @@ class Cloud {
     }
 
     adjustForces() {
+        this.diagonal = Math.sqrt(this.container.clientWidth * this.container.clientWidth + this.container.clientHeight * this.container.clientHeight);
         if (this.alteringForce) return;
         this.repulsionRange = particleForceRange * this.diagonal;
         this.repulsionSqrRange = this.repulsionRange * this.repulsionRange;
-        this.danceForce = particleDanceForce * this.diagonal;
-    }
-
-    updateDiagonal() {
-        this.diagonal = Math.sqrt(this.container.clientWidth * this.container.clientWidth + this.container.clientHeight * this.container.clientHeight);
-    }
-
-    setPositionTopMiddle() {
-        this.setPositionOffset(this.container.clientWidth/2, this.container.clientHeight * (1/4));
-    
     }
 }
 const cloud = new Cloud(matterInstance);

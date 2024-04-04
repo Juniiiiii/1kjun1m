@@ -2,7 +2,7 @@ const projectPage = document.querySelector('.project-page');
 const pixelGrid = projectPage.querySelector('.pixel-grid');
 const projectBar = projectPage.querySelector('.bar');
 const pictureContainer = projectPage.querySelector('.paper-container .picture-container');
-const textContainer = projectPage.querySelector('.paper-container .text-container');
+const paperContainer = projectPage.querySelector('.paper-container .text-container');
 
 const pixelRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-rows'));
 const pixelCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-cols'));
