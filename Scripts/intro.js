@@ -162,7 +162,6 @@ function textMagic() {
 }
 
 function spanifyAllText() {
-    var introRect = introPage.getBoundingClientRect();
     var textRect = textContainer.getBoundingClientRect();
 
     texts.forEach((text, index) => {

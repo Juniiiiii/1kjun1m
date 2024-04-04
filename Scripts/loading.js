@@ -107,12 +107,7 @@ function expansionComplete() {
 
 //Navbar stuff
 
-const topNav = document.getElementById('top-button');
-const aboutNav = document.getElementById('about-button');
-const projectNav = document.getElementById('project-button');
-const contactNav = document.getElementById('contact-button');
-
-const navs = [topNav, aboutNav, projectNav, contactNav];
+const navs = document.querySelectorAll('.nav .bar > div');
 const navigations = [
     document.getElementById('matter-container'),
     document.getElementById('third-page'),

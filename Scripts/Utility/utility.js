@@ -1,3 +1,25 @@
+const styles = getComputedStyle(document.documentElement);
+
+const black = styles.getPropertyValue('--black');
+const blue = styles.getPropertyValue('--blue');
+const green = styles.getPropertyValue('--green');
+const yellow = styles.getPropertyValue('--yellow');
+const white = styles.getPropertyValue('--white');
+const red = styles.getPropertyValue('--red');
+const ghost = styles.getPropertyValue('--ghost');
+
+const blackRGB = hexToRgb(black);
+const blueRGB = hexToRgb(blue);
+const greenRGB = hexToRgb(green);
+const yellowRGB = hexToRgb(yellow);
+const whiteRGB = hexToRgb(white);
+const redRGB = hexToRgb(red);
+const ghostRGB = hexToRgb(ghost);
+
+const particleColors = [blue, green, yellow, white, red];
+const charColors = [blue, green, yellow, red];
+const charColorsRGB = [blueRGB, greenRGB, yellowRGB, redRGB];
+
 function randomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -171,50 +193,6 @@ class TriggerScroll {
 
         window.removeEventListener('scroll', this.update.bind(this));
         window.removeEventListener('resize', this.update.bind(this));
-    }
-}
-
-class PercentScroll {
-    constructor(element, from, to, callBack) {
-        this.element = element;
-        this.rect = element.getBoundingClientRect();
-        this.callBack = callBack;
-
-        this.from = from;
-        this.to = 1 - to;
-
-        this.lower = this.rect.top + this.rect.height * this.from;
-        this.upper = this.rect.bottom - this.rect.height * this.to;
-
-        this.isRunning = false;
-
-        this.updateRange = this.updateRange.bind(this);
-        this.update = this.update.bind(this);
-    }
-
-    start() {
-        if (this.isRunning) return;
-        this.isRunning = true;
-
-        window.addEventListener('scroll', this.update);
-        window.addEventListener('resize', this.update);
-    }
-
-    update() {
-        this.rect = this.element.getBoundingClientRect();
-
-        this.lower = this.rect.top + this.rect.height * this.from;
-        this.upper = this.rect.bottom - this.rect.height * this.to;
-
-        this.callBack(Common.clamp((window.innerHeight - this.lower) / (this.upper - this.lower), 0, 1));
-    }
-
-    stop() {
-        if (!this.isRunning) return;
-        this.isRunning = false;
-
-        window.removeEventListener('scroll', this.update);
-        window.removeEventListener('resize', this.update);
     }
 }
 
