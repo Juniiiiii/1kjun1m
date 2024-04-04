@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     new ProjectCard(
         'inside-the-mind-of',
-        '/Media/ourVoice.png',
+        '/Media/insideTheMindOf.png',
         yellow, insideTheMindOfCoordinates
     );
 
     new ProjectCard(
         'our-voice',
-        '/Media/ourVoice.png',
+        '/Media/insideTheMindOf.png',
         red, ourVoiceCoordinates
     );
 
