@@ -43,7 +43,7 @@
 
 .project-page .bar-container {
     width: 100%;
-    height: 20%;
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -63,6 +63,8 @@
 .project-page .bar .card {
     height: 70%;
     aspect-ratio: 2 / 1;
+    max-width: 30vw;
+    max-height: 15vw;
     opacity: 0.3;
     display: grid;
     grid-template-columns: 1fr;
@@ -93,7 +95,7 @@
     align-items: center;
     font-family: 'Manrope', sans-serif;
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 1.6vw;
     transition: color 0.5s ease;
     pointer-events: none;
     color: var(--default-caption);
@@ -149,11 +151,18 @@
 
 .project-page .project-container {
     width: 100vw;
-    flex-grow: 1;
+    height: 85%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     overflow: hidden;
+}
+
+@media screen and (orientation: portrait) {
+    .project-page .project-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
 }
 
 .project-page .project-container .picture-container {
@@ -222,7 +231,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     text-align: left;
-    font-size: 2rem;
+    font-size: 1rem;
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
     pointer-events: all;
@@ -271,9 +280,20 @@
     clip-path: polygon(0 0, 0 200%, 200% 0);
 }
 
+.project-page .project-container .paper-container .paper .inner.hover-effect {
+    clip-path: polygon(0 0, 0 200%, 200% 0);
+}
+
+.paper .inner span {
+    margin: 3%;
+    margin-bottom: 5vh;
+    height: max-content;
+}
+
 .paper .outer span {
+    margin: 3%;
     margin-top: 5vh;
-    margin-bottom: 5%;
+    margin-bottom: 5vh;
     height: max-content;
 }
 

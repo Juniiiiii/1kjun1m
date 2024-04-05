@@ -167,6 +167,12 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
+@media (hover: none) {
+    #matter-container {
+        pointer-events: none;
+    }
+}
+
 .origami {
     display: grid;
     grid-template-columns: auto;

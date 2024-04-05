@@ -19,6 +19,17 @@
     flex-direction: column;
 }
 
+.cat-background-wrapper {
+    grid-area: 1 / 1 / -1 / -1;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
 .cat-background {
     -webkit-mask-image: url("/Media/catPath.svg");
     mask-image: url("/Media/catPath.svg");
@@ -26,7 +37,8 @@
     mask-repeat: no-repeat;
     -webkit-mask-position: bottom center;
     mask-position: bottom center;
-    z-index: 1;
+    overflow: hidden;
+    min-width: 1234px;
 }
 
 .tunnel-wrapper {
@@ -54,7 +66,7 @@
     display: inline-block;
     margin-right: 0.5em;
     color: var(--black);
-    font-size: 9vh;
+    font-size: min(10vw, 9vh);
 }
 
 .tunnel-wrapper .not {
@@ -99,7 +111,7 @@
     color: var(--white);
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
-    font-size: 4vh;
+    font-size: min(3vw, 4vh);
     margin: 0;
 }
 
@@ -107,7 +119,7 @@
     color: var(--yellow);
     font-family: 'Prata', serif;
     font-style: italic;
-    font-size: 6vh;
+    font-size: min(3.7vw, 6vh);
 }
 
 .transition-background .tunnel-wrapper .jump span {
@@ -221,7 +233,7 @@
     display: flex;
     justify-content: flex-end;
     font-family: 'Prata', serif;
-    font-size: 5vh;
+    font-size: min(3.7vw, 5vh);
 }
 
 .transition-background .tunnel.final .but {

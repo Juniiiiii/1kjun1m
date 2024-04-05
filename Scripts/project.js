@@ -99,6 +99,7 @@ class ProjectCard {
         this.color = color;
         this.captionColor = captionColor;
         this.coordinates = coordinates;
+        this.moved = false;
 
         this.parser = new DOMParser();
 
@@ -161,7 +162,18 @@ class ProjectCard {
 
         paperContainer.appendChild(this.paper);
 
-        this.paper.querySelector('.inner').style.backgroundColor = color;
+        this.inner = this.paper.querySelector('.inner');
+        this.inner.addEventListener('click', this.innerHoverEffect.bind(this));
+
+        this.inner.style.backgroundColor = color;
+    }
+
+    innerHoverEffect() {
+        if (this.inner.classList.contains('hover-effect')) {
+            this.inner.classList.remove('hover-effect');
+        } else {
+            this.inner.classList.add('hover-effect');
+        }
     }
 
     closingSequence() {
@@ -186,6 +198,13 @@ class ProjectCard {
         this.paper.style.setProperty('--gravity-y', `-${Math.random() * 10 + 20}vh`);
         this.paper.style.setProperty('--gravity-x', `${Math.random() * 40 - 20}vw`);
         this.paper.classList.add('fall');
+
+        if (this.moved) {
+            this.movePixelsBack();
+            this.pixels.forEach(pixel => {
+                pixel.element.style.setProperty('--pixel-color', ghost);
+            });
+        }
     }
 
     openingSequence() {
@@ -202,6 +221,13 @@ class ProjectCard {
         this.paper.classList.add('bot');
         this.paper.classList.remove('fall');
         this.paper.classList.add('show');
+
+        if (!this.moved) {
+            this.movePixels();
+            this.pixels.forEach(pixel => {
+                pixel.element.style.setProperty('--pixel-color', this.color);
+            });
+        }
     }
 
     closeHandler() {
@@ -222,12 +248,14 @@ class ProjectCard {
         this.pixels.forEach(pixel => {
             pixel.moveTo(this.name);
         });
+        this.moved = true;
     }
 
     movePixelsBack() {
         this.pixels.forEach(pixel => {
             pixel.goBack();
         });
+        this.moved = false;
     }
 
     hoverHandler() {
