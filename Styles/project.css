@@ -243,6 +243,13 @@
     padding: 1%;
     overflow: auto;
     display: flex;
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
+}
+
+.paper-container .paper .outer::-webkit-scrollbar {
+    display: initial;
 }
 
 .project-page .project-container .paper-container .paper .inner {
@@ -255,7 +262,15 @@
     padding: 1%;
     overflow: auto;
     display: flex;
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
 }
+
+.paper-container .paper .inner::-webkit-scrollbar {
+    display: initial;
+}
+
 
 .project-page .project-container .paper-container .paper .inner:hover {
     clip-path: polygon(0 0, 0 200%, 200% 0);
