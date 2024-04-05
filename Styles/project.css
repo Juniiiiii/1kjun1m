@@ -250,12 +250,13 @@
     padding: 1%;
     overflow: auto;
     display: flex;
-    scrollbar-width: thin;
-    -ms-overflow-style: thin;
+    scrollbar-width: 100px;
+    -ms-overflow-style: 100px;
 }
 
 .paper-container .paper .outer::-webkit-scrollbar {
-    display: initial;
+    display: block;
+	width: 100px;
 }
 
 .project-page .project-container .paper-container .paper .inner {
