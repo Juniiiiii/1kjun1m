@@ -123,7 +123,11 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16),
     } : null;
 }
-  
+
+function rgbaString(rgb, a) {
+    return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + a + ')';
+}
+
 function rgbToHex(rgb) {
     return "#" + ((1 << 24) | (rgb.r << 16) | (rgb.g << 8) | rgb.b).toString(16).slice(1).toUpperCase();
 }

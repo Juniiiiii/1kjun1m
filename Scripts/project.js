@@ -1,8 +1,8 @@
 const projectPage = document.querySelector('.project-page');  
 const pixelGrid = projectPage.querySelector('.pixel-grid');
 const projectBar = projectPage.querySelector('.bar');
-const pictureContainer = projectPage.querySelector('.paper-container .picture-container');
-const paperContainer = projectPage.querySelector('.paper-container .text-container');
+const pictureContainer = projectPage.querySelector('.project-container .picture-container');
+const paperContainer = projectPage.querySelector('.project-container .paper-container');
 
 const pixelRows = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-rows'));
 const pixelCols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-cols'));
@@ -27,14 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     new ProjectCard(
         'inside-the-mind-of',
-        '/Media/insideTheMindOf.png',
-        yellow, insideTheMindOfCoordinates
+        '/Media/insideTheMindOf.webp', "inside the mind of", white,
+        yellow, insideTheMindOfCoordinates,
+        insideTheMindOfText[0], insideTheMindOfText[1]
     );
 
     new ProjectCard(
         'our-voice',
-        '/Media/insideTheMindOf.png',
-        red, ourVoiceCoordinates
+        '/Media/ourVoice.webp', "OurVoice", black,
+        red, ourVoiceCoordinates,
+        ourVoiceText[0], ourVoiceText[1]
     );
 
 });
@@ -92,9 +94,10 @@ class Pixel {
 }
 
 class ProjectCard {
-    constructor(name, thumbnail, color, coordinates) {
+    constructor(name, thumbnail, caption, captionColor, color, coordinates, outerText, innerText) {
         this.name = name;
         this.color = color;
+        this.captionColor = captionColor;
         this.coordinates = coordinates;
 
         this.parser = new DOMParser();
@@ -104,16 +107,29 @@ class ProjectCard {
                 <div class="thumbnail">
                     <img src="${thumbnail}" alt="${name}">
                 </div>
+                <div class="caption">
+                    ${caption}
+                </div>
+                <div class="close">
+                    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#fef9ef" d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path></g></svg>
+                </div>
             </div>
         `, 'text/html').body.firstChild;
 
         this.element.style.setProperty('--card-color', color);
+        this.element.style.setProperty('--default-caption', captionColor);
+        this.thumbnail = this.element.querySelector('.thumbnail');
+
+        this.close = this.element.querySelector('.close');
+        this.close.style.backgroundColor = rgbaString(hexToRgb(color), 0.2);
+
+        this.caption = this.element.querySelector('.caption');
 
         projectBar.appendChild(this.element);
 
-        this.element.addEventListener('click', this.clickHandler.bind(this));
-        this.element.addEventListener('mouseover', this.hoverHandler.bind(this));
-        this.element.addEventListener('mouseout', this.unhoverHandler.bind(this));
+        this.thumbnail.addEventListener('click', this.clickHandler.bind(this));
+        this.thumbnail.addEventListener('mouseover', this.hoverHandler.bind(this));
+        this.thumbnail.addEventListener('mouseout', this.unhoverHandler.bind(this));
 
         this.pixels = [];
         shuffleArray(allIndexesArr);
@@ -131,25 +147,73 @@ class ProjectCard {
         `, 'text/html').body.firstChild;
 
         pictureContainer.appendChild(this.picture);
+
+        this.paper = this.parser.parseFromString(`
+            <div class="paper">
+                <div class="outer">
+                    <span>${outerText}</span>
+                </div>
+                <div class="inner">
+                    <span>${innerText}</span>
+                </div>
+            </div>
+        `, 'text/html').body.firstChild;
+
+        paperContainer.appendChild(this.paper);
+
+        this.paper.querySelector('.inner').style.backgroundColor = color;
+    }
+
+    closingSequence() {
+        this.close.removeEventListener('click', this.closeHandler.bind(this));
+
+        this.element.classList.remove('clicked');
+
+        this.close.classList.remove('show');
+
+        this.picture.classList.remove('show');
+        this.picture.classList.remove('bot');
+
+        this.paper.classList.remove('show');
+        this.paper.classList.remove('bot');
+
+        this.picture.style.setProperty('--gravity-rotation', `${Math.random() * 80 - 40}deg`);
+        this.picture.style.setProperty('--gravity-y', `-${Math.random() * 10 + 20}vh`);
+        this.picture.style.setProperty('--gravity-x', `${Math.random() * 40 - 20}vw`);
+        this.picture.classList.add('fall');
+
+        this.paper.style.setProperty('--gravity-rotation', `${Math.random() * 80 - 40}deg`);
+        this.paper.style.setProperty('--gravity-y', `-${Math.random() * 10 + 20}vh`);
+        this.paper.style.setProperty('--gravity-x', `${Math.random() * 40 - 20}vw`);
+        this.paper.classList.add('fall');
+    }
+
+    openingSequence() {
+        this.close.addEventListener('click', this.closeHandler.bind(this));
+
+        this.element.classList.add('clicked');
+
+        this.close.classList.add('show');
+
+        this.picture.classList.add('bot');
+        this.picture.classList.remove('fall');
+        this.picture.classList.add('show');
+
+        this.paper.classList.add('bot');
+        this.paper.classList.remove('fall');
+        this.paper.classList.add('show');
+    }
+
+    closeHandler() {
+        this.closingSequence();
+        clickedCard = null;
     }
 
     clickHandler() {
         if (clickedCard == this) return;
 
-        if (clickedCard) {
-            clickedCard.element.classList.remove('clicked');
-            clickedCard.picture.classList.remove('show');
-            clickedCard.picture.classList.remove('bot');
-            clickedCard.picture.style.setProperty('--gravity-rotation', `${Math.random() * 80 - 40}deg`);
-            clickedCard.picture.style.setProperty('--gravity-y', `-${Math.random() * 10 + 20}vh`);
-            clickedCard.picture.style.setProperty('--gravity-x', `${Math.random() * 40 - 20}vw`);
-            clickedCard.picture.classList.add('fall');
-        }
-
-        this.element.classList.add('clicked');
-        this.picture.classList.add('bot');
-        this.picture.classList.remove('fall');
-        this.picture.classList.add('show');
+        if (clickedCard) clickedCard.closingSequence();
+        this.openingSequence();
 
         clickedCard = this;
     }
@@ -178,7 +242,7 @@ class ProjectCard {
         }
         hoveredCard = this;
 
-        hoveredCard.movePixels();
+        this.movePixels();
 
         this.pixels.forEach(pixel => {
             pixel.element.style.setProperty('--pixel-color', this.color);

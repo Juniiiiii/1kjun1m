@@ -112,7 +112,7 @@
 
 .transition-background .tunnel-wrapper .jump span {
     animation: jumpAnimation 2s infinite;
-    color: var(--green);
+    color: var(--blue);
 }
 
 .transition-background .tunnel-wrapper .jump span:nth-child(1) {
@@ -184,7 +184,7 @@
 }
 
 .transition-background .tunnel-wrapper .better span {
-    color: #50C878;
+    color: var(--green);
 }
 
 .transition-background .tunnel-wrapper .better span:nth-child(3) {
