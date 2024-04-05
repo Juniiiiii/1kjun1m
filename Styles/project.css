@@ -43,7 +43,7 @@
 
 .project-page .bar-container {
     width: 100%;
-    height: 20%;
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -93,7 +93,7 @@
     align-items: center;
     font-family: 'Manrope', sans-serif;
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 1.6vw;
     transition: color 0.5s ease;
     pointer-events: none;
     color: var(--default-caption);
@@ -149,7 +149,7 @@
 
 .project-page .project-container {
     width: 100vw;
-    flex-grow: 1;
+	height: 85%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -222,7 +222,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     text-align: left;
-    font-size: 2rem;
+    font-size: 1rem;
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
     pointer-events: all;
@@ -241,12 +241,13 @@
     padding: 1%;
     overflow: auto;
     display: flex;
-    scrollbar-width: thin;
-    -ms-overflow-style: thin;
+    scrollbar-width: 100px;
+    -ms-overflow-style: 100px;
 }
 
 .paper-container .paper .outer::-webkit-scrollbar {
-    display: initial;
+    display: block;
+	width: 100px;
 }
 
 .project-page .project-container .paper-container .paper .inner {
