@@ -77,3 +77,18 @@
 .nav .bar .button:hover .background {
     transform: translateY(0%);
 }
+
+.nav .warning {
+    display: none;
+}
+
+@media (pointer:none), (pointer:coarse) {
+    .nav .warning {
+        color: var(--white);
+        align-self: flex-start;
+        justify-self: flex-start;
+        flex-grow: 1;
+        font-family: 'Prata', serif;
+        font-size: max(1.5vw, 3vh);
+    }
+}
