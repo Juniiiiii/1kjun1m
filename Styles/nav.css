@@ -84,6 +84,7 @@
 
 @media (pointer:none), (pointer:coarse) {
     .nav .warning {
+        display: inline;
         color: var(--white);
         align-self: flex-start;
         justify-self: flex-start;
