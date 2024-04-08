@@ -263,7 +263,7 @@
     grid-area: 1 / 1 / -1 / -1;
     width: 100%;
     height: 100%;
-    clip-path: polygon(0 0, 0 5vh, 5vh 0);
+    clip-path: polygon(0 0, 0 10vh, 10vh 0);
     color: var(--black);
     transition: clip-path 1.1s ease;
     padding: 1%;
@@ -293,7 +293,7 @@
 
 .paper .outer span {
     margin: 3%;
-    margin-top: 5vh;
+    margin-top: 8vh;
     margin-bottom: 5vh;
     height: max-content;
 }
